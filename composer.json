@@ -1,7 +1,8 @@
 {
-    "name": "tonicospinelli/phpclass",
+    "name": "tonicospinelli/classgeneration",
     "description": "Library to create Php Class files",
     "homepage": "https://github.com/tonicospinelli/ClassGeneration/",
+    "type": "library",
     "keywords": [
         "php class generator",
         "php class gen",
