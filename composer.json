@@ -1,0 +1,38 @@
+{
+    "name": "tonicospinelli/phpclass",
+    "description": "Library to create Php Class files",
+    "homepage": "https://github.com/tonicospinelli/ClassGeneration/",
+    "keywords": [
+        "php class generator",
+        "php class gen",
+        "php class",
+        "class gen",
+        "class generation",
+        "class generator",
+        "php gen",
+        "php generator"
+    ],
+    "authors": [
+        {
+            "name": "Antonio Spinelli",
+            "email": "tonicospinelli85@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/tonicospinelli/ClassGeneration/issues"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "ext-reflection": "*",
+        "ext-spl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "library/"
+        }
+    }
+}

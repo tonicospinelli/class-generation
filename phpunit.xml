@@ -1,0 +1,22 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+         verbose="true"
+         bootstrap="./bootstrap.php"
+        >
+    <testsuites>
+        <testsuite name="Class Generation Test Suite">
+            <directory>./test/ClassGeneration</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <log type="testdox-text" target="php://stdout"/>
+    </logging>
+</phpunit>
