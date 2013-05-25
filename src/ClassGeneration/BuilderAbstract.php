@@ -300,9 +300,12 @@ abstract class BuilderAbstract
             case Visibility::TYPE_PUBLIC:
                 $this->visibility = $visibility;
                 if ($forceInDocBlock) {
-                    $tag = new Tag(array(
-                        'name' => Tag::TAG_ACCESS,
-                        'type' => $visibility));
+                    $tag = new Tag(
+                        array(
+                            'name' => Tag::TAG_ACCESS,
+                            'type' => $visibility
+                        )
+                    );
                     $this->docBlock->addTag($tag);
                 }
                 break;
@@ -337,13 +340,13 @@ abstract class BuilderAbstract
                 break;
             case 'bool':
             case 'boolean':
-                $value = $value ? 'TRUE' : 'FALSE';
+                $value = $value ? 'true' : 'false';
                 break;
             case 'array':
                 $value = $this->arrayToString($value);
                 break;
-            case 'NULL':
-                $value = 'NULL';
+            case 'null':
+                $value = 'null';
                 break;
         }
         return $value;
@@ -359,15 +362,17 @@ abstract class BuilderAbstract
     protected function arrayToString($array)
     {
         $strings = array();
-        if (is_array($array))
+        if (is_array($array)) {
             foreach ($array as $key => $value) {
-                if (is_int($key))
+                if (is_int($key)) {
                     $strings[] = $this->maskValue($value);
-                else
+                } else {
                     $strings[] = $key . ' => ' . $this->maskValue($value);
+                }
             }
-        else
+        } else {
             $strings[] = $this->maskValue($array);
+        }
 
         return 'array(' . implode(', ', $strings) . ')';
     }

@@ -54,7 +54,7 @@ class MethodCollection extends ArrayCollection
         if (!$method instanceof Method) {
             $method = new Method($method);
         }
-        if ($method->getName() === NULL) {
+        if ($method->getName() === null) {
             $method->setName('method' . ($this->count() + 1));
         }
 

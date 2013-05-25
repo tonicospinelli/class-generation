@@ -167,27 +167,29 @@ class Tag
      */
     public function __construct($options = array())
     {
-        $this->tagHasTypes = new ArrayCollection(array(
-            'access', 'param', 'property', 'method', 'return', 'throws', 'var'
-        ));
-        $this->tagList = new ArrayCollection(array(
-            'abstract', 'access', 'author',
-            'category', 'copyright',
-            'deprecated',
-            'example',
-            'filesource', 'final',
-            'global',
-            'ignore', 'internal',
-            'license', 'link',
-            'method',
-            'name',
-            'package', 'param', 'property',
-            'return',
-            'see', 'since', 'static', 'staticvar', 'subpackage',
-            'todo', 'tutorial',
-            'uses',
-            'var', 'version',
-        ));
+        $this->tagHasTypes = new ArrayCollection(
+            array('access', 'param', 'property', 'method', 'return', 'throws', 'var')
+        );
+        $this->tagList = new ArrayCollection(
+            array(
+                'abstract', 'access', 'author',
+                'category', 'copyright',
+                'deprecated',
+                'example',
+                'filesource', 'final',
+                'global',
+                'ignore', 'internal',
+                'license', 'link',
+                'method',
+                'name',
+                'package', 'param', 'property',
+                'return',
+                'see', 'since', 'static', 'staticvar', 'subpackage',
+                'todo', 'tutorial',
+                'uses',
+                'var', 'version',
+            )
+        );
         $this->setOptions($options);
     }
 
@@ -202,8 +204,9 @@ class Tag
     {
         foreach ($options as $prop => $option) {
             $method = 'set' . ucfirst($prop);
-            if (method_exists($this, $method))
+            if (method_exists($this, $method)) {
                 $this->$method($option);
+            }
         }
 
         return $this;
@@ -395,15 +398,17 @@ class Tag
                     $strings[] = '@' . $value;
                     break;
                 case 'variable':
-                    if (!is_null($value) AND !empty($value))
+                    if (!is_null($value) AND !empty($value)) {
                         $strings[] = '$' . $value;
+                    }
                     break;
                 case 'type':
                     $name = $this->getName();
-                    if ($name === 'return' AND ($value !== false AND !is_null($value) AND !empty($value)))
+                    if ($name === 'return' AND ($value !== false AND !is_null($value) AND !empty($value))) {
                         $strings[] = $value;
-                    elseif ($this->hasType($name))
+                    } elseif ($this->hasType($name)) {
                         $strings[] = (is_null($value) OR empty($value)) ? 'type' : $value;
+                    }
                     break;
                 default:
                     $strings[] = $value;

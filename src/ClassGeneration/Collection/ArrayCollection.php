@@ -124,7 +124,7 @@ class ArrayCollection implements ICollection
      *
      * @param mixed $key
      *
-     * @return mixed The removed element or NULL, if no element exists for the given key.
+     * @return mixed The removed element or null, if no element exists for the given key.
      */
     public function remove($key)
     {
@@ -186,8 +186,9 @@ class ArrayCollection implements ICollection
      */
     public function offsetSet($offset, $value)
     {
-        if (!isset($offset))
+        if (!isset($offset)) {
             return $this->add($value);
+        }
 
         return $this->set($offset, $value);
     }
@@ -228,8 +229,9 @@ class ArrayCollection implements ICollection
     public function contains($element)
     {
         foreach ($this->elements as $collectionElement) {
-            if ($element === $collectionElement)
+            if ($element === $collectionElement) {
                 return true;
+            }
         }
 
         return false;
@@ -247,7 +249,7 @@ class ArrayCollection implements ICollection
     {
         if (!is_null($findKey) AND is_null($findElement)) {
             return $this->containsKey($findKey);
-        } else if (is_null($findKey) AND !is_null($findElement)) {
+        } elseif (is_null($findKey) AND !is_null($findElement)) {
             return $this->contains($findElement);
         } else {
             return $this->containsKey($findKey) AND $this->contains($findElement);
@@ -274,7 +276,7 @@ class ArrayCollection implements ICollection
      *
      * @param mixed $key The key.
      *
-     * @return mixed The element or NULL, if no element exists for the given key.
+     * @return mixed The element or null, if no element exists for the given key.
      */
     public function get($key)
     {

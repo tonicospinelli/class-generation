@@ -84,7 +84,13 @@ class Method extends BuilderAbstract
         $description = ($this->getReturns() instanceof Tag ? $this->getReturns()->getDescription() : '');
 
         if (is_null($this->getCode())) {
-            $this->setCode(str_replace($this->getName(), $this->getOwnerClass()->getFullName() . '::' . $this->getName(), $this->getCode()));
+            $this->setCode(
+                str_replace(
+                    $this->getName(),
+                    $this->getOwnerClass()->getFullName() . '::' . $this->getName(),
+                    $this->getCode()
+                )
+            );
         }
         if (preg_match('/return \$this;.*$/', $this->getCode())) {
             $this->setReturns($this->getOwnerClass()->getFullName(), $description);
@@ -170,13 +176,15 @@ class Method extends BuilderAbstract
     {
         $this->arguments->add($argument);
         $this->docBlock->addTag(
-            new Tag(array(
-                'name'        => Tag::TAG_PARAM,
-                'type'        => $argument->getType(),
-                'variable'    => $argument->getName(),
-                'description' => $argument->getDescription(),
-                'referenced'  => $this->arguments->offsetGet($argument->getName())
-            ))
+            new Tag(
+                array(
+                    'name'        => Tag::TAG_PARAM,
+                    'type'        => $argument->getType(),
+                    'variable'    => $argument->getName(),
+                    'description' => $argument->getDescription(),
+                    'referenced'  => $this->arguments->offsetGet($argument->getName())
+                )
+            )
         );
 
         return $this;
@@ -245,10 +253,13 @@ class Method extends BuilderAbstract
      */
     public function setReturns($type, $description = null)
     {
-        $tag = new Tag(array(
-            'name'        => Tag::TAG_RETURN,
-            'type'        => $type,
-            'description' => $description));
+        $tag = new Tag(
+            array(
+                'name'        => Tag::TAG_RETURN,
+                'type'        => $type,
+                'description' => $description
+            )
+        );
 
         $this->docBlock->addTag($tag);
 
@@ -287,7 +298,7 @@ class Method extends BuilderAbstract
         if (preg_match('/return /', $code) AND $this->getReturns() instanceof Tag
             AND $this->getReturns()->getType() === 'type'
         ) {
-            $this->setReturns(NULL);
+            $this->setReturns(null);
         }
 
         $this->code = $code;

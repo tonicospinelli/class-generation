@@ -50,11 +50,13 @@ class ConstantCollection extends ArrayCollection
      */
     public function add($constant)
     {
-        if (!$constant instanceof Constant)
+        if (!$constant instanceof Constant) {
             $constant = new Constant($constant);
+        }
 
-        if ($constant->getName() === NULL)
+        if ($constant->getName() === null) {
             $constant->setName('constant' . ($this->count() + 1));
+        }
 
         return parent::add($constant);
     }

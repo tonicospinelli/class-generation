@@ -169,10 +169,14 @@ class Builder extends BuilderAbstract
     {
         $replaceTo = strpos($name, '_') !== false ? '_' : '';
         $this->name = str_replace(' ', $replaceTo, ucwords(strtr($name, '_-', '  ')));
-        $this->addCommentTag(new Tag(array(
-            'name'        => Tag::TAG_NAME,
-            'description' => $this->name
-        )));
+        $this->addCommentTag(
+            new Tag(
+                array(
+                    'name'        => Tag::TAG_NAME,
+                    'description' => $this->name
+                )
+            )
+        );
 
         return $this;
     }
@@ -309,28 +313,38 @@ class Builder extends BuilderAbstract
         $prop->setOwnerClass($this);
         $this->properties->add($prop);
         if ($this->forcePropertyInDocBlock) {
-            $this->addCommentTag(new Tag(array(
-                'name'        => Tag::TAG_PROPERTY,
-                'type'        => $prop->getType(),
-                'variable'    => $prop->getName(),
-                'description' => $prop->getDescription(),
-                'referenced'  => $this->properties->last()
-            )));
+            $this->addCommentTag(
+                new Tag(
+                    array(
+                        'name'        => Tag::TAG_PROPERTY,
+                        'type'        => $prop->getType(),
+                        'variable'    => $prop->getName(),
+                        'description' => $prop->getDescription(),
+                        'referenced'  => $this->properties->last()
+                    )
+                )
+            );
         }
         if ($generateMethods) {
             $this->addMethod(
-                new Method(array(
-                    'name' => 'get_' . $prop->getName(),
-                    'code' => 'return $this->' . $prop->getName() . ';'
-                ))
+                new Method(
+                    array(
+                        'name' => 'get_' . $prop->getName(),
+                        'code' => 'return $this->' . $prop->getName() . ';'
+                    )
+                )
             );
             $argument = new Argument(array('name' => $prop->getName(), 'type' => $prop->getType()));
+            $code = '$this->' . $prop->getName() . ' = ' . $argument->getName(true) . ';'
+                . PHP_EOL . 'return $this;';
             $this->addMethod(
-                new Method(array(
-                    'name'   => 'set_' . $prop->getName(),
-                    'params' => array($argument),
-                    'code'   => '$this->' . $prop->getName() . ' = ' . $argument->getName(true) . ';' . PHP_EOL . 'return $this;'
-                ))
+                new Method(
+                    array(
+                        'name'   => 'set_' . $prop->getName(),
+                        'params' => array($argument),
+                        'code'   => $code
+                    )
+                )
             );
         }
 
@@ -374,15 +388,19 @@ class Builder extends BuilderAbstract
         $this->methods->add($method);
         if ($this->forceMethodInDocBlock) {
             $type = ($method->getReturns() instanceof Tag ?
-                $method->getReturns()->getType() : NULL);
+                $method->getReturns()->getType() : null);
 
-            $this->addCommentTag(new Tag(array(
-                'name'        => Tag::TAG_METHOD,
-                'type'        => $type,
-                'variable'    => $method->getName(),
-                'description' => $method->getDescription(),
-                'referenced'  => $this->methods->last()
-            )));
+            $this->addCommentTag(
+                new Tag(
+                    array(
+                        'name'        => Tag::TAG_METHOD,
+                        'type'        => $type,
+                        'variable'    => $method->getName(),
+                        'description' => $method->getDescription(),
+                        'referenced'  => $this->methods->last()
+                    )
+                )
+            );
         }
 
         return $this;
@@ -672,7 +690,8 @@ class Builder extends BuilderAbstract
         }
 
         $directoryPath = realpath($directoryPath);
-        $directoryPath .= DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()->getPath());
+        $directoryPath .= DIRECTORY_SEPARATOR
+            . str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()->getPath());
         $path = explode(DIRECTORY_SEPARATOR, $directoryPath);
         $dirPath = '';
         foreach ($path as $pathName) {

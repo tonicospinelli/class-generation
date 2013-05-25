@@ -27,8 +27,6 @@
  */
 namespace ClassGeneration;
 
-Autoloader::register();
-
 /**
  * @category   ClassGeneration
  * @package    ClassGeneration
@@ -46,8 +44,9 @@ class Autoloader
      */
     public static function register()
     {
-        if (function_exists('__autoload'))
+        if (function_exists('__autoload')) {
             spl_autoload_register('__autoload');
+        }
 
         return spl_autoload_register(array('\ClassGeneration\Autoloader', 'load'));
     }
@@ -61,8 +60,7 @@ class Autoloader
      */
     public static function load($className)
     {
-        $classPath = stream_resolve_include_path(
-            str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php');
+        $classPath = stream_resolve_include_path(str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php');
 
         if ($classPath !== false) {
             require_once $classPath;

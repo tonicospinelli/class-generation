@@ -55,7 +55,7 @@ class ArgumentCollection extends ArrayCollection
         if (!$argument instanceof Argument) {
             $argument = new Argument($argument);
         }
-        if ($argument->getName() === NULL) {
+        if ($argument->getName() === null) {
             $argument->setName('param' . ($this->count() + 1));
         }
 

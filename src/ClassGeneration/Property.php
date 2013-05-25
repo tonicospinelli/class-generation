@@ -151,9 +151,12 @@ class Property extends BuilderAbstract
     {
         $this->type = (string)$type;
         $this->docBlock->removeTagsByName('var');
-        $tag = new Tag(array(
-            'name' => Tag::TAG_VAR,
-            'type' => $this->type));
+        $tag = new Tag(
+            array(
+                'name' => Tag::TAG_VAR,
+                'type' => $this->type
+            )
+        );
         $this->docBlock->addTag($tag);
 
         return $this;
@@ -215,16 +218,19 @@ class Property extends BuilderAbstract
     public function __toString()
     {
         $final = '';
-        if ($this->isFinal())
+        if ($this->isFinal()) {
             $final = 'final ';
+        }
 
         $static = '';
-        if ($this->isStatic())
+        if ($this->isStatic()) {
             $static = 'static ';
+        }
 
         $value = '';
-        if ($this->hasValue())
+        if ($this->hasValue()) {
             $value = ' = ' . $this->maskValue($this->getValue());
+        }
 
         $property = $this->docBlock->toString() . $this->getTabulationFormatted()
             . $final

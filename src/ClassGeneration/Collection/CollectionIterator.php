@@ -96,7 +96,9 @@ class CollectionIterator implements \Iterator, \Countable
             $collection = new ArrayCollection($collection);
         }
         if (!$collection instanceof ArrayCollection) {
-            throw new \Exception('The collection is not instance of \ClassGeneration\Collection\ArrayCollection and is not Array');
+            throw new \Exception(
+                'The collection is not instance of \ClassGeneration\Collection\ArrayCollection and is not Array'
+            );
         }
         $this->currentIndex = 0;
         $this->collection = $collection;

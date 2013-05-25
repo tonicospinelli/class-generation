@@ -66,13 +66,15 @@ class Constant extends BuilderAbstract
      */
     public function init()
     {
-        $this->allowedTypes = new ArrayCollection(array(
-            'boolean', 'bool',
-            'double', 'decimal',
-            'int', 'integer',
-            'float',
-            'string'
-        ));
+        $this->allowedTypes = new ArrayCollection(
+            array(
+                'boolean', 'bool',
+                'double', 'decimal',
+                'int', 'integer',
+                'float',
+                'string'
+            )
+        );
     }
 
     /**

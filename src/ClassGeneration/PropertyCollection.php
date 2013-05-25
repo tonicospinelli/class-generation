@@ -54,7 +54,7 @@ class PropertyCollection extends ArrayCollection
         if (!$property instanceof Property) {
             $property = new Property($property);
         }
-        if ($property->getName() === NULL) {
+        if ($property->getName() === null) {
             $property->setName('property' . ($this->count() + 1));
         }
 

@@ -47,3 +47,4 @@ $path = explode(PATH_SEPARATOR, get_include_path());
  * PHP software.
  */
 require __DIR__ . '/src/ClassGeneration/Autoloader.php';
+Autoloader::register();

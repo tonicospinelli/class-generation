@@ -220,10 +220,9 @@ class DocBlock
     {
         $tagList = $this->getTagIterator();
 
-        if ($tagList->count() == 0 AND
-            ($this->getDescription() === null OR $this->getDescription() === '')
-        )
+        if ($tagList->count() == 0 AND ($this->getDescription() === null OR $this->getDescription() === '')) {
             return PHP_EOL;
+        }
 
         $spaces = $this->getTabulationFormatted();
         $block = PHP_EOL
