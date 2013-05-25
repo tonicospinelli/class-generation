@@ -672,7 +672,7 @@ class Builder extends BuilderAbstract
         }
 
         $directoryPath = realpath($directoryPath);
-        $directoryPath .= str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()->getPath());
+        $directoryPath .= DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()->getPath());
         $path = explode(DIRECTORY_SEPARATOR, $directoryPath);
         $dirPath = '';
         foreach ($path as $pathName) {

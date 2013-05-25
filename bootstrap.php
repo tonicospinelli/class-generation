@@ -33,7 +33,7 @@ set_include_path(
         array_unique(
             array_merge(
                 array(
-                    $bootstrapPath . 'library',
+                    $bootstrapPath . 'src',
                     $bootstrapPath . 'tests',
                 ),
                 explode(PATH_SEPARATOR, get_include_path())
@@ -46,4 +46,4 @@ $path = explode(PATH_SEPARATOR, get_include_path());
  * Autoloader that implements the PSR-0 spec for interoperability between
  * PHP software.
  */
-require __DIR__ . '/library/ClassGeneration/Autoloader.php';
+require __DIR__ . '/src/ClassGeneration/Autoloader.php';

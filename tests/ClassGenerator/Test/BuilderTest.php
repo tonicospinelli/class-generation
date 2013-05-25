@@ -241,6 +241,7 @@ class Test extends \ArrayIterator
     {
         $code = new Builder();
         $code->setName('Test')
+            ->setNamespace('ClassGenerator')
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
