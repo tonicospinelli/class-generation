@@ -2,23 +2,18 @@
 
 /**
  * ClassGenerator
- *
  * Copyright (c) 2012 ClassGenerator
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
@@ -254,7 +249,7 @@ class Test extends \ArrayIterator
         }
 
         $code->save($path);
-        $this->assertFileExists($path . '/' . $code->getName() . '.php');
+        $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
     }
 
     public function testEvaluate()
@@ -328,7 +323,8 @@ class Test extends \ArrayIterator
         $this->assertEquals('1', $code->maskValue(1));
         $this->assertEquals('1.2', $code->maskValue(1.2));
         $this->assertEquals("'test'", $code->maskValue('test'));
-        $this->assertEquals('TRUE', $code->maskValue(true));
+        $this->assertEquals('true', $code->maskValue(true));
+        $this->assertEquals('false', $code->maskValue(false));
         $this->assertEquals('array()', $code->maskValue(array()));
         $this->assertEquals('NULL', $code->maskValue(NULL));
     }
