@@ -241,13 +241,15 @@ class Test extends \ArrayIterator
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property());
-        $path = './data';
-        $i = 0;
-        while ($i < 3 AND !realpath($path)) {
-            $path = '../' . $path;
-            $i++;
+        $path = './tests/data';
+        if (!is_dir('./tests/data')) {
+            $path = './data';
+            $i = 0;
+            while ($i < 3 AND !realpath($path)) {
+                $path = '../' . $path;
+                $i++;
+            }
         }
-
         $code->save($path);
         $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
     }

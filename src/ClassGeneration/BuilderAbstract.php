@@ -345,8 +345,9 @@ abstract class BuilderAbstract
             case 'array':
                 $value = $this->arrayToString($value);
                 break;
+            case 'NULL':
             case 'null':
-                $value = 'null';
+                $value = 'NULL';
                 break;
         }
         return $value;
