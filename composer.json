@@ -32,8 +32,6 @@
         "phpunit/phpunit": "3.7@stable"
     },
     "autoload": {
-        "psr-0": {
-            "": "src/"
-        }
+        "psr-0": { "ClassGeneration": "src/"}
     }
 }
