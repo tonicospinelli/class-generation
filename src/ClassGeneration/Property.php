@@ -217,11 +217,6 @@ class Property extends BuilderAbstract
      */
     public function __toString()
     {
-        $final = '';
-        if ($this->isFinal()) {
-            $final = 'final ';
-        }
-
         $static = '';
         if ($this->isStatic()) {
             $static = 'static ';
@@ -233,7 +228,6 @@ class Property extends BuilderAbstract
         }
 
         $property = $this->docBlock->toString() . $this->getTabulationFormatted()
-            . $final
             . $this->getVisibility() . ' '
             . $static
             . '$' . $this->getName()

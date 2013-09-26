@@ -29,6 +29,7 @@
 namespace ClassGeneration\Test;
 
 use ClassGeneration\Property;
+use ClassGeneration\DocBlock;
 
 /**
  * Property ClassGenerator
@@ -79,16 +80,31 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-
         $property = new Property();
         $property->setName('test')
             ->setType('int')
-            ->setValue(1);
+            ->setValue(1)
+            ->setIsStatic();
         $property->setDescription('test');
         $expected = '
     /**
      * test
      * @var int
+     */
+    public static $test = 1;
+';
+        $this->assertEquals($expected, $property->toString());
+    }
+    public function testSetDockBlock()
+    {
+        $property = new Property();
+        $property->setName('test')
+            ->setType('int')
+            ->setValue(1);
+        $property->setDocBlock(new DocBlock(array('description' => 'New description')));
+        $expected = '
+    /**
+     * New description
      */
     public $test = 1;
 ';

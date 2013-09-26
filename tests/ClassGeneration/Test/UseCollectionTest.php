@@ -51,6 +51,7 @@ class UseCollectionTest extends \PHPUnit_Framework_TestCase
     public function testParseToString()
     {
         $collection = new UseCollection();
+        $this->assertEmpty($collection->toString());
         $collection->add('ClassGenerator\Code');
         $expected = 'use ClassGenerator\Code;' . PHP_EOL;
         $this->assertEquals($expected, $collection->toString());

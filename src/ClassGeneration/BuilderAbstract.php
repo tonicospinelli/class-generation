@@ -220,7 +220,7 @@ abstract class BuilderAbstract
      *
      * @param boolean $isFinal
      *
-     * @return ClassGeneration
+     * @return BuilderAbstract
      */
     public function setIsFinal($isFinal = true)
     {
@@ -267,10 +267,14 @@ abstract class BuilderAbstract
      * Sets this property like static
      *
      * @param bool $isStatic
+     *
+     * @return BuilderAbstract
      */
     public function setIsStatic($isStatic = true)
     {
         $this->isStatic = (bool)$isStatic;
+
+        return $this;
     }
 
     /**

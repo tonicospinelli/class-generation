@@ -28,6 +28,7 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
+use Guzzle\Service\Command\OperationResponseParser;
 
 /**
  * Argument Collection ClassGeneration
@@ -65,7 +66,7 @@ class ArgumentCollection extends ArrayCollection
     /**
      * Gets Argument Iterator
      *
-     * @return ArgumentIterator
+     * @return ArgumentIterator|Argument[]
      */
     public function getIterator()
     {
@@ -98,7 +99,7 @@ class ArgumentCollection extends ArrayCollection
     /**
      * Removes tags by name.
      *
-     * @param $argumentName
+     * @param string|array|Argument $argumentName
      *
      * @return \ClassGeneration\ArgumentCollection
      */
@@ -107,12 +108,12 @@ class ArgumentCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $argument) {
-            if ((is_array($argumentName) AND in_array($argument->getName(), $argumentName))
-                OR ($argument->getName() === $argumentName)
-            ) {
-                $removedList->add(clone $argument);
-                $this->remove($index);
+            if(($argumentName instanceof Argument AND $argumentName->getName() != $argument->getName())
+                OR (is_string($argumentName) AND $argument->getName() !== $argumentName)){
+                continue;
             }
+            $removedList->add(clone $argument);
+            $this->remove($index);
         }
 
         return $removedList;
