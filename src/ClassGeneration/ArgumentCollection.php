@@ -28,7 +28,6 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
-use Guzzle\Service\Command\OperationResponseParser;
 
 /**
  * Argument Collection ClassGeneration
