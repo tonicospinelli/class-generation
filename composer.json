@@ -29,6 +29,7 @@
         "ext-spl": "*"
     },
     "require-dev": {
+        "satooshi/php-coveralls": "dev-master",
         "phpunit/phpunit": "3.7@stable"
     },
     "autoload": {
