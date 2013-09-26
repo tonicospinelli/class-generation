@@ -2,23 +2,18 @@
 
 /**
  * ClassGenerator
- *
  * Copyright (c) 2012 ClassGenerator
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
@@ -28,11 +23,11 @@
 
 namespace ClassGeneration\Test;
 
+use ClassGeneration\DocBlock;
 use ClassGeneration\Namespacing;
 
 /**
  * Namespace ClassGenerator
- *
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
@@ -74,5 +69,14 @@ class NamespacingTest extends \PHPUnit_Framework_TestCase
 namespace Test;
 ';
         $this->assertEquals($expected, $namespace->toString());
+    }
+
+    public function testSetNewDocBlock()
+    {
+        $namespace = new Namespacing();
+        $namespace->setPath('Test');
+        $namespace->setDescription('Test');
+        $namespace->setDocBlock(new DocBlock(array('description' => 'New Description')));
+        $this->assertEquals('New Description', $namespace->getDescription());
     }
 }
