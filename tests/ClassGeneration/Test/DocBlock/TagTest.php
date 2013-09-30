@@ -28,6 +28,7 @@
 namespace ClassGeneration\Test\DocBlock;
 
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\Property;
 
 /**
  * Tag DocBlock ClassGenerator
@@ -44,81 +45,53 @@ class TagTest extends \PHPUnit_Framework_TestCase
     public function testCreatingAnInstanceOfTagDocblock()
     {
         $tag = new Tag();
+        $this->assertInstanceOf('\ClassGeneration\Element\ElementAbstract', $tag);
+        $this->assertInstanceOf('\ClassGeneration\Element\ElementInterface', $tag);
         $this->assertInstanceOf('\ClassGeneration\DocBlock\Tag', $tag);
     }
 
     public function testSetOptions()
     {
         $tag = new Tag();
-        $tag->setOptions(array('name' => Tag::TAG_ABSTRACT));
+        $tag->setOptions(
+            array(
+                'name' => Tag::TAG_METHOD,
+                'name' => Tag::TAG_METHOD,
+                'description' => 'Test Description'
+            )
+        );
         $this->assertEquals('abstract', $tag->getName());
     }
 
-    public function testGetName()
-    {
-        $tag = new Tag(array('name' => 'param'));
-        $this->assertEquals('param', $tag->getName());
-    }
-
-    public function testSetName()
+    public function testSetAndGetName()
     {
         $tag = new Tag();
         $tag->setName('param');
         $this->assertEquals('param', $tag->getName());
     }
 
-    public function testGetType()
+    public function testSetAndGetType()
     {
         $tag = new Tag(array('type' => 'int'));
         $this->assertEquals('int', $tag->getType());
     }
 
-    public function testSetType()
-    {
-        $tag = new Tag();
-        $tag->setType('int');
-        $this->assertEquals('int', $tag->getType());
-    }
-
-    public function testGetVariable()
+    public function testSetAndGetVariable()
     {
         $tag = new Tag(array('variable' => 'test'));
         $this->assertEquals('test', $tag->getVariable());
     }
 
-    public function testSetVariable()
-    {
-        $tag = new Tag();
-        $tag->setVariable('test');
-        $this->assertEquals('test', $tag->getVariable());
-    }
-
-    public function testGetDescription()
+    public function testSetAndGetDescription()
     {
         $tag = new Tag(array('description' => 'test description'));
         $this->assertEquals('test description', $tag->getDescription());
     }
 
-    public function testSetDescription()
+    public function testSetAndGetReferenced()
     {
-        $tag = new Tag();
-        $tag->setDescription('test description');
-        $this->assertEquals('test description', $tag->getDescription());
-    }
-
-    public function testGetReferenced()
-    {
-        $tag = new Tag(array('referenced' => 'test referenced'));
-        $this->assertEquals('test referenced', $tag->getReferenced());
-    }
-
-    public function testSetReferenced()
-    {
-        $tag = new Tag(array('name' => 'see'));
-        $ref = new Tag(array('name' => 'param'));
-        $tag->setReferenced($ref);
-        $this->assertInstanceOf('\ClassGeneration\DocBlock\Tag', $tag->getReferenced());
-        $this->assertEquals('param', $tag->getReferenced()->getName());
+        $tag = new Tag(array('referenced' => new Property()));
+        $this->assertInstanceOf('\ClassGeneration\Property', $tag->getReferenced());
     }
 
     public function testParseTagToString()

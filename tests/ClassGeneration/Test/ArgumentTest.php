@@ -46,77 +46,41 @@ class ArgumentTest extends \PHPUnit_Framework_TestCase
     {
         $argument = new Argument();
         $this->assertInstanceOf('\ClassGeneration\Argument', $argument);
+        $this->assertInstanceOf('\ClassGeneration\ArgumentInterface', $argument);
     }
 
-    public function testGetName()
+    public function testSetAndGetNameFormatted()
     {
         $argument = new Argument(array('name' => 'arg'));
         $this->assertEquals('arg', $argument->getName());
-        $this->assertEquals('$arg', $argument->getName(true));
+        $this->assertEquals('$arg', $argument->getNameFormatted());
     }
 
-    public function testSetName()
+    public function testSetAndGetValue()
     {
-        $argument = new Argument(array('name' => 'arg'));
-        $argument->setName('arg2');
-        $this->assertEquals('arg2', $argument->getName());
-        $this->assertEquals('$arg2', $argument->getName(true));
+        $argument = new Argument();
+        $argument->setValue(1);
+        $this->assertEquals(1, $argument->getValue());
     }
 
-    public function testGetValue()
-    {
-        $argument = new Argument(array('value' => 'null'));
-        $this->assertEquals('null', $argument->getValue());
-    }
-
-    public function testSetValue()
-    {
-        $argument = new Argument(array('value' => 'null'));
-        $argument->setValue('0');
-        $this->assertEquals('0', $argument->getValue());
-    }
-
-    public function testIsOptional()
+    public function testSetAndIsOptional()
     {
         $argument = new Argument();
         $this->assertFalse($argument->isOptional());
-    }
-
-    public function testSetIsOptional()
-    {
-        $argument = new Argument();
         $argument->setIsOptional();
         $this->assertTrue($argument->isOptional());
     }
 
-    public function testGetType()
+    public function testSetAndGetAndHasType()
     {
         $argument = new Argument(array('type' => 'int'));
         $this->assertEquals('int', $argument->getType());
-    }
-
-    public function testHasType()
-    {
-        $argument = new Argument(array('type' => '\ClassGeneration'));
-        $this->assertTrue($argument->hasType());
-        $argument = new Argument(array('type' => 'int'));
         $this->assertFalse($argument->hasType());
+        $argument->setType('\ClassGeneration');
+        $this->assertTrue($argument->hasType());
     }
 
-    public function testSetType()
-    {
-        $argument = new Argument();
-        $argument->setType('int');
-        $this->assertEquals('int', $argument->getType());
-    }
-
-    public function testGetDescription()
-    {
-        $argument = new Argument(array('description' => 'test'));
-        $this->assertEquals('test', $argument->getDescription());
-    }
-
-    public function testSetDescription()
+    public function testSetAndGetDescription()
     {
         $argument = new Argument();
         $argument->setDescription('test');
@@ -156,6 +120,6 @@ class ArgumentTest extends \PHPUnit_Framework_TestCase
         $argument->setType('\ClassGeneration')
             ->setIsOptional()
             ->setName('arg');
-        $this->assertEquals('\ClassGeneration $arg = NULL', $argument->toString());
+        $this->assertEquals('\ClassGeneration $arg = null', $argument->toString());
     }
 }

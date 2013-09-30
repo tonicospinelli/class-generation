@@ -22,38 +22,52 @@
  */
 namespace ClassGeneration;
 
+use ClassGeneration\DocBlock\TagCollectionInterface;
+
 /**
+ * DocBlock Interface
  * @category   ClassGeneration
- * @package    ClassGeneration\Visibility
- * @copyright  Copyright (c) 2012
- * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL v.3
- * @author     Antonio Spinelli <tonicospinelli85@gmail.com>
+ * @package    ClassGeneration
+ * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
-class Visibility
+interface DocBlockInterface
 {
 
-    const TYPE_PUBLIC = 'public';
-
-    const TYPE_PRIVATE = 'private';
-
-    const TYPE_PROTECTED = 'protected';
+    /**
+     * Get list of tags.
+     * @return TagCollectionInterface
+     */
+    public function getTagCollection();
 
     /**
-     * Validate visiblity.
+     * Replace list of tags.
      *
-     * @param $visibility
+     * @param TagCollectionInterface $tags ClassGeneration\DocBlock\Tag's array.
      *
-     * @return bool
+     * @return DocBlock
      */
-    public static function isValid($visibility)
-    {
-        switch ($visibility) {
-            case Visibility::TYPE_PRIVATE:
-            case Visibility::TYPE_PROTECTED:
-            case Visibility::TYPE_PUBLIC:
-                return true;
-                break;
-        }
-        return false;
-    }
+    public function setTagCollection(TagCollectionInterface $tags);
+
+    /**
+     * Gets the description.
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * Sets the description
+     *
+     * @param string $description
+     *
+     * @return DocBlock
+     */
+    public function setDescription($description);
+
+    /**
+     * Convert the object to string.
+     * @return string
+     */
+    public function toString();
 }

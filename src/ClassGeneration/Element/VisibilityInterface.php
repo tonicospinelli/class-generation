@@ -20,40 +20,33 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-namespace ClassGeneration;
+
+namespace ClassGeneration\Element;
 
 /**
+ * Interface for Class Elements ClassGeneration
  * @category   ClassGeneration
- * @package    ClassGeneration\Visibility
- * @copyright  Copyright (c) 2012
- * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL v.3
- * @author     Antonio Spinelli <tonicospinelli85@gmail.com>
+ * @package    ClassGeneration
+ * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
-class Visibility
+interface VisibilityInterface
 {
 
-    const TYPE_PUBLIC = 'public';
-
-    const TYPE_PRIVATE = 'private';
-
-    const TYPE_PROTECTED = 'protected';
+    /**
+     * Gets the element visibility.
+     * @return string
+     */
+    public function getVisibility();
 
     /**
-     * Validate visiblity.
+     * Sets the element visibility.
      *
-     * @param $visibility
+     * @param string $visibility Use the constants in the Visibility.
      *
-     * @return bool
+     * @throws \Exception If the visibility is not found.
+     * @return mixed
      */
-    public static function isValid($visibility)
-    {
-        switch ($visibility) {
-            case Visibility::TYPE_PRIVATE:
-            case Visibility::TYPE_PROTECTED:
-            case Visibility::TYPE_PUBLIC:
-                return true;
-                break;
-        }
-        return false;
-    }
+    public function setVisibility($visibility);
 }

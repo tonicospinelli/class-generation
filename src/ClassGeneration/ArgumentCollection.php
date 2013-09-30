@@ -46,15 +46,12 @@ class ArgumentCollection extends ArrayCollection
      * The index is a argument name, then will replace
      * if exist a index with the same name.
      *
-     * @param Argument|array $argument
+     * @param ArgumentInterface $argument
      *
      * @return boolean
      */
-    public function add($argument)
+    public function add(ArgumentInterface $argument)
     {
-        if (!$argument instanceof Argument) {
-            $argument = new Argument($argument);
-        }
         if ($argument->getName() === null) {
             $argument->setName('param' . ($this->count() + 1));
         }

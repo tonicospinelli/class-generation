@@ -20,40 +20,47 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
+
 namespace ClassGeneration;
 
 /**
+ * Interface for Class Elements ClassGeneration
  * @category   ClassGeneration
- * @package    ClassGeneration\Visibility
- * @copyright  Copyright (c) 2012
- * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL v.3
- * @author     Antonio Spinelli <tonicospinelli85@gmail.com>
+ * @package    ClassGeneration
+ * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
-class Visibility
+interface ClassInterface extends ElementInterface
 {
 
-    const TYPE_PUBLIC = 'public';
-
-    const TYPE_PRIVATE = 'private';
-
-    const TYPE_PROTECTED = 'protected';
+    /**
+     * Is a final element?
+     * @return boolean
+     */
+    public function isFinal();
 
     /**
-     * Validate visiblity.
+     * Sets this class is final.
      *
-     * @param $visibility
+     * @param boolean $isFinal
      *
-     * @return bool
+     * @return ElementInterface
      */
-    public static function isValid($visibility)
-    {
-        switch ($visibility) {
-            case Visibility::TYPE_PRIVATE:
-            case Visibility::TYPE_PROTECTED:
-            case Visibility::TYPE_PUBLIC:
-                return true;
-                break;
-        }
-        return false;
-    }
+    public function setIsFinal($isFinal = true);
+
+    /**
+     * Is a abstract element?
+     * @return boolean
+     */
+    public function isAbstract();
+
+    /**
+     * Sets this class is abstract.
+     *
+     * @param boolean $isAbstract
+     *
+     * @return ElementInterface
+     */
+    public function setIsAbstract($isAbstract = true);
 }

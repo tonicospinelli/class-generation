@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -27,49 +22,33 @@
  */
 namespace ClassGeneration;
 
-use ClassGeneration\Collection\ArrayCollection;
-use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlock\TagCollection;
-use ClassGeneration\DocBlock\TagIterator;
+use ClassGeneration\DocBlock\TagCollectionInterface;
+use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Element\ElementAbstract;
 
 /**
  * DocBlock ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class DocBlock
+class DocBlock extends ElementAbstract implements DocBlockInterface
 {
 
     /**
-     * Tabulation Identity
-     *
-     * @var int
-     */
-    protected $tabulation = 4;
-
-    /**
      * DockBlock description.
-     *
      * @var string
      */
     protected $description;
 
     /**
      * List of allowed tags.
-     *
-     * @var TagCollection
+     * @var TagCollectionInterface
      */
     protected $tagCollection;
-
-    public function __construct($options = array())
-    {
-        $this->init();
-        $this->setOptions($options);
-    }
 
     /**
      * Initialize.
@@ -80,28 +59,31 @@ class DocBlock
     }
 
     /**
-     * Sets the properties from array.
+     * Gets the description.
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the description
      *
-     * @param array $options
+     * @param string $description
      *
      * @return DocBlock
      */
-    public function setOptions(array $options)
+    public function setDescription($description)
     {
-        foreach ($options as $prop => $option) {
-            $method = 'set' . ucfirst($prop);
-            if (method_exists($this, $method)) {
-                $this->$method($option);
-            }
-        }
+        $this->description = $description;
 
         return $this;
     }
 
     /**
      * Get list of tags.
-     *
-     * @return TagCollection
+     * @return TagCollectionInterface
      */
     public function getTagCollection()
     {
@@ -111,19 +93,13 @@ class DocBlock
     /**
      * Replace list of tags.
      *
-     * @param TagCollection|array $tags ClassGeneration\DocBlock\Tag's array.
+     * @param TagCollectionInterface $tagCollection
      *
      * @return DocBlock
      */
-    public function setTagCollection($tags)
+    public function setTagCollection(TagCollectionInterface $tagCollection)
     {
-        if (!$tags instanceof TagCollection) {
-            $tags = new TagCollection($tags);
-        }
-
-        foreach ($tags as $tag) {
-            $this->addTag($tag);
-        }
+        $this->tagCollection = $tagCollection;
 
         return $this;
     }
@@ -131,13 +107,13 @@ class DocBlock
     /**
      * Add a docblock tag.
      *
-     * @param Tag $tag
+     * @param TagInterface $tag
      *
      * @return DocBlock
      */
-    public function addTag(Tag $tag)
+    public function addTag(TagInterface $tag)
     {
-        $this->tagCollection->add($tag);
+        $this->getTagCollection()->add($tag);
 
         return $this;
     }
@@ -183,7 +159,7 @@ class DocBlock
      */
     public function getTagsByName($nameTag)
     {
-        $foundList = new ArrayCollection();
+        $foundList = new TagCollection();
         $list = $this->getTagIterator();
 
         $tag = new Tag(array('name' => $nameTag));
@@ -192,9 +168,9 @@ class DocBlock
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
             if (is_array($nameTag) AND in_array($name, $nameTag)) {
-                $foundList->add($this->tagCollection->get($index));
+                $foundList->add($this->getTagCollection()->get($index));
             } elseif ($name === $nameTag) {
-                $foundList->add($this->tagCollection->get($index));
+                $foundList->add($this->getTagCollection()->get($index));
             }
         }
 
@@ -203,7 +179,6 @@ class DocBlock
 
     /**
      * Parse the DockBlock to string.
-     *
      * @return string
      */
     public function toString()
@@ -213,12 +188,11 @@ class DocBlock
 
     /**
      * Parse the DockBlock to string.
-     *
      * @return string
      */
     public function __toString()
     {
-        $tagList = $this->getTagIterator();
+        $tagList = $this->getTagCollection()->getIterator();
 
         if ($tagList->count() == 0 AND ($this->getDescription() === null OR $this->getDescription() === '')) {
             return PHP_EOL;
@@ -236,80 +210,12 @@ class DocBlock
             $tagList->getCollection()->sortAsc();
 
             foreach ($tagList as $tag) {
-                if ($tag instanceof Tag) {
+                if ($tag instanceof TagInterface) {
                     $block .= $spaces . ' * ' . str_replace('<br>', '<br>' . $spaces . ' * ', $tag->toString());
                 }
             }
         }
 
         return $block . $spaces . ' */' . PHP_EOL;
-    }
-
-    /**
-     * Gets the Tag Iterator.
-     *
-     * @return TagIterator
-     */
-    public function getTagIterator()
-    {
-        return $this->tagCollection->getIterator();
-    }
-
-    /**
-     * Gets the description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Sets the description
-     *
-     * @param string $description
-     *
-     * @return DocBlock
-     */
-    public function setDescription($description)
-    {
-        $this->description = nl2br($description);
-
-        return $this;
-    }
-
-    /**
-     * Gets tabulations formatted by spaces.
-     *
-     * @return string
-     */
-    public function getTabulationFormatted()
-    {
-        return str_repeat(' ', $this->getTabulation());
-    }
-
-    /**
-     * Gets tabulation size.
-     *
-     * @return int
-     */
-    public function getTabulation()
-    {
-        return $this->tabulation;
-    }
-
-    /**
-     * Sets tabulation length.
-     *
-     * @param int $tabulation
-     *
-     * @return DocBlock
-     */
-    public function setTabulation($tabulation)
-    {
-        $this->tabulation = (int)$tabulation;
-
-        return $this;
     }
 }

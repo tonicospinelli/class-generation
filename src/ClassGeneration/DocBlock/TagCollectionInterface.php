@@ -20,40 +20,52 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-namespace ClassGeneration;
+
+namespace ClassGeneration\DocBlock;
+
+use ClassGeneration\Collection\CollectionInterface;
 
 /**
+ * Tag Collection ClassGeneration
  * @category   ClassGeneration
- * @package    ClassGeneration\Visibility
- * @copyright  Copyright (c) 2012
- * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL v.3
- * @author     Antonio Spinelli <tonicospinelli85@gmail.com>
+ * @package    ClassGeneration
+ * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
-class Visibility
+interface TagCollectionInterface extends CollectionInterface
 {
 
-    const TYPE_PUBLIC = 'public';
-
-    const TYPE_PRIVATE = 'private';
-
-    const TYPE_PROTECTED = 'protected';
-
     /**
-     * Validate visiblity.
+     * Check the tag name is unique on collection.
      *
-     * @param $visibility
+     * @param string $tagName
      *
      * @return bool
      */
-    public static function isValid($visibility)
-    {
-        switch ($visibility) {
-            case Visibility::TYPE_PRIVATE:
-            case Visibility::TYPE_PROTECTED:
-            case Visibility::TYPE_PUBLIC:
-                return true;
-                break;
-        }
-        return false;
-    }
+    public function isUniqueTag($tagName);
+
+    /**
+     * Removes tag by reference.
+     *
+     * @param int|string|array $reference
+     *
+     * @return TagCollectionInterface
+     */
+    public function removeByReferece($reference);
+
+    /**
+     * Removes tags by name.
+     *
+     * @param string|array $tagName
+     *
+     * @return TagCollectionInterface
+     */
+    public function removeByName($tagName);
+    /**
+     * Get Tag Iterator.
+     *
+     * @return TagIterator
+     */
+    public function getIterator();
 }

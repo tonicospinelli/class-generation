@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -32,40 +27,38 @@ use ClassGeneration\Collection\ArrayCollection;
 
 /**
  * Tag Collection ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class TagCollection extends ArrayCollection
+class TagCollection extends ArrayCollection implements TagCollectionInterface
 {
 
     /**
      * Unique tags for Docblock.
-     *
      * @var array
      */
     protected $uniqueTags = array(
         'access', 'category', 'copyright',
         'license', 'name', 'package',
-        'return', 'subpackage', 'version'
+        'return', 'subpackage', 'var', 'version',
     );
 
     /**
      * Adds a new Tag on Dockblock.
      *
-     * @param \ClassGeneration\DocBlock\Tag|array $tag
+     * @param TagInterface $tag
      *
+     * @throws \InvalidArgumentException
      * @return bool
      */
     public function add($tag)
     {
-        if (!$tag instanceof Tag) {
-            $tag = new Tag($tag);
+        if (!$tag instanceof TagInterface) {
+            throw new \InvalidArgumentException('This tag is not allowed');
         }
-
         if ($this->isUniqueTag($tag->getName())) {
             $this->removeByName($tag->getName());
         }
@@ -87,8 +80,7 @@ class TagCollection extends ArrayCollection
 
     /**
      * Get Tag Iterator.
-     *
-     * @return TagIterator
+     * @return TagIterator|TagInterface[]
      */
     public function getIterator()
     {
@@ -119,11 +111,7 @@ class TagCollection extends ArrayCollection
     }
 
     /**
-     * Removes tags by name.
-     *
-     * @param string|array $tagName
-     *
-     * @return \ClassGeneration\DocBlock\TagCollection
+     * {@inheritdoc}
      */
     public function removeByName($tagName)
     {
@@ -144,7 +132,6 @@ class TagCollection extends ArrayCollection
 
     /**
      * Sort the list by elements.
-     *
      * @return void
      */
     public function sortAsc()
@@ -161,7 +148,6 @@ class TagCollection extends ArrayCollection
 
     /**
      * Sort the list by elements.
-     *
      * @return void
      */
     public function sortDesc()

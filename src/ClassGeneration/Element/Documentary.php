@@ -20,40 +20,34 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-namespace ClassGeneration;
+
+namespace ClassGeneration\Element;
+
+use ClassGeneration\DocBlockInterface;
 
 /**
+ * Interface for Document Class Elements
  * @category   ClassGeneration
- * @package    ClassGeneration\Visibility
- * @copyright  Copyright (c) 2012
- * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL v.3
- * @author     Antonio Spinelli <tonicospinelli85@gmail.com>
+ * @package    ClassGeneration
+ * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
-class Visibility
+interface Documentary
 {
 
-    const TYPE_PUBLIC = 'public';
-
-    const TYPE_PRIVATE = 'private';
-
-    const TYPE_PROTECTED = 'protected';
+    /**
+     * Returns the DocBlock Object.
+     * @return DocBlockInterface
+     */
+    public function getDocBlock();
 
     /**
-     * Validate visiblity.
+     * Sets the DocBlock Object.
      *
-     * @param $visibility
+     * @param DocBlockInterface $docBlock
      *
-     * @return bool
+     * @return ElementInterface
      */
-    public static function isValid($visibility)
-    {
-        switch ($visibility) {
-            case Visibility::TYPE_PRIVATE:
-            case Visibility::TYPE_PROTECTED:
-            case Visibility::TYPE_PUBLIC:
-                return true;
-                break;
-        }
-        return false;
-    }
+    public function setDocBlock(DocBlockInterface $docBlock);
 }

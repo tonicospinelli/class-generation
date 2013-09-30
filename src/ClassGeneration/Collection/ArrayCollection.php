@@ -37,7 +37,7 @@ namespace ClassGeneration\Collection;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class ArrayCollection implements ICollection
+class ArrayCollection implements CollectionInterface
 {
 
     /**
@@ -68,10 +68,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Sets the internal iterator to the first element in the collection and
-     * returns this element.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function first()
     {
@@ -79,20 +76,14 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Sets the internal iterator to the last element in the collection and
-     * returns this element.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function last()
     {
         return end($this->elements);
     }
-
     /**
-     * Gets the current key/index at the current internal iterator position.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -100,9 +91,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Moves the internal iterator position to the next element.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -110,9 +99,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Gets the element of the collection at the current internal iterator position.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -120,11 +107,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Removes an element with a specific key/index from the collection.
-     *
-     * @param mixed $key
-     *
-     * @return mixed The removed element or null, if no element exists for the given key.
+     * {@inheritdoc}
      */
     public function remove($key)
     {
@@ -139,11 +122,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Removes the specified element from the collection, if it is found.
-     *
-     * @param mixed $element The element to remove.
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * {@inheritdoc}
      */
     public function removeElement($element)
     {
@@ -159,9 +138,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * ArrayAccess implementation of offsetExists()
-     *
-     * @see containsKey()
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -169,9 +146,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * ArrayAccess implementation of offsetGet()
-     *
-     * @see get()
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -179,10 +154,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * ArrayAccess implementation of offsetGet()
-     *
-     * @see add()
-     * @see set()
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -194,9 +166,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * ArrayAccess implementation of offsetUnset()
-     *
-     * @see remove()
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
@@ -204,11 +174,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Checks whether the collection contains a specific key/index.
-     *
-     * @param mixed $key The key to check for.
-     *
-     * @return boolean TRUE if the given key/index exists, FALSE otherwise.
+     * {@inheritdoc}
      */
     public function containsKey($key)
     {
@@ -216,15 +182,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Checks whether the given element is contained in the collection.
-     * Only element values are compared, not keys. The comparison of two elements
-     * is strict, that means not only the value but also the type must match.
-     * For objects this means reference equality.
-     *
-     * @param mixed $element
-     *
-     * @return boolean TRUE if the given element is contained in the collection,
-     *          FALSE otherwise.
+     * {@inheritdoc}
      */
     public function contains($element)
     {
@@ -238,12 +196,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Tests for the existance of an element that satisfies the given predicate.
-     *
-     * @param mixed $findKey     Array Key.
-     * @param mixed $findElement Array Value.
-     *
-     * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
+     * {@inheritdoc}
      */
     public function exists($findKey = null, $findElement = null)
     {
@@ -257,14 +210,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Searches for a given element and, if found, returns the corresponding key/index
-     * of that element. The comparison of two elements is strict, that means not
-     * only the value but also the type must match.
-     * For objects this means reference equality.
-     *
-     * @param mixed $element The element to search for.
-     *
-     * @return mixed The key/index of the element or FALSE if the element was not found.
+     * {@inheritdoc}
      */
     public function indexOf($element)
     {
@@ -272,11 +218,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Gets the element with the given key/index.
-     *
-     * @param mixed $key The key.
-     *
-     * @return mixed The element or null, if no element exists for the given key.
+     * {@inheritdoc}
      */
     public function get($key)
     {
@@ -288,9 +230,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Gets all keys/indexes of the collection elements.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getKeys()
     {
@@ -298,9 +238,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Gets all elements.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getValues()
     {
@@ -308,11 +246,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Returns the number of elements in the collection.
-     *
-     * Implementation of the Countable interface.
-     *
-     * @return integer The number of elements in the collection.
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -320,13 +254,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Adds/sets an element in the collection at the index / with the specified key.
-     *
-     * When the collection is a Map this is like put(key,value)/add(key,value).
-     * When the collection is a List this is like add(position,value).
-     *
-     * @param mixed $key
-     * @param mixed $value
+     * {@inheritdoc}
      */
     public function set($key, $value)
     {
@@ -334,11 +262,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Adds an element to the collection.
-     *
-     * @param mixed $value
-     *
-     * @return boolean Always TRUE.
+     * {@inheritdoc}
      */
     public function add($value)
     {
@@ -348,11 +272,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Checks whether the collection is empty.
-     *
-     * Note: This is preferrable over count() == 0.
-     *
-     * @return boolean TRUE if the collection is empty, FALSE otherwise.
+     * {@inheritdoc}
      */
     public function isEmpty()
     {
@@ -360,9 +280,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Gets an iterator for iterating over the elements in the collection.
-     *
-     * @return CollectionIterator
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -370,9 +288,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Returns a string representation of this object.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -380,7 +296,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Clears the collection.
+     * {@inheritdoc}
      */
     public function clear()
     {
@@ -388,16 +304,7 @@ class ArrayCollection implements ICollection
     }
 
     /**
-     * Extract a slice of $length elements starting at position $offset from the Collection.
-     *
-     * If $length is null it returns all elements from $offset to the end of the Collection.
-     * Keys have to be preserved by this method. Calling this method will only return the
-     * selected slice and NOT change the elements contained in the collection slice is called on.
-     *
-     * @param int $offset
-     * @param int $length
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function slice($offset, $length = null)
     {

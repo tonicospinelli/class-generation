@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -28,53 +23,65 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\BuilderAbstract;
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\DocBlockInterface;
+use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\ElementAbstract;
+use ClassGeneration\Element\StaticInterface;
+use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Property ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Property extends BuilderAbstract
+class Property extends ElementAbstract implements VisibilityInterface, StaticInterface, Documentary
 {
 
     /**
      * Property's name
-     *
      * @var string
      */
     protected $name;
 
     /**
      * Property's value.
-     *
      * @var mixed
      */
     protected $value;
 
     /**
      * Property's type.
-     *
      * @var string
      */
     protected $type;
+
+    /**
+     * Element Visibility.
+     * @var string
+     */
+    protected $visibility;
+
+    /**
+     * Element is static.
+     * @var bool
+     */
+    protected $isStatic;
 
     /**
      * Initialize.
      */
     public function init()
     {
-        $this->setVisibility(\ClassGeneration\Visibility::TYPE_PUBLIC);
+        $this->setDocBlock(new DocBlock())
+            ->setVisibility(Visibility::TYPE_PUBLIC);
     }
 
     /**
      * Gets the property's name
-     *
      * @return string
      */
     public function getName()
@@ -87,7 +94,7 @@ class Property extends BuilderAbstract
      *
      * @param string $name
      *
-     * @return \ClassGeneration\Property
+     * @return Property
      */
     public function setName($name)
     {
@@ -98,7 +105,6 @@ class Property extends BuilderAbstract
 
     /**
      * Gets the property's value.
-     *
      * @return mixed
      */
     public function getValue()
@@ -108,7 +114,6 @@ class Property extends BuilderAbstract
 
     /**
      * Check the property's value.
-     *
      * @return boolean
      */
     public function hasValue()
@@ -121,10 +126,14 @@ class Property extends BuilderAbstract
      *
      * @param mixed $value
      *
-     * @return \ClassGeneration\Property
+     * @throws \InvalidArgumentException
+     * @return Property
      */
     public function setValue($value)
     {
+        if (is_object($value)) {
+            throw new \InvalidArgumentException('Object is not allowed in value for Property.');
+        }
         $this->value = $value;
 
         return $this;
@@ -132,8 +141,7 @@ class Property extends BuilderAbstract
 
     /**
      * Gets the property's type.
-     *
-     * @return \ClassGeneration\DocBlock\Tag
+     * @return string
      */
     public function getType()
     {
@@ -145,55 +153,40 @@ class Property extends BuilderAbstract
      *
      * @param string $type
      *
-     * @return \ClassGeneration\Property
+     * @return Property
      */
     public function setType($type)
     {
         $this->type = (string)$type;
-        $this->docBlock->removeTagsByName('var');
+        $this->getDocBlock()->getTagCollection()->removeByName('var');
         $tag = new Tag(
             array(
                 'name' => Tag::TAG_VAR,
                 'type' => $this->type
             )
         );
-        $this->docBlock->addTag($tag);
+        $this->docBlock->getTagCollection()->add($tag);
 
         return $this;
     }
 
     /**
-     * Sets the property's description.
-     *
-     * @param string $description
-     *
-     * @return \ClassGeneration\Property
+     * Returns the DocBlock Object.
+     * @return DocBlockInterface
      */
-    public function setDescription($description)
+    public function getDocBlock()
     {
-        $this->docBlock->setDescription($description);
-
-        return $this;
-    }
-
-    /**
-     * Gets the property's description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->docBlock->getDescription();
+        return $this->docBlock;
     }
 
     /**
      * Sets the docBlock.
      *
-     * @param \ClassGeneration\DocBlock $docBlock
+     * @param DocBlockInterface $docBlock
      *
-     * @return \ClassGeneration\Property
+     * @return Property
      */
-    public function setDocBlock(\ClassGeneration\DocBlock $docBlock)
+    public function setDocBlock(DocBlockInterface $docBlock)
     {
         $this->docBlock = $docBlock;
 
@@ -201,8 +194,57 @@ class Property extends BuilderAbstract
     }
 
     /**
-     * Parse the property string;
+     * Gets the element visibility.
+     * @return string
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * Sets the element visibility.
      *
+     * @param string $visibility Use the constants in the Visibility.
+     *
+     * @throws \InvalidArgumentException If the visibility is not found.
+     * @return Property
+     */
+    public function setVisibility($visibility)
+    {
+        if (!Visibility::isValid($visibility)) {
+            throw new \InvalidArgumentException('The ' . $visibility . ' is not allowed.');
+        }
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * Is a static element?
+     * @return bool
+     */
+    public function isStatic()
+    {
+        return $this->isStatic;
+    }
+
+    /**
+     * Sets this property like static
+     *
+     * @param bool $isStatic
+     *
+     * @return Property
+     */
+    public function setIsStatic($isStatic = true)
+    {
+        $this->isStatic = (bool)$isStatic;
+
+        return $this;
+    }
+
+    /**
+     * Parse the property string;
      * @return string
      */
     public function toString()
@@ -212,7 +254,6 @@ class Property extends BuilderAbstract
 
     /**
      * Parse the property string;
-     *
      * @return string
      */
     public function __toString()
@@ -224,16 +265,15 @@ class Property extends BuilderAbstract
 
         $value = '';
         if ($this->hasValue()) {
-            $value = ' = ' . $this->maskValue($this->getValue());
+            $value = ' = ' . var_export($this->getValue(), true);
         }
 
-        $property = $this->docBlock->toString() . $this->getTabulationFormatted()
+        $property = $this->getDocBlock()->toString() . $this->getTabulationFormatted()
             . $this->getVisibility() . ' '
             . $static
             . '$' . $this->getName()
             . $value
             . ';' . PHP_EOL;
-
 
         return $property;
     }
