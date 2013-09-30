@@ -287,9 +287,6 @@ class ArrayCollection implements CollectionInterface
         return new CollectionIterator($this->elements);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         return __CLASS__ . '@' . spl_object_hash($this);

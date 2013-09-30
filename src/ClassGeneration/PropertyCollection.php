@@ -74,7 +74,7 @@ class PropertyCollection extends ArrayCollection
     /**
      * Gets the Property Iterator.
      *
-     * @return PropertyIterator
+     * @return PropertyIterator|Property[]
      */
     public function getIterator()
     {

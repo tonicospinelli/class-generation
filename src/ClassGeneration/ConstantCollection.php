@@ -74,7 +74,7 @@ class ConstantCollection extends ArrayCollection
     /**
      * Gets the Constant Iterator.
      *
-     * @return ConstantIterator
+     * @return ConstantIterator|Constant[]
      */
     public function getIterator()
     {

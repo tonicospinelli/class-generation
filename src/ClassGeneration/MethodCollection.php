@@ -64,7 +64,7 @@ class MethodCollection extends ArrayCollection
     /**
      * Gets the Method Iterator.
      *
-     * @return MethodIterator
+     * @return MethodIterator|Method[]
      */
     public function getIterator()
     {

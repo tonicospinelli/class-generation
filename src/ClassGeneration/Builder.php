@@ -637,9 +637,8 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      * This class to string.
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
-        $type = '';
         $extends = '';
 
         if ($this->isInterface()) {
@@ -675,11 +674,6 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
             . '}';
 
         return $string;
-    }
-
-    public function toString()
-    {
-        return $this->__toString();
     }
 
     /**

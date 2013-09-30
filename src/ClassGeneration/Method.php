@@ -346,15 +346,6 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
      */
     public function toString()
     {
-        return $this->__toString();
-    }
-
-    /**
-     * Parse the property string.
-     * @return string
-     */
-    public function __toString()
-    {
         $defaultTabulation = $this->getTabulation();
         $tabulationFormatted = $this->getTabulationFormatted();
 
@@ -381,7 +372,7 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
             $visibility = $this->getVisibility() . ' ';
         }
 
-        $method = $this->docBlock->toString()
+        $method = $this->getDocBlock()->toString()
             . $tabulationFormatted
             . $final
             . $abstract

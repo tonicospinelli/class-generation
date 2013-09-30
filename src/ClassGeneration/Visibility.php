@@ -43,6 +43,7 @@ class Visibility
      *
      * @param $visibility
      *
+     * @throws \InvalidArgumentException
      * @return bool
      */
     public static function isValid($visibility)
