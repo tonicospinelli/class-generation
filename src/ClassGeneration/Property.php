@@ -72,7 +72,13 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
     protected $isStatic;
 
     /**
-     * Initialize.
+     * Documentation Block
+     * @var DocBlockInterface
+     */
+    protected $docBlock;
+
+    /**
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -165,14 +171,13 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
                 'type' => $this->type
             )
         );
-        $this->docBlock->getTagCollection()->add($tag);
+        $this->getDocBlock()->addTag($tag);
 
         return $this;
     }
 
     /**
-     * Returns the DocBlock Object.
-     * @return DocBlockInterface
+     * {@inheritdoc}
      */
     public function getDocBlock()
     {
@@ -180,10 +185,7 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
     }
 
     /**
-     * Sets the docBlock.
-     *
-     * @param DocBlockInterface $docBlock
-     *
+     * {@inheritdoc}
      * @return Property
      */
     public function setDocBlock(DocBlockInterface $docBlock)
@@ -194,8 +196,7 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
     }
 
     /**
-     * Gets the element visibility.
-     * @return string
+     * {@inheritdoc}
      */
     public function getVisibility()
     {
@@ -203,18 +204,12 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
     }
 
     /**
-     * Sets the element visibility.
-     *
-     * @param string $visibility Use the constants in the Visibility.
-     *
-     * @throws \InvalidArgumentException If the visibility is not found.
+     * {@inheritdoc}
      * @return Property
      */
     public function setVisibility($visibility)
     {
-        if (!Visibility::isValid($visibility)) {
-            throw new \InvalidArgumentException('The ' . $visibility . ' is not allowed.');
-        }
+        Visibility::isValid($visibility);
         $this->visibility = $visibility;
 
         return $this;
@@ -244,19 +239,32 @@ class Property extends ElementAbstract implements VisibilityInterface, StaticInt
     }
 
     /**
-     * Parse the property string;
+     * Gets a description
      * @return string
      */
-    public function toString()
+    public function getDescription()
     {
-        return $this->__toString();
+        return $this->getDocBlock()->getDescription();
     }
 
     /**
-     * Parse the property string;
-     * @return string
+     * Sets a description.
+     *
+     * @param $description
+     *
+     * @return Property
      */
-    public function __toString()
+    public function setDescription($description)
+    {
+        $this->getDocBlock()->setDescription($description);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString()
     {
         $static = '';
         if ($this->isStatic()) {

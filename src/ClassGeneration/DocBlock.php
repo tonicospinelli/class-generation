@@ -51,7 +51,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     protected $tagCollection;
 
     /**
-     * Initialize.
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -59,8 +59,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     }
 
     /**
-     * Gets the description.
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -68,11 +67,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     }
 
     /**
-     * Sets the description
-     *
-     * @param string $description
-     *
-     * @return DocBlock
+     * {@inheritdoc}
      */
     public function setDescription($description)
     {
@@ -82,8 +77,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     }
 
     /**
-     * Get list of tags.
-     * @return TagCollectionInterface
+     * {@inheritdoc}
      */
     public function getTagCollection()
     {
@@ -91,11 +85,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     }
 
     /**
-     * Replace list of tags.
-     *
-     * @param TagCollectionInterface $tagCollection
-     *
-     * @return DocBlock
+     * {@inheritdoc}
      */
     public function setTagCollection(TagCollectionInterface $tagCollection)
     {
@@ -116,14 +106,6 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
         $this->getTagCollection()->add($tag);
 
         return $this;
-    }
-
-    /**
-     * Clear all tag list.
-     */
-    public function clearAllTags()
-    {
-        $this->tagCollection->clear();
     }
 
     /**
@@ -155,15 +137,12 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
      *
      * @param string $nameTag
      *
-     * @return ArrayCollection
+     * @return TagCollectionInterface
      */
     public function getTagsByName($nameTag)
     {
         $foundList = new TagCollection();
-        $list = $this->getTagIterator();
-
-        $tag = new Tag(array('name' => $nameTag));
-        $nameTag = $tag->getName();
+        $list = $this->getTagCollection()->getIterator();
 
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
@@ -178,19 +157,9 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     }
 
     /**
-     * Parse the DockBlock to string.
-     * @return string
+     * @{inheritdoc}
      */
     public function toString()
-    {
-        return $this->__toString();
-    }
-
-    /**
-     * Parse the DockBlock to string.
-     * @return string
-     */
-    public function __toString()
     {
         $tagList = $this->getTagCollection()->getIterator();
 

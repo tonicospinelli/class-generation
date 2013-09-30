@@ -81,14 +81,16 @@ class Argument extends ElementAbstract implements ArgumentInterface
         'resource',
     );
 
+    /**
+     * {@inheritdoc}
+     */
     public function init()
     {
         $this->setIsOptional(false);
     }
 
     /**
-     * Gets the property's name
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -96,11 +98,15 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Sets the property's name.
-     *
-     * @param string $name
-     *
-     * @return \ClassGeneration\Argument
+     * {@inheritdoc}
+     */
+    public function getNameFormatted()
+    {
+        return '$' . $this->getName();
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -110,8 +116,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Gets the value.
-     * @return string
+     * {@inheritdoc}
      */
     public function getValue()
     {
@@ -119,11 +124,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Sets the value.
-     *
-     * @param string $value
-     *
-     * @return \ClassGeneration\Argument
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
@@ -133,8 +134,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Check if this argument is optional.
-     * @return bool
+     * {@inheritdoc}
      */
     public function isOptional()
     {
@@ -142,11 +142,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Sets the argument is optional.
-     *
-     * @param bool $isOptional
-     *
-     * @return \ClassGeneration\Argument
+     * {@inheritdoc}
      */
     public function setIsOptional($isOptional = true)
     {
@@ -156,8 +152,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Gets the argument type.
-     * @return string
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -165,8 +160,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Check if this argument has type and is a primitive type.
-     * @return boolean
+     * {@inheritdoc}
      */
     public function hasType()
     {
@@ -174,11 +168,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Sets a argument type.
-     *
-     * @param string $type
-     *
-     * @return \ClassGeneration\Argument
+     * {@inheritdoc}
      */
     public function setType($type)
     {
@@ -188,8 +178,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Get the argument description.
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -197,11 +186,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Sets the argument description.
-     *
-     * @param string $description
-     *
-     * @return \ClassGeneration\Argument
+     * {@inheritdoc}
      */
     public function setDescription($description)
     {
@@ -211,19 +196,9 @@ class Argument extends ElementAbstract implements ArgumentInterface
     }
 
     /**
-     * Parse the property string;
-     * @return string
+     * {@inheritdoc}
      */
     public function toString()
-    {
-        return $this->__toString();
-    }
-
-    /**
-     * Parse the property string;
-     * @return string
-     */
-    public function __toString()
     {
         $type = '';
         if ($this->hasType()) {
@@ -231,7 +206,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
         }
         $value = '';
         if ($this->isOptional()) {
-            $value = ' = ' . $this->maskValue($this->getValue());
+            $value = ' = ' . var_export($this->getValue(), true);
         }
         $argument = $type
             . $this->getNameFormatted()
@@ -239,14 +214,4 @@ class Argument extends ElementAbstract implements ArgumentInterface
 
         return $argument;
     }
-
-    /**
-     * Gets the Name formatted.
-     * @return string
-     */
-    public function getNameFormatted()
-    {
-        return '$' . $this->getName();
-    }
-
 }

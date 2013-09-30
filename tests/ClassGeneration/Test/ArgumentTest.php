@@ -120,6 +120,6 @@ class ArgumentTest extends \PHPUnit_Framework_TestCase
         $argument->setType('\ClassGeneration')
             ->setIsOptional()
             ->setName('arg');
-        $this->assertEquals('\ClassGeneration $arg = null', $argument->toString());
+        $this->assertEquals('\ClassGeneration $arg = NULL', $argument->toString());
     }
 }

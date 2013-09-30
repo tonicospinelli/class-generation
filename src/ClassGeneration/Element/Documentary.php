@@ -23,6 +23,7 @@
 
 namespace ClassGeneration\Element;
 
+use ClassGeneration\DocBlock;
 use ClassGeneration\DocBlockInterface;
 
 /**
@@ -38,7 +39,7 @@ interface Documentary
 
     /**
      * Returns the DocBlock Object.
-     * @return DocBlockInterface
+     * @return DocBlock
      */
     public function getDocBlock();
 

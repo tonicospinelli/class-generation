@@ -55,8 +55,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $tag = new Tag();
         $tag->setOptions(
             array(
-                'name' => Tag::TAG_METHOD,
-                'name' => Tag::TAG_METHOD,
+                'name' => Tag::TAG_ABSTRACT,
                 'description' => 'Test Description'
             )
         );

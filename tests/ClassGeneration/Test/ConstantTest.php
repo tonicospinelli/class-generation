@@ -49,52 +49,35 @@ class ConstantTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\Constant', $constant);
     }
 
-    public function testGetName()
+    public function testSetAndGetName()
     {
         $constant = new Constant(array('name' => 'testA'));
         $this->assertEquals('testA', $constant->getName());
     }
 
-    public function testSetName()
-    {
-        $constant = new Constant(array('name' => 'testA'));
-        $constant->setName('testB');
-        $this->assertEquals('testB', $constant->getName());
-    }
-
-    public function testGetValue()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetAndGetValue()
     {
         $constant = new Constant(array('value' => 1));
         $this->assertEquals(1, $constant->getValue());
+        $constant->setValue(new \Stdclass());
     }
 
-    public function testSetValue()
-    {
-        $constant = new Constant();
-        $constant->setValue(1);
-        $this->assertEquals(1, $constant->getValue());
-    }
-
-    public function testSetDescription()
+    public function testSetAndGetDescription()
     {
         $constant = new Constant(array('description' => 'test description'));
         $constant->setDescription('test2');
         $this->assertEquals('test2', $constant->getDescription());
     }
 
-    public function testGetDescription()
-    {
-        $constant = new Constant(array('description' => 'test description'));
-        $this->assertEquals('test description', $constant->getDescription());
-    }
-
-    public function testSetDocBlock()
+    public function testSetAndGetDocBlock()
     {
         $constant = new Constant();
-        $doc = new DocBlock();
-        $doc->setDescription('test doc');
+        $doc = new DocBlock(array('description' => 'Test New DocBlock'));
         $constant->setDocBlock($doc);
-        $this->assertEquals('test doc', $constant->getDescription());
+        $this->assertEquals('Test New DocBlock', $constant->getDescription());
     }
 
     public function testParseConstantToString()

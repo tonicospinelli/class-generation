@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -29,6 +24,9 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\Element\Declarable;
+use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\ElementAbstract;
 
 /**
  * @category   ClassGeneration
@@ -37,99 +35,106 @@ use ClassGeneration\DocBlock\Tag;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Builder extends BuilderAbstract
+class Builder extends ElementAbstract implements ClassInterface, Documentary, Declarable
 {
 
     /**
+     * Sets like a trait.
+     * @var boolean
+     */
+    protected $isTrait = false;
+
+    /**
+     * Sets like an interface.
+     * @var boolean
+     */
+    protected $isInterface = false;
+
+    /**
+     * Set like a final.
+     * @var bool
+     */
+    protected $isFinal = false;
+
+    /**
+     * Set like an abstract.
+     * @var bool
+     */
+    protected $isAbstract = false;
+
+    /**
+     * Documentation Block
+     * @var DocBlockInterface
+     */
+    protected $docBlock;
+
+    /**
      * Class name
-     *
      * @var string
      */
     protected $name;
 
     /**
      * Class namespace
-     *
      * @var Namespacing
      */
     protected $namespace;
 
     /**
      * Class Use Collection
-     *
      * @var UseCollection
      */
     protected $useCollection;
 
     /**
      * Class constants
-     *
      * @var ConstantCollection
      */
     protected $constants;
 
     /**
      * Class properties
-     *
      * @var PropertyCollection
      */
     protected $properties;
 
     /**
      * Class methods
-     *
      * @var MethodCollection
      */
     protected $methods;
 
     /**
      * Extends from.
-     *
      * @var string
      */
     protected $extends;
 
     /**
      * Implements the interfaces.
-     *
      * @var InterfaceCollection
      */
     protected $interfaces;
 
     /**
-     * Argument to set this class like trait.
-     *
-     * @var boolean
-     */
-    protected $isTrait;
-
-    /**
-     * Argument to set this class like interface.
-     *
-     * @var boolean
-     */
-    protected $isInterface;
-
-    /**
      * Force on add method on class docblock.
-     *
      * @var boolean
      */
     public $forceMethodInDocBlock = false;
 
     /**
      * Force on add property on class docblock.
-     *
      * @var boolean
      */
     public $forcePropertyInDocBlock = false;
 
     /**
-     * Initialize.
+     * {@inheritdoc}
      */
     public function init()
     {
         $this->setTabulation(0);
+        $this->docBlock = new DocBlock();
         $this->methods = new MethodCollection();
         $this->properties = new PropertyCollection();
         $this->constants = new ConstantCollection();
@@ -139,8 +144,25 @@ class Builder extends BuilderAbstract
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getDocBlock()
+    {
+        return $this->docBlock;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDocBlock(DocBlockInterface $docBlock)
+    {
+        $this->docBlock = $docBlock;
+
+        return $this;
+    }
+
+    /**
      * Gets the classe full name. Include the namespace.
-     *
      * @return string
      */
     public function getFullName()
@@ -150,7 +172,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets the class name.
-     *
      * @return string
      */
     public function getName()
@@ -183,7 +204,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets the namespace.
-     *
      * @return Namespacing
      */
     public function getNamespace()
@@ -210,7 +230,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets Constant Collection.
-     *
      * @return ConstantCollection
      */
     public function getConstants()
@@ -249,7 +268,7 @@ class Builder extends BuilderAbstract
      */
     public function addConstant(Constant $const)
     {
-        $const->setOwnerClass($this);
+        $const->setParent($this);
         $this->constants->add($const);
 
         return $this;
@@ -257,7 +276,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets properties collection.
-     *
      * @return PropertyCollection
      */
     public function getProperties()
@@ -288,7 +306,7 @@ class Builder extends BuilderAbstract
     public function setProperties($properties, $generateMethods = false)
     {
         $this->properties->clear();
-        $this->docBlock->removeTagsByName('property');
+        $this->getDocBlock()->removeTagsByName('property');
 
         if (!$properties instanceof PropertyCollection) {
             $properties = new PropertyCollection($properties);
@@ -310,7 +328,7 @@ class Builder extends BuilderAbstract
      */
     public function addProperty(Property $prop, $generateMethods = false)
     {
-        $prop->setOwnerClass($this);
+        $prop->setParent($this);
         $this->properties->add($prop);
         if ($this->forcePropertyInDocBlock) {
             $this->addCommentTag(
@@ -360,14 +378,13 @@ class Builder extends BuilderAbstract
      */
     public function addCommentTag($tagArguments)
     {
-        $this->docBlock->addTag($tagArguments);
+        $this->getDocBlock()->addTag($tagArguments);
 
         return $this;
     }
 
     /**
      * Gets the Methods Collection.
-     *
      * @return MethodCollection
      */
     public function getMethods()
@@ -384,7 +401,7 @@ class Builder extends BuilderAbstract
      */
     public function addMethod(Method $method)
     {
-        $method->setOwnerClass($this);
+        $method->setParent($this);
         $this->methods->add($method);
         if ($this->forceMethodInDocBlock) {
             $type = ($method->getReturns() instanceof Tag ?
@@ -416,7 +433,7 @@ class Builder extends BuilderAbstract
     public function setMethods($methods)
     {
         $this->methods->clear();
-        $this->docBlock->removeTagsByName('method');
+        $this->getDocBlock()->removeTagsByName('method');
 
         if (!$methods instanceof MethodCollection) {
             $methods = new MethodCollection($methods);
@@ -430,7 +447,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets the class extends.
-     *
      * @return string
      */
     public function getExtends()
@@ -464,7 +480,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets the interfaces collection.
-     *
      * @return InterfaceCollection
      */
     public function getInterfaceCollection()
@@ -517,7 +532,6 @@ class Builder extends BuilderAbstract
 
     /**
      * This class is a trait?
-     *
      * @return boolean
      */
     public function isTrait()
@@ -541,7 +555,6 @@ class Builder extends BuilderAbstract
 
     /**
      * This class is a interface?
-     *
      * @return boolean
      */
     public function isInterface()
@@ -579,7 +592,6 @@ class Builder extends BuilderAbstract
 
     /**
      * Gets the collection class use.
-     *
      * @return UseCollection
      */
     public function getUseCollection()
@@ -623,7 +635,6 @@ class Builder extends BuilderAbstract
 
     /**
      * This class to string.
-     *
      * @return string
      */
     public function __toString()
@@ -714,5 +725,41 @@ class Builder extends BuilderAbstract
     {
         $classString = substr($this->toString(), 7);
         eval($classString);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFinal()
+    {
+        return $this->isFinal;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Builder
+     */
+    public function setIsFinal($isFinal = true)
+    {
+        $this->isFinal = (bool)$isFinal;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAbstract()
+    {
+        return $this->isAbstract;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Builder
+     */
+    public function setIsAbstract($isAbstract = true)
+    {
+        $this->isAbstract = (bool)$isAbstract;
     }
 }

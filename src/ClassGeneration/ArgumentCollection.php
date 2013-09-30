@@ -48,10 +48,14 @@ class ArgumentCollection extends ArrayCollection
      *
      * @param ArgumentInterface $argument
      *
+     * @throws \InvalidArgumentException
      * @return boolean
      */
-    public function add(ArgumentInterface $argument)
+    public function add($argument)
     {
+        if(!$argument instanceof ArgumentInterface){
+            throw new \InvalidArgumentException('This Argument is not a instance of a \ClassGeneration\ArgumentInterface');
+        }
         if ($argument->getName() === null) {
             $argument->setName('param' . ($this->count() + 1));
         }

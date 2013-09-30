@@ -215,14 +215,6 @@ class Tag extends ElementAbstract implements TagInterface
      */
     public function toString()
     {
-        return $this->__toString();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
         $name = $this->getName();
         $variable = $this->getVariable();
         $type = $this->getType();
@@ -231,10 +223,10 @@ class Tag extends ElementAbstract implements TagInterface
             $type = (is_null($type) OR empty($type)) ? 'type' : $type;
         }
         $string =
-            '@' . $name . ' '
-            . $type
+            '@' . $name
+            . ((!is_null($type) AND !empty($type)) ? ' ' . $type : '')
             . ((!is_null($variable) AND !empty($variable)) ? ' $' . $variable : '')
-            . ' ' . $description;
+            . ((!is_null($description) AND !empty($description)) ? ' ' . $description : '');
 
         $string = trim($string);
         if ($this->isInline()) {

@@ -51,7 +51,7 @@ interface Tabbable
      *
      * @param int $tabulation
      *
-     * @return ElementInterface
+     * @return mixed
      */
     public function setTabulation($tabulation);
 }

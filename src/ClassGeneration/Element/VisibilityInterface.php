@@ -45,7 +45,7 @@ interface VisibilityInterface
      *
      * @param string $visibility Use the constants in the Visibility.
      *
-     * @throws \Exception If the visibility is not found.
+     * @throws \InvalidArgumentException If the visibility is not found.
      * @return mixed
      */
     public function setVisibility($visibility);

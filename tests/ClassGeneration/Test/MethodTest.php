@@ -29,7 +29,6 @@ namespace ClassGeneration\Test;
 
 use ClassGeneration\Argument;
 use ClassGeneration\ArgumentCollection;
-use ClassGeneration\Code;
 use ClassGeneration\Builder;
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\Method;
@@ -57,9 +56,9 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     {
         $code = new Builder();
         $method = new Method();
-        $method->setOwnerClass($code);
+        $method->setParent($code);
 
-        $this->assertInstanceOf('\ClassGeneration\Builder', $method->getOwnerClass());
+        $this->assertInstanceOf('\ClassGeneration\Builder', $method->getParent());
     }
 
     public function testSetAndGetName()

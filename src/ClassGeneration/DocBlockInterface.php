@@ -23,6 +23,8 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\TagCollectionInterface;
+use ClassGeneration\Element\ElementAbstract;
+use ClassGeneration\Element\ElementInterface;
 
 /**
  * DocBlock Interface
@@ -32,7 +34,7 @@ use ClassGeneration\DocBlock\TagCollectionInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface DocBlockInterface
+interface DocBlockInterface extends ElementInterface
 {
 
     /**
@@ -65,9 +67,4 @@ interface DocBlockInterface
      */
     public function setDescription($description);
 
-    /**
-     * Convert the object to string.
-     * @return string
-     */
-    public function toString();
 }

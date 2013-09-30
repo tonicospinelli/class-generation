@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -28,72 +23,116 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\Element\Declarable;
+use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\ElementAbstract;
+use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\Element\StaticInterface;
+use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Method ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Method extends BuilderAbstract
+class Method extends ElementAbstract implements VisibilityInterface, Declarable, StaticInterface, Documentary
 {
 
     /**
      * Method's name
-     *
      * @var string
      */
     protected $name;
 
     /**
      * Method's arguments.
-     *
      * @var ArgumentCollection
      */
     protected $arguments;
 
     /**
      * Method's code.
-     *
      * @var string
      */
     protected $code;
 
     /**
-     * Initialize.
+     * @var string
+     */
+    protected $visibility;
+
+    /**
+     * Sets like a final.
+     * @var bool
+     */
+    protected $isFinal;
+
+    /**
+     * Sets like an abstract.
+     * @var bool
+     */
+    protected $isAbstract;
+
+    /**
+     * Sets like a static.
+     * @var bool
+     */
+    protected $isStatic;
+
+    /**
+     * Documentation Block.
+     * @var DocBlockInterface
+     */
+    protected $docBlock;
+
+    /**
+     * {@inheritdoc}
      */
     public function init()
     {
         $this->arguments = new ArgumentCollection();
+        $this->docBlock = new DocBlock();
         $this->setVisibility(Visibility::TYPE_PUBLIC);
+    }
+
+    /**
+     * @return Builder
+     */
+    public function getParent()
+    {
+        return parent::getParent();
     }
 
     /**
      * Set the owner class
      *
-     * @param \ClassGeneration\Builder $ownerClass
+     * @param Element\ElementInterface $parent
      *
+     * @throws \InvalidArgumentException
      * @return Method
      */
-    public function setOwnerClass(&$ownerClass)
+    public function setParent(ElementInterface $parent)
     {
-        parent::setOwnerClass($ownerClass);
+        if(!$parent instanceof ClassInterface){
+            throw new \InvalidArgumentException('Only accept instaciated class from ClassGeneration\ClassInterface');
+        }
+        parent::setParent($parent);
         $description = ($this->getReturns() instanceof Tag ? $this->getReturns()->getDescription() : '');
 
         if (is_null($this->getCode())) {
             $this->setCode(
                 str_replace(
                     $this->getName(),
-                    $this->getOwnerClass()->getFullName() . '::' . $this->getName(),
+                    $this->getParent()->getFullName() . '::' . $this->getName(),
                     $this->getCode()
                 )
             );
         }
         if (preg_match('/return \$this;.*$/', $this->getCode())) {
-            $this->setReturns($this->getOwnerClass()->getFullName(), $description);
+            $this->setReturns($this->getParent()->getFullName(), $description);
         }
 
         return $this;
@@ -101,7 +140,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the method's name
-     *
      * @return string
      */
     public function getName()
@@ -130,7 +168,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the Arguments Colletion.
-     *
      * @return ArgumentCollection
      */
     public function getArguments()
@@ -160,7 +197,7 @@ class Method extends BuilderAbstract
     public function removeArgumentByName($argumentName)
     {
         $params = $this->arguments->removeByName($argumentName);
-        $this->docBlock->removeTagsByReference($params->getIterator()->current());
+        $this->getDocBlock()->removeTagsByReference($params->getIterator()->current());
 
         return $params;
     }
@@ -175,7 +212,7 @@ class Method extends BuilderAbstract
     public function addArgument(Argument $argument)
     {
         $this->arguments->add($argument);
-        $this->docBlock->addTag(
+        $this->getDocBlock()->addTag(
             new Tag(
                 array(
                     'name'        => Tag::TAG_PARAM,
@@ -216,7 +253,7 @@ class Method extends BuilderAbstract
      */
     public function addDocBlockTag(Tag $tag)
     {
-        $this->docBlock->addTag($tag);
+        $this->getDocBlock()->addTag($tag);
     }
 
     /**
@@ -235,7 +272,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the property's description.
-     *
      * @return string
      */
     public function getDescription()
@@ -261,24 +297,22 @@ class Method extends BuilderAbstract
             )
         );
 
-        $this->docBlock->addTag($tag);
+        $this->getDocBlock()->addTag($tag);
 
         return $this;
     }
 
     /**
      * Sets the property's description.
-     *
      * @return Tag
      */
     public function getReturns()
     {
-        return $this->docBlock->getTagsByName('return')->current();
+        return $this->getDocBlock()->getTagsByName('return')->current();
     }
 
     /**
      * Method's code
-     *
      * @return string
      */
     public function getCode()
@@ -308,7 +342,6 @@ class Method extends BuilderAbstract
 
     /**
      * Parse the property string.
-     *
      * @return string
      */
     public function toString()
@@ -318,7 +351,6 @@ class Method extends BuilderAbstract
 
     /**
      * Parse the property string.
-     *
      * @return string
      */
     public function __toString()
@@ -372,5 +404,97 @@ class Method extends BuilderAbstract
             . PHP_EOL;
 
         return $method;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Method
+     */
+    public function setVisibility($visibility)
+    {
+        Visibility::isValid($visibility);
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFinal()
+    {
+        return $this->isFinal;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Method
+     */
+    public function setIsFinal($isFinal = true)
+    {
+        $this->isFinal = (bool)$isFinal;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAbstract()
+    {
+        return $this->isAbstract;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Method
+     */
+    public function setIsAbstract($isAbstract = true)
+    {
+        $this->isAbstract = (bool)$isAbstract;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isStatic()
+    {
+        return $this->isStatic;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Method
+     */
+    public function setIsStatic($isStatic = true)
+    {
+        $this->isStatic = (bool)$isStatic;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDocBlock()
+    {
+        return $this->docBlock;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Method
+     */
+    public function setDocBlock(DocBlockInterface $docBlock)
+    {
+        $this->docBlock = $docBlock;
+
+        return $this;
     }
 }

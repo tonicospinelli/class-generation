@@ -42,6 +42,9 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\ArgumentCollection', $collection);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testAddArgumentFromInstace()
     {
         $argument = new Argument();

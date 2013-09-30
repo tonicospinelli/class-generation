@@ -48,7 +48,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testCreatingInstanceOfBuilder()
     {
         $code = new Builder();
-        $this->assertInstanceOf('\ClassGeneration\Builder', $code);
+        $this->assertInstanceOf('\ClassGeneration\ClassInterface', $code);
     }
 
     public function testSetAndGetName()
@@ -310,24 +310,5 @@ class Test extends \ArrayIterator
         $code = new Builder();
         $code->setIsAbstract();
         $this->assertTrue($code->isAbstract());
-    }
-
-    public function testSetAndIsStatic()
-    {
-        $code = new Builder();
-        $code->setIsStatic();
-        $this->assertTrue($code->isStatic());
-    }
-
-    public function testMaskValue()
-    {
-        $code = new Builder();
-        $this->assertEquals('1', $code->maskValue(1));
-        $this->assertEquals('1.2', $code->maskValue(1.2));
-        $this->assertEquals("'test'", $code->maskValue('test'));
-        $this->assertEquals('true', $code->maskValue(true));
-        $this->assertEquals('false', $code->maskValue(false));
-        $this->assertEquals('array()', $code->maskValue(array()));
-        $this->assertEquals('NULL', $code->maskValue(NULL));
     }
 }

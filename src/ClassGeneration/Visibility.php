@@ -54,6 +54,6 @@ class Visibility
                 return true;
                 break;
         }
-        return false;
+        throw new \InvalidArgumentException('The ' . $visibility . ' is not allowed');
     }
 }

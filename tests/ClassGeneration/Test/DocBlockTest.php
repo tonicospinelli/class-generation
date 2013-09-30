@@ -77,23 +77,14 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $docBlock = new DocBlock();
         $tag = new Tag();
         $docBlock->addTag($tag);
-        $this->assertEquals(1, $docBlock->getTagIterator()->count());
+        $this->assertCount(1, $docBlock->getTagCollection());
     }
 
     public function testSetTagCollection()
     {
         $docBlock = new DocBlock();
         $docBlock->setTagCollection(new TagCollection(array(new Tag())));
-        $this->assertEquals(1, $docBlock->getTagIterator()->count());
-    }
-
-    public function testClearAllTags()
-    {
-        $docBlock = new DocBlock();
-        $docBlock->setTagCollection(new TagCollection(array(new Tag())));
-        $this->assertEquals(1, $docBlock->getTagIterator()->count());
-        $docBlock->clearAllTags();
-        $this->assertEquals(0, $docBlock->getTagIterator()->count());
+        $this->assertCount(1, $docBlock->getTagCollection());
     }
 
     public function testRemoveTagsByName()
@@ -103,9 +94,9 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
             new Tag(array('name' => 'param')),
             new Tag(array('name' => 'return')),
         )));
-        $this->assertEquals(2, $docBlock->getTagIterator()->count());
+        $this->assertCount(2, $docBlock->getTagCollection());
         $docBlock->removeTagsByName('return');
-        $this->assertEquals(1, $docBlock->getTagIterator()->count());
+        $this->assertCount(1, $docBlock->getTagCollection());
     }
 
     public function testRemoveTagsByReference()
@@ -117,9 +108,9 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
             new Tag(array('name' => 'param', 'referenced' => $property)),
             new Tag(array('name' => 'param')),
         )));
-        $this->assertEquals(3, $docBlock->getTagIterator()->count());
+        $this->assertCount(3, $docBlock->getTagCollection());
         $docBlock->removeTagsByReference($property);
-        $this->assertEquals(1, $docBlock->getTagIterator()->count());
+        $this->assertCount(1, $docBlock->getTagCollection());
     }
 
     public function testGetTagsByName()
@@ -130,8 +121,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
             new Tag(array('name' => 'return')),
             new Tag(array('name' => 'param')),
         )));
-        $this->assertEquals(3, $docBlock->getTagIterator()->count());
-        $this->assertEquals(2, $docBlock->getTagsByName('param')->count());
+        $this->assertCount(3, $docBlock->getTagCollection());
+        $this->assertCount(2, $docBlock->getTagsByName('param'));
     }
 
     public function testGetTabulation()
@@ -153,12 +144,6 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(4, $docBlock->getTabulation());
         $docBlock->setTabulation(2);
         $this->assertEquals(2, $docBlock->getTabulation());
-    }
-
-    public function testGetTagIterator()
-    {
-        $docBlock = new DocBlock();
-        $this->assertInstanceOf('\ClassGeneration\DocBlock\TagIterator', $docBlock->getTagIterator());
     }
 
     public function testParseDocBlockToString()

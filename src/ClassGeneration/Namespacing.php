@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -27,35 +22,42 @@
  */
 namespace ClassGeneration;
 
+use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\ElementAbstract;
+
 /**
  * Namespace ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Namespacing extends BuilderAbstract
+class Namespacing extends ElementAbstract implements Documentary
 {
 
     /**
-     *
      * @var mixed
      */
     protected $path;
 
     /**
-     * Initialize.
+     * Documentation Block
+     * @var DocBlockInterface
+     */
+    protected $docBlock;
+
+    /**
+     * {@inheritdoc}
      */
     public function init()
     {
         $this->setTabulation(0);
+        $this->setDocBlock(new DocBlock());
     }
 
     /**
      * Gets the path.
-     *
      * @return string
      */
     public function getPath()
@@ -68,8 +70,7 @@ class Namespacing extends BuilderAbstract
      *
      * @param string $path
      *
-     * @return \ClassGeneration\Namespaces
-     * @throws \RuntimeException
+     * @return Namespacing
      */
     public function setPath($path)
     {
@@ -83,62 +84,54 @@ class Namespacing extends BuilderAbstract
      *
      * @param string $description
      *
-     * @return \ClassGeneration\Namespaces
+     * @return Namespacing
      */
     public function setDescription($description)
     {
-        $this->docBlock->setDescription($description);
+        $this->getDocBlock()->setDescription($description);
 
         return $this;
     }
 
     /**
      * Gets the namespace's description.
-     *
      * @return string
      */
     public function getDescription()
     {
-        return $this->docBlock->getDescription();
+        return $this->getDocBlock()->getDescription();
     }
 
     /**
-     * Sets the docBlock.
-     *
-     * @param DocBlock $docBlock
-     *
-     * @return \ClassGeneration\Namespace
+     * {@inheritdoc}
      */
-    public function setDocBlock(DocBlock $docBlock)
+    public function getDocBlock()
     {
-        parent::setDocBlock($docBlock);
-        $this->docBlock->clearAllTags();
+        return $this->docBlock;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return Namespacing
+     */
+    public function setDocBlock(DocBlockInterface $docBlock)
+    {
+        $this->docBlock = $docBlock;
 
         return $this;
     }
 
     /**
      * Parse the namespace string;
-     *
      * @return string
      */
     public function toString()
-    {
-        return $this->__toString();
-    }
-
-    /**
-     * Parse the namespace string;
-     *
-     * @return string
-     */
-    public function __toString()
     {
         if (!$this->getPath()) {
             return '';
         }
 
-        $namespace = $this->docBlock->setTabulation($this->getTabulation())->toString()
+        $namespace = $this->getDocBlock()->setTabulation($this->getTabulation())->toString()
             . $this->getTabulationFormatted()
             . 'namespace '
             . (strpos($this->getPath(), '\\') === 0 ? substr($this->getPath(), 1) : $this->getPath())

@@ -23,6 +23,8 @@
 
 namespace ClassGeneration;
 
+use ClassGeneration\Element\ElementInterface;
+
 /**
  * Interface for Class Elements ClassGeneration
  * @category   ClassGeneration

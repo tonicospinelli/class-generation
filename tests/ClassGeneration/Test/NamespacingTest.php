@@ -62,12 +62,11 @@ class NamespacingTest extends \PHPUnit_Framework_TestCase
         $namespace = new Namespacing();
         $namespace->setPath('Test');
         $namespace->setDescription('Test');
-        $expected = '
-/**
- * Test
- */
-namespace Test;
-';
+        $expected = PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'namespace Test;' . PHP_EOL;
         $this->assertEquals($expected, $namespace->toString());
     }
 

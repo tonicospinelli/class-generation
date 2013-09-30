@@ -49,26 +49,13 @@ abstract class ElementAbstract implements ElementInterface, Tabbable
     protected $parent = null;
 
     /**
-     * Documentation Block.
-     * @var DocBlockInterface
+     * @{inheritdoc}
      */
-    protected $docBlock;
-
-    /**
-     * Element is static.
-     * @var bool
-     */
-    protected $isFinal;
-
-
-    /**
-     * Element is abstract.
-     * @var bool
-     */
-    protected $isAbstract;
-
     abstract public function init();
 
+    /**
+     * {@inheritdoc}
+     */
     abstract public function toString();
 
     public function __construct($options = array())
@@ -127,7 +114,11 @@ abstract class ElementAbstract implements ElementInterface, Tabbable
     }
 
     /**
-     * {@inheritdoc}
+     * Set tabulation spaces.
+     *
+     * @param int $tabulation
+     *
+     * @return ElementAbstract
      */
     public function setTabulation($tabulation)
     {
