@@ -9,7 +9,7 @@ When I developed a specific project, I saw an opportunity to create a library to
 
 Installation
 ============
-I assume you now about a Composer, if not see [Composer WebSite](http://getcomposer.org/).
+I assume you know about Composer, if not see [Composer WebSite](http://getcomposer.org/).
 ```sh
 $ php composer.phar require tonicospinelli/classgeneration:1.0.*
 ```
