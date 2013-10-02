@@ -45,14 +45,15 @@ class MethodCollection extends ArrayCollection
     /**
      * Adds a new Method on collection.
      *
-     * @param Method|array $method
+     * @param MethodInterface $method
      *
+     * @throws \InvalidArgumentException
      * @return bool
      */
     public function add($method)
     {
-        if (!$method instanceof Method) {
-            $method = new Method($method);
+        if(!$method instanceof MethodInterface){
+            throw new \InvalidArgumentException('This Method must be a instance of \ClassGeneration\MethodInterface');
         }
         if ($method->getName() === null) {
             $method->setName('method' . ($this->count() + 1));
@@ -64,7 +65,7 @@ class MethodCollection extends ArrayCollection
     /**
      * Gets the Method Iterator.
      *
-     * @return MethodIterator|Method[]
+     * @return MethodIterator|MethodInterface[]
      */
     public function getIterator()
     {
@@ -92,7 +93,7 @@ class MethodCollection extends ArrayCollection
      *
      * @param $methodName
      *
-     * @return MethodCollection
+     * @return MethodCollection Returns a collection with removed methods.
      */
     public function removeByName($methodName)
     {

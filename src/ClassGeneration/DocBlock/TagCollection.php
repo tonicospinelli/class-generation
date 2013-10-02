@@ -67,11 +67,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
     }
 
     /**
-     * Check the tag name is unique on collection.
-     *
-     * @param string $tagName
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isUniqueTag($tagName)
     {
@@ -88,11 +84,16 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
     }
 
     /**
-     * Removes tag by reference.
-     *
-     * @param int|string|array $reference
-     *
-     * @return \ClassGeneration\DocBlock\TagCollection
+     * @inheritdoc
+     * @return TagInterface
+     */
+    public function current()
+    {
+        return parent::current();
+    }
+
+    /**
+     * @inheritdoc
      */
     public function removeByReferece($reference)
     {
@@ -136,7 +137,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
      */
     public function sortAsc()
     {
-        $cmp = function ($a, $b) {
+        $cmp = function (TagInterface $a, TagInterface $b) {
             if ($a->getName() == $b->getName()) {
                 return 0;
             }
@@ -152,7 +153,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
      */
     public function sortDesc()
     {
-        $cmp = function ($a, $b) {
+        $cmp = function (TagInterface $a, TagInterface $b) {
             if ($a->getName() == $b->getName()) {
                 return 0;
             }

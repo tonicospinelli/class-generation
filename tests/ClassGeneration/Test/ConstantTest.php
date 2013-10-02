@@ -47,6 +47,7 @@ class ConstantTest extends \PHPUnit_Framework_TestCase
     {
         $constant = new Constant();
         $this->assertInstanceOf('\ClassGeneration\Constant', $constant);
+        $this->assertInstanceOf('\ClassGeneration\ConstantInterface', $constant);
     }
 
     public function testSetAndGetName()

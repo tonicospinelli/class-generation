@@ -62,10 +62,17 @@ interface TagCollectionInterface extends CollectionInterface
      * @return TagCollectionInterface
      */
     public function removeByName($tagName);
+
     /**
      * Get Tag Iterator.
      *
-     * @return TagIterator|Tag[]
+     * @return TagIterator|TagInterface[]
      */
     public function getIterator();
+
+    /**
+     * @inheritdoc
+     * @return TagInterface
+     */
+    public function current();
 }

@@ -31,6 +31,7 @@ use ClassGeneration\DocBlock;
 use ClassGeneration\InterfaceCollection;
 use ClassGeneration\Method;
 use ClassGeneration\MethodCollection;
+use ClassGeneration\Namespacing;
 use ClassGeneration\Property;
 use ClassGeneration\PropertyCollection;
 use ClassGeneration\UseCollection;
@@ -61,7 +62,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetNamespace()
     {
         $code = new Builder();
-        $code->setNamespace('Builder');
+        $code->setNamespace(new Namespacing(array('path'=>'Builder')));
         $this->assertEquals('Builder', $code->getNamespace()->getPath());
     }
 
@@ -69,48 +70,48 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $code = new Builder();
         $code->setName('Test');
-        $code->setNamespace('Code');
+        $code->setNamespace(new Namespacing('Code'));
         $this->assertEquals('Code\Test', $code->getFullName());
     }
 
     public function testSetAndGetAndAddConstants()
     {
         $code = new Builder();
-        $code->setConstants(new ConstantCollection(array(
+        $code->setConstantCollection(new ConstantCollection(array(
             new Constant(array('name' => 'test1', 'value' => 1))
         )));
 
-        $this->assertInstanceOf('\ClassGeneration\ConstantCollection', $code->getConstants());
-        $this->assertInstanceOf('\ClassGeneration\Constant', $code->getConstants()->current());
-        $this->assertCount(1, $code->getConstants());
-        $this->assertEquals('test1', $code->getConstants()->current()->getName());
+        $this->assertInstanceOf('\ClassGeneration\ConstantCollection', $code->getConstantCollection());
+        $this->assertInstanceOf('\ClassGeneration\Constant', $code->getConstantCollection()->current());
+        $this->assertCount(1, $code->getConstantCollection());
+        $this->assertEquals('test1', $code->getConstantCollection()->current()->getName());
 
         $code->addConstant(new Constant(array('name' => 'test2', 'value' => 1)));
-        $this->assertCount(2, $code->getConstants());
-        $this->assertEquals('test2', $code->getConstants()->last()->getName());
+        $this->assertCount(2, $code->getConstantCollection());
+        $this->assertEquals('test2', $code->getConstantCollection()->last()->getName());
     }
 
     public function testSetAndGetAndAddProperties()
     {
         $code = new Builder();
-        $code->setProperties(new PropertyCollection(array(
+        $code->setPropertyCollection(new PropertyCollection(array(
             new Property(array('name' => 'test1', 'value' => 1))
         )));
 
-        $this->assertInstanceOf('\ClassGeneration\PropertyCollection', $code->getProperties());
-        $this->assertInstanceOf('\ClassGeneration\Property', $code->getProperties()->current());
-        $this->assertCount(1, $code->getProperties());
-        $this->assertEquals('test1', $code->getProperties()->current()->getName());
+        $this->assertInstanceOf('\ClassGeneration\PropertyCollection', $code->getPropertyCollection());
+        $this->assertInstanceOf('\ClassGeneration\Property', $code->getPropertyCollection()->current());
+        $this->assertCount(1, $code->getPropertyCollection());
+        $this->assertEquals('test1', $code->getPropertyCollection()->current()->getName());
 
         $code->addProperty(new Property(array('name' => 'test2', 'value' => 1)));
-        $this->assertCount(2, $code->getProperties());
-        $this->assertEquals('test2', $code->getProperties()->last()->getName());
+        $this->assertCount(2, $code->getPropertyCollection());
+        $this->assertEquals('test2', $code->getPropertyCollection()->last()->getName());
     }
 
     public function testGetProperty()
     {
         $code = new Builder();
-        $code->setProperties(new PropertyCollection(array(
+        $code->setPropertyCollection(new PropertyCollection(array(
             new Property(array('name' => 'test', 'value' => 1))
         )));
 
@@ -129,18 +130,22 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddMethods()
     {
         $code = new Builder();
-        $code->setMethods(new MethodCollection(array(
-            new Method(array('name' => 'test1'))
-        )));
+        $code->setMethodCollection(
+            new MethodCollection(
+                array(
+                    new Method(array('name' => 'test1'))
+                )
+            )
+        );
 
-        $this->assertInstanceOf('\ClassGeneration\MethodCollection', $code->getMethods());
-        $this->assertInstanceOf('\ClassGeneration\Method', $code->getMethods()->current());
-        $this->assertCount(1, $code->getMethods());
-        $this->assertEquals('test1', $code->getMethods()->current()->getName());
+        $this->assertInstanceOf('\ClassGeneration\MethodCollection', $code->getMethodCollection());
+        $this->assertInstanceOf('\ClassGeneration\Method', $code->getMethodCollection()->current());
+        $this->assertCount(1, $code->getMethodCollection());
+        $this->assertEquals('test1', $code->getMethodCollection()->current()->getName());
 
         $code->addMethod(new Method(array('name' => 'test2')));
-        $this->assertCount(2, $code->getMethods());
-        $this->assertEquals('test2', $code->getMethods()->last()->getName());
+        $this->assertCount(2, $code->getMethodCollection());
+        $this->assertEquals('test2', $code->getMethodCollection()->last()->getName());
     }
 
     public function testSetAndGetExtends()
@@ -236,7 +241,7 @@ class Test extends \ArrayIterator
     {
         $code = new Builder();
         $code->setName('Test')
-            ->setNamespace('ClassGenerator')
+            ->setNamespace(new Namespacing('ClassGenerator'))
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())

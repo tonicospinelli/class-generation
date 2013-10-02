@@ -59,14 +59,6 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test', $collection->current()->getName());
     }
 
-    public function testAddMethodFromArray()
-    {
-        $collection = new MethodCollection();
-        $collection->add(array('name' => 'test'));
-        $this->assertCount(1, $collection);
-        $this->assertEquals('test', $collection->current()->getName());
-    }
-
     public function testGetIterator()
     {
         $collection = new MethodCollection();
@@ -76,7 +68,7 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
     public function testRemoveByName()
     {
         $collection = new MethodCollection();
-        $collection->add(array('name' => 'test'));
+        $collection->add(new Method(array('name' => 'test')));
         $this->assertCount(1, $collection);
         $collection->removeByName('test');
         $this->assertCount(0, $collection);
@@ -85,8 +77,8 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
     public function testParseToString()
     {
         $collection = new MethodCollection();
-        $collection->add(array('name' => 'test1'));
-        $collection->add(array('name' => 'test2'));
+        $collection->add(new Method(array('name' => 'test1')));
+        $collection->add(new Method(array('name' => 'test2')));
         $expected = '
     public function test1()
     {

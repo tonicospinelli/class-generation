@@ -2,23 +2,18 @@
 
 /**
  * ClassGenerator
- *
  * Copyright (c) 2012 ClassGenerator
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
@@ -36,7 +31,6 @@ use ClassGeneration\Visibility;
 
 /**
  * Method ClassGenerator
- *
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
@@ -52,11 +46,15 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\Method', $method);
     }
 
-    public function testSetAndGetOwnerClass()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetAndGetParent()
     {
         $code = new Builder();
         $method = new Method();
         $method->setParent($code);
+        $method->setParent(new Tag());
 
         $this->assertInstanceOf('\ClassGeneration\Builder', $method->getParent());
     }
@@ -73,10 +71,10 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $method = new Method();
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(array('name' => 'arg1')));
-        $method->setArguments($arguments);
+        $method->setArgumentCollection($arguments);
 
-        $this->assertInstanceOf('\ClassGeneration\ArgumentCollection', $method->getArguments());
-        $this->assertCount(1, $method->getArguments());
+        $this->assertInstanceOf('\ClassGeneration\ArgumentCollection', $method->getArgumentCollection());
+        $this->assertCount(1, $method->getArgumentCollection());
     }
 
     public function tesAddAndGetArgument()
@@ -86,25 +84,6 @@ class MethodTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\ClassGeneration\Argument', $method->getArgument('arg1'));
         $this->assertEquals('arg1', $method->getArgument('arg1')->getName());
-    }
-
-    public function testRemoveArgumentByName()
-    {
-        $method = new Method();
-        $arguments = new ArgumentCollection();
-        $arguments->add(new Argument(array('name' => 'arg1')));
-        $method->setArguments($arguments);
-
-        $this->assertCount(1, $method->getArguments());
-        $method->removeArgumentByName('arg1');
-        $this->assertCount(0, $method->getArguments());
-    }
-
-    public function testAddDocBlockTag()
-    {
-        $method = new Method();
-        $method->addDocBlockTag(new Tag(array('name' => Tag::TAG_PARAM)));
-        $this->assertInstanceOf('\ClassGeneration\DocBlock\Tag', $method->getDocBlock()->getTagsByName(Tag::TAG_PARAM)->current());
     }
 
     public function testSetAndGetDescription()
@@ -117,7 +96,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetReturns()
     {
         $method = new Method();
-        $method->setReturns('bool');
+        $method->setReturns(new Tag(array('type' => 'bool')));
         $this->assertInstanceOf('\ClassGeneration\DocBlock\Tag', $method->getReturns());
         $this->assertEquals('bool', $method->getReturns()->getType());
     }
@@ -134,6 +113,8 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $method = new Method();
         $method->setName('test')
             ->setCode('$test = 0;')
+            ->setIsStatic()
+            ->setIsFinal()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description')
             ->setVisibility(Visibility::TYPE_PUBLIC);
@@ -142,7 +123,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      * test description
      * @param type $arg
      */
-    public function test($arg)
+    final public static function test($arg)
     {
         $test = 0;
     }

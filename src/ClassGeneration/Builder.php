@@ -134,13 +134,13 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     public function init()
     {
         $this->setTabulation(0);
-        $this->docBlock = new DocBlock();
-        $this->methods = new MethodCollection();
-        $this->properties = new PropertyCollection();
-        $this->constants = new ConstantCollection();
-        $this->interfaces = new InterfaceCollection();
-        $this->namespace = new Namespacing();
-        $this->useCollection = new UseCollection();
+        $this->setDocBlock(new DocBlock());
+        $this->setMethodCollection(new MethodCollection());
+        $this->setPropertyCollection(new PropertyCollection());
+        $this->setConstantCollection(new ConstantCollection());
+        $this->setInterfaceCollection(new InterfaceCollection());
+        $this->setNamespace(new Namespacing());
+        $this->setUseCollection(new UseCollection());
     }
 
     /**
@@ -214,15 +214,13 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Sets the namespace.
      *
-     * @param Namespacing|string $namespace Add the namespace path.
+     * @param Namespacing $namespace Add the namespace path.
      *
      * @return Builder
      */
-    public function setNamespace($namespace)
+    public function setNamespace(Namespacing $namespace)
     {
-        if (!$namespace instanceof Namespacing) {
-            $namespace = new Namespacing(array('path' => $namespace));
-        }
+        $namespace->setParent($this);
         $this->namespace = $namespace;
 
         return $this;
@@ -232,7 +230,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      * Gets Constant Collection.
      * @return ConstantCollection
      */
-    public function getConstants()
+    public function getConstantCollection()
     {
         return $this->constants;
     }
@@ -240,21 +238,13 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Sets the constants collection on the Class.
      *
-     * @param ConstantCollection|array $constants
+     * @param ConstantCollection $constants
      *
      * @return Builder
      */
-    public function setConstants($constants)
+    public function setConstantCollection(ConstantCollection $constants)
     {
-        $this->constants->clear();
-
-        if (!$constants instanceof ConstantCollection) {
-            $constants = new ConstantCollection($constants);
-        }
-
-        foreach ($constants as $constant) {
-            $this->addConstant($constant);
-        }
+        $this->constants = $constants;
 
         return $this;
     }
@@ -269,7 +259,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     public function addConstant(Constant $const)
     {
         $const->setParent($this);
-        $this->constants->add($const);
+        $this->getConstantCollection()->add($const);
 
         return $this;
     }
@@ -278,7 +268,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      * Gets properties collection.
      * @return PropertyCollection
      */
-    public function getProperties()
+    public function getPropertyCollection()
     {
         return $this->properties;
     }
@@ -298,22 +288,13 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Sets properties by collection.
      *
-     * @param PropertyCollection|array $properties
-     * @param boolean                  $generateMethods If TRUE generate GET and SET methods from this property.
+     * @param PropertyCollection $properties
      *
      * @return Builder
      */
-    public function setProperties($properties, $generateMethods = false)
+    public function setPropertyCollection(PropertyCollection $properties)
     {
-        $this->properties->clear();
-        $this->getDocBlock()->removeTagsByName('property');
-
-        if (!$properties instanceof PropertyCollection) {
-            $properties = new PropertyCollection($properties);
-        }
-        foreach ($properties as $property) {
-            $this->addProperty($property, $generateMethods);
-        }
+        $this->properties = $properties;
 
         return $this;
     }
@@ -321,50 +302,14 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Adds property in Properties Collection.
      *
-     * @param Property $prop
-     * @param boolean  $generateMethods If TRUE generate GET and SET methods from this property.
+     * @param PropertyInterface $property
      *
      * @return Builder
      */
-    public function addProperty(Property $prop, $generateMethods = false)
+    public function addProperty(PropertyInterface $property)
     {
-        $prop->setParent($this);
-        $this->properties->add($prop);
-        if ($this->forcePropertyInDocBlock) {
-            $this->addCommentTag(
-                new Tag(
-                    array(
-                        'name'        => Tag::TAG_PROPERTY,
-                        'type'        => $prop->getType(),
-                        'variable'    => $prop->getName(),
-                        'description' => $prop->getDescription(),
-                        'referenced'  => $this->properties->last()
-                    )
-                )
-            );
-        }
-        if ($generateMethods) {
-            $this->addMethod(
-                new Method(
-                    array(
-                        'name' => 'get_' . $prop->getName(),
-                        'code' => 'return $this->' . $prop->getName() . ';'
-                    )
-                )
-            );
-            $argument = new Argument(array('name' => $prop->getName(), 'type' => $prop->getType()));
-            $code = '$this->' . $prop->getName() . ' = ' . $argument->getName(true) . ';'
-                . PHP_EOL . 'return $this;';
-            $this->addMethod(
-                new Method(
-                    array(
-                        'name'   => 'set_' . $prop->getName(),
-                        'params' => array($argument),
-                        'code'   => $code
-                    )
-                )
-            );
-        }
+        $property->setParent($this);
+        $this->getPropertyCollection()->add($property);
 
         return $this;
     }
@@ -387,7 +332,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      * Gets the Methods Collection.
      * @return MethodCollection
      */
-    public function getMethods()
+    public function getMethodCollection()
     {
         return $this->methods;
     }
@@ -395,30 +340,14 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Adds Method on Methods Collection.
      *
-     * @param Method $method
+     * @param MethodInterface $method
      *
      * @return Builder
      */
-    public function addMethod(Method $method)
+    public function addMethod(MethodInterface $method)
     {
         $method->setParent($this);
-        $this->methods->add($method);
-        if ($this->forceMethodInDocBlock) {
-            $type = ($method->getReturns() instanceof Tag ?
-                $method->getReturns()->getType() : null);
-
-            $this->addCommentTag(
-                new Tag(
-                    array(
-                        'name'        => Tag::TAG_METHOD,
-                        'type'        => $type,
-                        'variable'    => $method->getName(),
-                        'description' => $method->getDescription(),
-                        'referenced'  => $this->methods->last()
-                    )
-                )
-            );
-        }
+        $this->getMethodCollection()->add($method);
 
         return $this;
     }
@@ -430,17 +359,9 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @return Builder
      */
-    public function setMethods($methods)
+    public function setMethodCollection(MethodCollection $methods)
     {
-        $this->methods->clear();
-        $this->getDocBlock()->removeTagsByName('method');
-
-        if (!$methods instanceof MethodCollection) {
-            $methods = new MethodCollection($methods);
-        }
-        foreach ($methods as $method) {
-            $this->addMethod($method);
-        }
+        $this->methods = $methods;
 
         return $this;
     }
@@ -512,20 +433,13 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
     /**
      * Sets the interfaces to implement.
      *
-     * @param InterfaceCollection|array $interfacesNames
+     * @param InterfaceCollection $interfacesNames
      *
      * @return Builder
      */
-    public function setInterfaceCollection($interfacesNames)
+    public function setInterfaceCollection(InterfaceCollection $interfacesNames)
     {
-        $this->interfaces->clear();
-        if (!$interfacesNames instanceof InterfaceCollection) {
-            $interfacesNames = new InterfaceCollection($interfacesNames);
-        }
-        $iterator = $interfacesNames->getIterator();
-        foreach ($iterator as $interface) {
-            $this->addInterface($interface);
-        }
+        $this->interfaces = $interfacesNames;
 
         return $this;
     }
@@ -621,16 +535,72 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @return Builder
      */
-    public function setUseCollection($uses)
+    public function setUseCollection(UseCollection $uses)
     {
-        $this->useCollection->clear();
-        if (!$uses instanceof UseCollection) {
-            $uses = new UseCollection($uses);
-        }
-
         $this->useCollection = $uses;
 
         return $this;
+    }
+
+    /**
+     * Create a Get Method from Property of Class.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return void
+     */
+    protected function generateGetterFromProperty(PropertyInterface $property)
+    {
+        $this->addMethod(
+            new Method(
+                array(
+                    'name' => 'get_' . $property->getName(),
+                    'code' => 'return $this->' . $property->getName() . ';'
+                )
+            )
+        );
+    }
+
+    /**
+     * Generate Set Method from Property.
+     * Add a set method in the class based on Object Property.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return void
+     */
+    protected function generateSetterFromProperty(PropertyInterface $property)
+    {
+        $argument = new Argument(
+            array(
+                'name' => $property->getName(),
+                'type' => $property->getType()
+            )
+        );
+        $code = "\$this->{$property->getName()} = {$argument->getNameFormatted()};"
+            . PHP_EOL
+            . 'return $this;';
+        $this->addMethod(
+            new Method(
+                array(
+                    'name'               => 'set_' . $property->getName(),
+                    'argumentCollection' => new ArgumentCollection(array($argument)),
+                    'code'               => $code
+                )
+            )
+        );
+    }
+
+    /**
+     * Create all getters and setters from Property Collection.
+     */
+    public function generateGettersAndSettersFromProperties()
+    {
+        $propertyIterator = $this->getPropertyCollection()->getIterator();
+        foreach ($propertyIterator as $property) {
+            $this->generateGetterFromProperty($property);
+            $this->generateSetterFromProperty($property);
+        }
     }
 
     /**
@@ -667,9 +637,9 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
             . PHP_EOL
             . '{'
             . PHP_EOL
-            . $this->getConstants()->toString()
-            . $this->getProperties()->toString()
-            . $this->getMethods()->toString()
+            . $this->getConstantCollection()->toString()
+            . $this->getPropertyCollection()->toString()
+            . $this->getMethodCollection()->toString()
             . PHP_EOL
             . '}';
 

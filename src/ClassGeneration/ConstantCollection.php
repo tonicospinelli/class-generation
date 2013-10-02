@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -31,7 +26,6 @@ use ClassGeneration\Collection\ArrayCollection;
 
 /**
  * Constant Collection ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -44,14 +38,15 @@ class ConstantCollection extends ArrayCollection
     /**
      * Adds a new Constant at ConstantCollection.
      *
-     * @param Constant|array $constant
+     * @param ConstantInterface $constant
      *
+     * @throws \InvalidArgumentException
      * @return bool
      */
     public function add($constant)
     {
-        if (!$constant instanceof Constant) {
-            $constant = new Constant($constant);
+        if (!$constant instanceof ConstantInterface) {
+            throw new \InvalidArgumentException('This Constant must be a instance of \ClassGeneration\ConstantInterface');
         }
 
         if ($constant->getName() === null) {
@@ -63,8 +58,7 @@ class ConstantCollection extends ArrayCollection
 
     /**
      * Gets the element of the collection at the current internal iterator position.
-     *
-     * @return Constant
+     * @return ConstantInterface
      */
     public function current()
     {
@@ -73,17 +67,15 @@ class ConstantCollection extends ArrayCollection
 
     /**
      * Gets the Constant Iterator.
-     *
      * @return ConstantIterator|Constant[]
      */
     public function getIterator()
     {
-        return new ConstantIterator($this->toArray());
+        return new ConstantIterator($this);
     }
 
     /**
      * Parse the Constant Collection to string.
-     *
      * @return string
      */
     public function toString()
@@ -102,7 +94,7 @@ class ConstantCollection extends ArrayCollection
      *
      * @param $constantName
      *
-     * @return \ClassGeneration\ConstantCollection
+     * @return ConstantCollection
      */
     public function removeByName($constantName)
     {

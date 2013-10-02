@@ -23,6 +23,7 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\DocBlock\TagInterface;
 use ClassGeneration\Element\Declarable;
 use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
@@ -38,7 +39,7 @@ use ClassGeneration\Element\VisibilityInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Method extends ElementAbstract implements VisibilityInterface, Declarable, StaticInterface, Documentary
+class Method extends ElementAbstract implements MethodInterface, VisibilityInterface, Declarable, StaticInterface, Documentary
 {
 
     /**
@@ -93,8 +94,8 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
      */
     public function init()
     {
-        $this->arguments = new ArgumentCollection();
-        $this->docBlock = new DocBlock();
+        $this->setArgumentCollection(new ArgumentCollection());
+        $this->setDocBlock(new DocBlock());
         $this->setVisibility(Visibility::TYPE_PUBLIC);
     }
 
@@ -107,20 +108,15 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Set the owner class
-     *
-     * @param Element\ElementInterface $parent
-     *
-     * @throws \InvalidArgumentException
-     * @return Method
+     * @inheritdoc
      */
     public function setParent(ElementInterface $parent)
     {
-        if(!$parent instanceof ClassInterface){
-            throw new \InvalidArgumentException('Only accept instaciated class from ClassGeneration\ClassInterface');
+        if (!$parent instanceof ClassInterface) {
+            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\ClassInterface');
         }
         parent::setParent($parent);
-        $description = ($this->getReturns() instanceof Tag ? $this->getReturns()->getDescription() : '');
+        $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
         if (is_null($this->getCode())) {
             $this->setCode(
@@ -132,15 +128,21 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
             );
         }
         if (preg_match('/return \$this;.*$/', $this->getCode())) {
-            $this->setReturns($this->getParent()->getFullName(), $description);
+            $this->setReturns(
+                new Tag(
+                    array(
+                        'name'        => $this->getParent()->getFullName(),
+                        'description' => $description,
+                    )
+                )
+            );
         }
 
         return $this;
     }
 
     /**
-     * Gets the method's name
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -148,11 +150,7 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Sets the method's name.
-     *
-     * @param string $name
-     *
-     * @return Method
+     * @inheritdoc
      */
     public function setName($name)
     {
@@ -167,49 +165,17 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Gets the Arguments Colletion.
-     * @return ArgumentCollection
+     * @inheritdoc
      */
-    public function getArguments()
+    public function getArgumentCollection()
     {
         return $this->arguments;
     }
 
     /**
-     * Gets the Argument Object.
-     *
-     * @param string $argumentName
-     *
-     * @return Argument
+     * @inheritdoc
      */
-    public function getArgument($argumentName)
-    {
-        return $this->arguments->offsetGet($argumentName);
-    }
-
-    /**
-     * Remove the argument by name.
-     *
-     * @param string $argumentName
-     *
-     * @return Argument
-     */
-    public function removeArgumentByName($argumentName)
-    {
-        $params = $this->arguments->removeByName($argumentName);
-        $this->getDocBlock()->removeTagsByReference($params->getIterator()->current());
-
-        return $params;
-    }
-
-    /**
-     * Add a new Argument Object.
-     *
-     * @param Argument $argument
-     *
-     * @return Method
-     */
-    public function addArgument(Argument $argument)
+    public function addArgument(ArgumentInterface $argument)
     {
         $this->arguments->add($argument);
         $this->getDocBlock()->addTag(
@@ -228,40 +194,17 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Arguments's list.
-     *
-     * @param ArgumentCollection|\ReflectionParameter|array $arguments \ClassGeneration\Arguments's array.
-     *
-     * @return Method
+     * @inheritdoc
      */
-    public function setArguments($arguments)
+    public function setArgumentCollection(ArgumentCollection $arguments)
     {
-        if (!$arguments instanceof ArgumentCollection) {
-            $arguments = new ArgumentCollection($arguments);
-        }
-        foreach ($arguments as $argument) {
-            $this->addArgument($argument);
-        }
+        $this->arguments = $arguments;
 
         return $this;
     }
 
     /**
-     * Adds a new tag in DockBlock.
-     *
-     * @param Tag $tag
-     */
-    public function addDocBlockTag(Tag $tag)
-    {
-        $this->getDocBlock()->addTag($tag);
-    }
-
-    /**
-     * Sets the property's description.
-     *
-     * @param string $description
-     *
-     * @return Method
+     * @inheritdoc
      */
     public function setDescription($description)
     {
@@ -271,8 +214,7 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Gets the property's description.
-     * @return string
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -280,31 +222,18 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Sets the property's description.
-     *
-     * @param string $type
-     * @param string $description
-     *
-     * @return Method
+     * @inheritdoc
      */
-    public function setReturns($type, $description = null)
+    public function setReturns(TagInterface $tag)
     {
-        $tag = new Tag(
-            array(
-                'name'        => Tag::TAG_RETURN,
-                'type'        => $type,
-                'description' => $description
-            )
-        );
-
+        $tag->setName(TagInterface::TAG_RETURN);
         $this->getDocBlock()->addTag($tag);
 
         return $this;
     }
 
     /**
-     * Sets the property's description.
-     * @return Tag
+     * @inheritdoc
      */
     public function getReturns()
     {
@@ -312,8 +241,7 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Method's code
-     * @return string
+     * @inheritdoc
      */
     public function getCode()
     {
@@ -321,11 +249,7 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     }
 
     /**
-     * Method's code
-     *
-     * @param string $code
-     *
-     * @return Method
+     * @inheritdoc
      */
     public function setCode($code)
     {
@@ -338,63 +262,6 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
         $this->code = $code;
 
         return $this;
-    }
-
-    /**
-     * Parse the property string.
-     * @return string
-     */
-    public function toString()
-    {
-        $defaultTabulation = $this->getTabulation();
-        $tabulationFormatted = $this->getTabulationFormatted();
-
-        $this->setTabulation($defaultTabulation + $defaultTabulation);
-        $tabulationFormattedCode = $this->getTabulationFormatted();
-
-        $final = '';
-        if ($this->isFinal()) {
-            $final = 'final ';
-        }
-
-        $abstract = '';
-        if ($this->isAbstract()) {
-            $abstract = 'abstract ';
-        }
-
-        $static = '';
-        if ($this->isStatic()) {
-            $static = 'static ';
-        }
-
-        $visibility = '';
-        if ($this->getVisibility()) {
-            $visibility = $this->getVisibility() . ' ';
-        }
-
-        $method = $this->getDocBlock()->toString()
-            . $tabulationFormatted
-            . $final
-            . $abstract
-            . $visibility
-            . $static
-            . 'function '
-            . $this->getName()
-            . '('
-            . $this->arguments->implode()
-            . ')'
-            . PHP_EOL
-            . $tabulationFormatted
-            . '{'
-            . PHP_EOL
-            . $tabulationFormattedCode
-            . preg_replace("/\n/", PHP_EOL . $tabulationFormattedCode, $this->getCode())
-            . PHP_EOL
-            . $tabulationFormatted
-            . '}'
-            . PHP_EOL;
-
-        return $method;
     }
 
     /**
@@ -451,6 +318,8 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     public function setIsAbstract($isAbstract = true)
     {
         $this->isAbstract = (bool)$isAbstract;
+
+        return $this;
     }
 
     /**
@@ -468,6 +337,8 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
     public function setIsStatic($isStatic = true)
     {
         $this->isStatic = (bool)$isStatic;
+
+        return $this;
     }
 
     /**
@@ -487,5 +358,61 @@ class Method extends ElementAbstract implements VisibilityInterface, Declarable,
         $this->docBlock = $docBlock;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function toString()
+    {
+        $defaultTabulation = $this->getTabulation();
+        $tabulationFormatted = $this->getTabulationFormatted();
+
+        $this->setTabulation($defaultTabulation + $defaultTabulation);
+        $tabulationFormattedCode = $this->getTabulationFormatted();
+
+        $final = '';
+        if ($this->isFinal()) {
+            $final = 'final ';
+        }
+
+        $abstract = '';
+        if ($this->isAbstract()) {
+            $abstract = 'abstract ';
+        }
+
+        $static = '';
+        if ($this->isStatic()) {
+            $static = 'static ';
+        }
+
+        $visibility = '';
+        if ($this->getVisibility()) {
+            $visibility = $this->getVisibility() . ' ';
+        }
+
+        $method = $this->getDocBlock()->toString()
+            . $tabulationFormatted
+            . $final
+            . $abstract
+            . $visibility
+            . $static
+            . 'function '
+            . $this->getName()
+            . '('
+            . $this->arguments->implode()
+            . ')'
+            . PHP_EOL
+            . $tabulationFormatted
+            . '{'
+            . PHP_EOL
+            . $tabulationFormattedCode
+            . preg_replace("/\n/", PHP_EOL . $tabulationFormattedCode, $this->getCode())
+            . PHP_EOL
+            . $tabulationFormatted
+            . '}'
+            . PHP_EOL;
+
+        return $method;
     }
 }

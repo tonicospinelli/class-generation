@@ -38,7 +38,7 @@ use ClassGeneration\Element\VisibilityInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Property extends ElementAbstract implements VisibilityInterface, StaticInterface, Documentary
+class Property extends ElementAbstract implements PropertyInterface, VisibilityInterface, StaticInterface, Documentary
 {
 
     /**

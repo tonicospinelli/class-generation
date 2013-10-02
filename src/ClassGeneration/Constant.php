@@ -34,7 +34,7 @@ use ClassGeneration\Element\ElementAbstract;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Constant extends ElementAbstract implements Documentary
+class Constant extends ElementAbstract implements ConstantInterface, Documentary
 {
 
     /**
@@ -65,12 +65,22 @@ class Constant extends ElementAbstract implements Documentary
      */
     public function init()
     {
-        $this->docBlock = new DocBlock();
+        $this->setDocBlock(new DocBlock());
     }
 
     /**
-     * Gets the constant's name
-     * @return string
+     * {@inheritdoc}
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+
+        return $this;
+    }
+
+
+    /**
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -78,12 +88,7 @@ class Constant extends ElementAbstract implements Documentary
     }
 
     /**
-     * Sets Constant Value.
-     *
-     * @param mixed $value Set the value in simple types: integer, float, string or boolean.
-     *
-     * @throws \InvalidArgumentException
-     * @return \ClassGeneration\Constant
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
@@ -96,22 +101,7 @@ class Constant extends ElementAbstract implements Documentary
     }
 
     /**
-     * Sets the constant's name.
-     *
-     * @param string $name
-     *
-     * @return \ClassGeneration\Constant
-     */
-    public function setName($name)
-    {
-        $this->name = (string)$name;
-
-        return $this;
-    }
-
-    /**
-     * Gets the Constant Value.
-     * @return integer|float|string|boolean
+     * {@inheritdoc}
      */
     public function getValue()
     {
@@ -119,11 +109,7 @@ class Constant extends ElementAbstract implements Documentary
     }
 
     /**
-     * Sets the constant's description.
-     *
-     * @param string $description
-     *
-     * @return \ClassGeneration\Constant
+     * {@inheritdoc}
      */
     public function setDescription($description)
     {
@@ -133,8 +119,7 @@ class Constant extends ElementAbstract implements Documentary
     }
 
     /**
-     * Gets the constant's description.
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {

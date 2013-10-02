@@ -45,14 +45,14 @@ class PropertyCollection extends ArrayCollection
     /**
      * Adds a new Property on the collection.
      *
-     * @param Property|array $property
+     * @param PropertyInterface $property
      *
      * @return bool
      */
     public function add($property)
     {
-        if (!$property instanceof Property) {
-            $property = new Property($property);
+        if(!$property instanceof PropertyInterface){
+            throw new \InvalidArgumentException('This Property must be a instance of \ClassGeneration\PropertyInterface');
         }
         if ($property->getName() === null) {
             $property->setName('property' . ($this->count() + 1));

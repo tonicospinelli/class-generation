@@ -55,7 +55,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
      */
     public function init()
     {
-        $this->tagCollection = new TagCollection();
+        $this->setTagCollection(new TagCollection());
     }
 
     /**
