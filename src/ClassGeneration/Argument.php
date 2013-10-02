@@ -250,9 +250,9 @@ class Argument extends BuilderAbstract
         if ($this->isOptional()) {
             $value = ' = ' . $this->maskValue($this->getValue());
         }
-        $argument = $type
+        $argument = trim($type
             . $this->getName(true)
-            . $value;
+            . $value);
 
         return $argument;
     }

@@ -169,7 +169,7 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $expected = "
     /**
      * test
-     * @param type
+     * @param mixed
      */".PHP_EOL;
 
         $this->assertEquals($expected, $docBlock->toString());

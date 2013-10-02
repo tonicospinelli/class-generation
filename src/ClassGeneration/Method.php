@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -31,7 +26,6 @@ use ClassGeneration\DocBlock\Tag;
 
 /**
  * Method ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -43,21 +37,18 @@ class Method extends BuilderAbstract
 
     /**
      * Method's name
-     *
      * @var string
      */
     protected $name;
 
     /**
      * Method's arguments.
-     *
      * @var ArgumentCollection
      */
     protected $arguments;
 
     /**
      * Method's code.
-     *
      * @var string
      */
     protected $code;
@@ -93,7 +84,7 @@ class Method extends BuilderAbstract
             );
         }
         if (preg_match('/return \$this;.*$/', $this->getCode())) {
-            $this->setReturns($this->getOwnerClass()->getFullName(), $description);
+            $this->setReturns('\\' . $this->getOwnerClass()->getFullName(), $description);
         }
 
         return $this;
@@ -101,7 +92,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the method's name
-     *
      * @return string
      */
     public function getName()
@@ -130,7 +120,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the Arguments Colletion.
-     *
      * @return ArgumentCollection
      */
     public function getArguments()
@@ -235,7 +224,6 @@ class Method extends BuilderAbstract
 
     /**
      * Gets the property's description.
-     *
      * @return string
      */
     public function getDescription()
@@ -268,7 +256,6 @@ class Method extends BuilderAbstract
 
     /**
      * Sets the property's description.
-     *
      * @return Tag
      */
     public function getReturns()
@@ -278,7 +265,6 @@ class Method extends BuilderAbstract
 
     /**
      * Method's code
-     *
      * @return string
      */
     public function getCode()
@@ -308,7 +294,6 @@ class Method extends BuilderAbstract
 
     /**
      * Parse the property string.
-     *
      * @return string
      */
     public function toString()
@@ -318,7 +303,6 @@ class Method extends BuilderAbstract
 
     /**
      * Parse the property string.
-     *
      * @return string
      */
     public function __toString()

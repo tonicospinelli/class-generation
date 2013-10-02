@@ -141,7 +141,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $expected = '
     /**
      * test description
-     * @param type $arg
+     * @param mixed $arg
      */
     public function test($arg)
     {

@@ -341,7 +341,7 @@ class Builder extends BuilderAbstract
                 new Method(
                     array(
                         'name'   => 'set_' . $prop->getName(),
-                        'params' => array($argument),
+                        'arguments' => array($argument),
                         'code'   => $code
                     )
                 )

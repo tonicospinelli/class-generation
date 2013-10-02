@@ -235,12 +235,10 @@ class Test extends \ArrayIterator
     public function testSaveFile()
     {
         $code = new Builder();
-        $code->setName('Test')
-            ->setNamespace('ClassGenerator')
+        $code->setName('FirstClass')
+            ->setNamespace('MyNamespace')
             ->setDescription('Class description')
-            ->setExtends('\ArrayIterator')
-            ->addMethod(new Method())
-            ->addProperty(new Property());
+            ->addProperty(new Property(array('name' => 'property')), true);
         $path = './tests/data';
         if (!is_dir('./tests/data')) {
             $path = './data';
@@ -250,7 +248,7 @@ class Test extends \ArrayIterator
                 $i++;
             }
         }
-        $code->save($path);
+        $code->save($path, null, true);
         $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
     }
 

@@ -407,7 +407,7 @@ class Tag
                     if ($name === 'return' AND ($value !== false AND !is_null($value) AND !empty($value))) {
                         $strings[] = $value;
                     } elseif ($this->hasType($name)) {
-                        $strings[] = (is_null($value) OR empty($value)) ? 'type' : $value;
+                        $strings[] = (is_null($value) OR empty($value)) ? 'mixed' : $value;
                     }
                     break;
                 default:
