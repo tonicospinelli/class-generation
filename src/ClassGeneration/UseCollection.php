@@ -25,7 +25,6 @@ namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
 use ClassGeneration\Element\ElementInterface;
-use ClassGeneration\Element\Tabbable;
 
 /**
  * Use ClassGeneration
@@ -75,6 +74,9 @@ class UseCollection extends ArrayCollection implements ElementInterface
      */
     public function setParent(ElementInterface $parent)
     {
+        if (!$parent instanceof ClassInterface) {
+            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\ClassInterface');
+        }
         $this->parent = $parent;
 
         return $this;
