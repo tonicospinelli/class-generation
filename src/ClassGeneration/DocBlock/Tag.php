@@ -220,7 +220,7 @@ class Tag extends ElementAbstract implements TagInterface
         $type = $this->getType();
         $description = $this->getDescription();
         if ($this->needsType($name)) {
-            $type = (is_null($type) OR empty($type)) ? 'type' : $type;
+            $type = (is_null($type) OR empty($type)) ? 'mixed' : $type;
         }
         $string =
             '@' . $name

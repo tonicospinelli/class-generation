@@ -208,9 +208,9 @@ class Argument extends ElementAbstract implements ArgumentInterface
         if ($this->isOptional()) {
             $value = ' = ' . var_export($this->getValue(), true);
         }
-        $argument = $type
+        $argument = trim($type
             . $this->getNameFormatted()
-            . $value;
+            . $value);
 
         return $argument;
     }

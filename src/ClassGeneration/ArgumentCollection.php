@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -31,7 +26,6 @@ use ClassGeneration\Collection\ArrayCollection;
 
 /**
  * Argument Collection ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -53,7 +47,7 @@ class ArgumentCollection extends ArrayCollection
      */
     public function add($argument)
     {
-        if(!$argument instanceof ArgumentInterface){
+        if (!$argument instanceof ArgumentInterface) {
             throw new \InvalidArgumentException('This Argument must be a instance of \ClassGeneration\ArgumentInterface');
         }
         if ($argument->getName() === null) {
@@ -65,7 +59,6 @@ class ArgumentCollection extends ArrayCollection
 
     /**
      * Gets Argument Iterator
-     *
      * @return ArgumentIterator|Argument[]
      */
     public function getIterator()
@@ -75,22 +68,19 @@ class ArgumentCollection extends ArrayCollection
 
     /**
      * Returns the arguments in string.
-     *
      * @return string
      */
     public function implode()
     {
-        $list = $this->getIterator();
+        $arguments = $this->getIterator();
         $params = array();
         $optionals = array();
-        while ($list->valid()) {
-            $item = $list->current();
-            if ($item->isOptional()) {
-                $optionals[] = $item->toString();
+        foreach ($arguments as $argument) {
+            if ($argument->isOptional()) {
+                $optionals[] = $argument->toString();
             } else {
-                $params[] = $item->toString();
+                $params[] = $argument->toString();
             }
-            $list->next();
         }
 
         return implode(', ', array_merge($params, $optionals));
@@ -108,8 +98,9 @@ class ArgumentCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $argument) {
-            if(($argumentName instanceof Argument AND $argumentName->getName() != $argument->getName())
-                OR (is_string($argumentName) AND $argument->getName() !== $argumentName)){
+            if (($argumentName instanceof Argument AND $argumentName->getName() != $argument->getName())
+                OR (is_string($argumentName) AND $argument->getName() !== $argumentName)
+            ) {
                 continue;
             }
             $removedList->add(clone $argument);
