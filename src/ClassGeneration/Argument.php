@@ -37,7 +37,7 @@ namespace ClassGeneration;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Argument extends BuilderAbstract
+class Argument extends PhpClassAbstract
 {
 
     /**

@@ -39,7 +39,7 @@ use ClassGeneration\DocBlock\Tag;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-abstract class BuilderAbstract
+abstract class PhpClassAbstract
 {
 
     /**
@@ -52,7 +52,7 @@ abstract class BuilderAbstract
     /**
      * Parent Class.
      *
-     * @var Builder
+     * @var PhpClass
      */
     protected $ownerClass = null;
 
@@ -107,7 +107,7 @@ abstract class BuilderAbstract
     /**
      * Gets the owner class.
      *
-     * @return Builder|null
+     * @return PhpClass|null
      */
     public function getOwnerClass()
     {
@@ -117,7 +117,7 @@ abstract class BuilderAbstract
     /**
      * Sets the owner class.
      *
-     * @param Builder $ownerClass
+     * @param PhpClass $ownerClass
      *
      * @return BuilderAbstrat
      */
@@ -147,7 +147,7 @@ abstract class BuilderAbstract
      *
      * @param DocBlock $docBlock
      *
-     * @return BuilderAbstract
+     * @return PhpClassAbstract
      */
     public function setDocBlock(DocBlock $docBlock)
     {
@@ -161,7 +161,7 @@ abstract class BuilderAbstract
      *
      * @param array $options
      *
-     * @return BuilderAbstract
+     * @return PhpClassAbstract
      */
     public function setOptions(array $options)
     {
@@ -220,7 +220,7 @@ abstract class BuilderAbstract
      *
      * @param boolean $isFinal
      *
-     * @return BuilderAbstract
+     * @return PhpClassAbstract
      */
     public function setIsFinal($isFinal = true)
     {
@@ -268,7 +268,7 @@ abstract class BuilderAbstract
      *
      * @param bool $isStatic
      *
-     * @return BuilderAbstract
+     * @return PhpClassAbstract
      */
     public function setIsStatic($isStatic = true)
     {
@@ -294,7 +294,7 @@ abstract class BuilderAbstract
      * @param bool   $forceInDocBlock
      *
      * @throws \Exception If the visibility is not found.
-     * @return BuilderAbstract
+     * @return PhpClassAbstract
      */
     public function setVisibility($visibility, $forceInDocBlock = false)
     {

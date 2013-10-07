@@ -32,7 +32,7 @@ use ClassGeneration\DocBlock\Tag;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Method extends BuilderAbstract
+class Method extends PhpClassAbstract
 {
 
     /**
@@ -65,7 +65,7 @@ class Method extends BuilderAbstract
     /**
      * Set the owner class
      *
-     * @param \ClassGeneration\Builder $ownerClass
+     * @param \ClassGeneration\PhpClass $ownerClass
      *
      * @return Method
      */

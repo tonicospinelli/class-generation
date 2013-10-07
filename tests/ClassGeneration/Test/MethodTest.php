@@ -30,7 +30,7 @@ namespace ClassGeneration\Test;
 use ClassGeneration\Argument;
 use ClassGeneration\ArgumentCollection;
 use ClassGeneration\Code;
-use ClassGeneration\Builder;
+use ClassGeneration\PhpClass;
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\Method;
 use ClassGeneration\Visibility;
@@ -55,11 +55,11 @@ class MethodTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetOwnerClass()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $method = new Method();
         $method->setOwnerClass($code);
 
-        $this->assertInstanceOf('\ClassGeneration\Builder', $method->getOwnerClass());
+        $this->assertInstanceOf('\ClassGeneration\PhpClass', $method->getOwnerClass());
     }
 
     public function testSetAndGetName()

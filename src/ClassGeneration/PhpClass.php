@@ -37,7 +37,7 @@ use ClassGeneration\DocBlock\Tag;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Builder extends BuilderAbstract
+class PhpClass extends PhpClassAbstract
 {
 
     /**
@@ -163,7 +163,7 @@ class Builder extends BuilderAbstract
      *
      * @param string $name
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setName($name)
     {
@@ -196,7 +196,7 @@ class Builder extends BuilderAbstract
      *
      * @param Namespacing|string $namespace Add the namespace path.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setNamespace($namespace)
     {
@@ -223,7 +223,7 @@ class Builder extends BuilderAbstract
      *
      * @param ConstantCollection|array $constants
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setConstants($constants)
     {
@@ -245,7 +245,7 @@ class Builder extends BuilderAbstract
      *
      * @param Constant $const
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addConstant(Constant $const)
     {
@@ -283,7 +283,7 @@ class Builder extends BuilderAbstract
      * @param PropertyCollection|array $properties
      * @param boolean                  $generateMethods If TRUE generate GET and SET methods from this property.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setProperties($properties, $generateMethods = false)
     {
@@ -306,7 +306,7 @@ class Builder extends BuilderAbstract
      * @param Property $prop
      * @param boolean  $generateMethods If TRUE generate GET and SET methods from this property.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addProperty(Property $prop, $generateMethods = false)
     {
@@ -356,7 +356,7 @@ class Builder extends BuilderAbstract
      *
      * @param Tag|array $tagArguments
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addCommentTag($tagArguments)
     {
@@ -380,7 +380,7 @@ class Builder extends BuilderAbstract
      *
      * @param Method $method
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addMethod(Method $method)
     {
@@ -411,7 +411,7 @@ class Builder extends BuilderAbstract
      *
      * @param MethodCollection $methods
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setMethods($methods)
     {
@@ -444,7 +444,7 @@ class Builder extends BuilderAbstract
      *
      * @param string $extends
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setExtends($extends)
     {
@@ -477,7 +477,7 @@ class Builder extends BuilderAbstract
      *
      * @param string $interfaceName Interface name.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addInterface($interfaceName)
     {
@@ -499,7 +499,7 @@ class Builder extends BuilderAbstract
      *
      * @param InterfaceCollection|array $interfacesNames
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setInterfaceCollection($interfacesNames)
     {
@@ -530,7 +530,7 @@ class Builder extends BuilderAbstract
      *
      * @param boolean $isTrait
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsTrait($isTrait = true)
     {
@@ -554,7 +554,7 @@ class Builder extends BuilderAbstract
      *
      * @param boolean $isInterface
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsInterface($isInterface = true)
     {
@@ -568,7 +568,7 @@ class Builder extends BuilderAbstract
      *
      * @param string $description
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setDescription($description)
     {
@@ -593,7 +593,7 @@ class Builder extends BuilderAbstract
      * @param string $fullClassName
      * @param string $alias
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addUse($fullClassName, $alias = null)
     {
@@ -607,7 +607,7 @@ class Builder extends BuilderAbstract
      *
      * @param UseCollection $uses
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setUseCollection($uses)
     {

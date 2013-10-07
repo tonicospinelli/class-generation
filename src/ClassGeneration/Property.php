@@ -28,7 +28,7 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\BuilderAbstract;
+use ClassGeneration\PhpClassAbstract;
 use ClassGeneration\DocBlock\Tag;
 
 /**
@@ -40,7 +40,7 @@ use ClassGeneration\DocBlock\Tag;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Property extends BuilderAbstract
+class Property extends PhpClassAbstract
 {
 
     /**
