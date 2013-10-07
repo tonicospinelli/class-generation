@@ -35,7 +35,7 @@ use ClassGeneration\Element\ElementAbstract;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Builder extends ElementAbstract implements ClassInterface, Documentary, Declarable
+class PhpClass extends ElementAbstract implements ClassInterface, Documentary, Declarable
 {
 
     /**
@@ -184,7 +184,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param string $name
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setName($name)
     {
@@ -216,7 +216,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param Namespacing $namespace Add the namespace path.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setNamespace(Namespacing $namespace)
     {
@@ -240,7 +240,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param ConstantCollection $constants
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setConstantCollection(ConstantCollection $constants)
     {
@@ -254,7 +254,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param Constant $const
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addConstant(Constant $const)
     {
@@ -290,7 +290,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param PropertyCollection $properties
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setPropertyCollection(PropertyCollection $properties)
     {
@@ -304,7 +304,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param PropertyInterface $property
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addProperty(PropertyInterface $property)
     {
@@ -319,7 +319,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param Tag|array $tagArguments
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addCommentTag($tagArguments)
     {
@@ -342,7 +342,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param MethodInterface $method
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addMethod(MethodInterface $method)
     {
@@ -357,7 +357,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param MethodCollection $methods
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setMethodCollection(MethodCollection $methods)
     {
@@ -381,7 +381,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param string $extends
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setExtends($extends)
     {
@@ -413,7 +413,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param string $interfaceName Interface name.
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addInterface($interfaceName)
     {
@@ -435,7 +435,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param InterfaceCollection $interfacesNames
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setInterfaceCollection(InterfaceCollection $interfacesNames)
     {
@@ -458,7 +458,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param boolean $isTrait
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsTrait($isTrait = true)
     {
@@ -481,7 +481,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param boolean $isInterface
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsInterface($isInterface = true)
     {
@@ -495,7 +495,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param string $description
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setDescription($description)
     {
@@ -519,7 +519,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      * @param string $fullClassName
      * @param string $alias
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function addUse($fullClassName, $alias = null)
     {
@@ -533,7 +533,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
      *
      * @param UseCollection $uses
      *
-     * @return Builder
+     * @return PhpClass
      */
     public function setUseCollection(UseCollection $uses)
     {
@@ -701,7 +701,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
 
     /**
      * {@inheritdoc}
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsFinal($isFinal = true)
     {
@@ -720,7 +720,7 @@ class Builder extends ElementAbstract implements ClassInterface, Documentary, De
 
     /**
      * {@inheritdoc}
-     * @return Builder
+     * @return PhpClass
      */
     public function setIsAbstract($isAbstract = true)
     {

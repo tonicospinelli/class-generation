@@ -23,7 +23,7 @@
 
 namespace ClassGeneration\Test;
 
-use ClassGeneration\Builder;
+use ClassGeneration\PhpClass;
 use ClassGeneration\Constant;
 use ClassGeneration\ConstantCollection;
 use ClassGeneration\DocBlock\Tag;
@@ -38,7 +38,7 @@ use ClassGeneration\UseCollection;
 
 /**
  * @category   ClassGenerator
- * @package    ClassGenerator\Builder
+ * @package    ClassGenerator\PhpClass
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -48,27 +48,27 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingInstanceOfBuilder()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $this->assertInstanceOf('\ClassGeneration\ClassInterface', $code);
     }
 
     public function testSetAndGetName()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setName('Test');
         $this->assertEquals('Test', $code->getName());
     }
 
     public function testSetAndGetNamespace()
     {
-        $code = new Builder();
-        $code->setNamespace(new Namespacing(array('path'=>'Builder')));
-        $this->assertEquals('Builder', $code->getNamespace()->getPath());
+        $code = new PhpClass();
+        $code->setNamespace(new Namespacing(array('path'=>'PhpClass')));
+        $this->assertEquals('PhpClass', $code->getNamespace()->getPath());
     }
 
     public function testGetFullName()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setName('Test');
         $code->setNamespace(new Namespacing('Code'));
         $this->assertEquals('Code\Test', $code->getFullName());
@@ -76,7 +76,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetAndAddConstants()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setConstantCollection(new ConstantCollection(array(
             new Constant(array('name' => 'test1', 'value' => 1))
         )));
@@ -93,7 +93,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetAndAddProperties()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setPropertyCollection(new PropertyCollection(array(
             new Property(array('name' => 'test1', 'value' => 1))
         )));
@@ -110,7 +110,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProperty()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setPropertyCollection(new PropertyCollection(array(
             new Property(array('name' => 'test', 'value' => 1))
         )));
@@ -122,14 +122,14 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddCommentTag()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->addCommentTag(new Tag(array('name' => Tag::TAG_PARAM)));
         $this->assertCount(1, $code->getDocBlock()->getTagCollection());
     }
 
     public function testSetAndGetAndAddMethods()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setMethodCollection(
             new MethodCollection(
                 array(
@@ -150,14 +150,14 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetExtends()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setExtends('\SplHeap');
         $this->assertEquals('\SplHeap', $code->getExtends());
     }
 
     public function testSetAndGetAndAddInterfaces()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setInterfaceCollection(new InterfaceCollection(array(
             '\Countable'
         )));
@@ -173,28 +173,28 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndIsTrait()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setIsTrait();
         $this->assertTrue($code->isTrait());
     }
 
     public function testSetAndIsInterface()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setIsInterface();
         $this->assertTrue($code->isInterface());
     }
 
     public function testSetAndGetDescription()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setDescription('Class test');
         $this->assertEquals('Class test', $code->getDocBlock()->getDescription());
     }
 
     public function testSetAndGetAndAddUse()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setUseCollection(new UseCollection(array(
             'ClassGenerator\Builder'
         )));
@@ -210,7 +210,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setName('Test')
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
@@ -239,7 +239,7 @@ class Test extends \ArrayIterator
 
     public function testSaveFile()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setName('Test')
             ->setNamespace(new Namespacing('ClassGenerator'))
             ->setDescription('Class description')
@@ -261,7 +261,7 @@ class Test extends \ArrayIterator
 
     public function testEvaluate()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setName('Test')
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
@@ -273,7 +273,7 @@ class Test extends \ArrayIterator
 
     public function testSetAndGetDocBlock()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setDescription('first test');
         $this->assertEquals('first test', $code->getDocBlock()->getDescription());
         $code->setDocBlock(new DocBlock(array('description' => 'second test')));
@@ -282,7 +282,7 @@ class Test extends \ArrayIterator
 
     public function testSetOptions()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setOptions(array(
             'description' => 'first test',
         ));
@@ -291,28 +291,28 @@ class Test extends \ArrayIterator
 
     public function testSetAndGetTabulation()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setTabulation(0);
         $this->assertEquals(0, $code->getTabulation());
     }
 
     public function testGetTabulationFormatted()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setTabulation(4);
         $this->assertEquals('    ', $code->getTabulationFormatted());
     }
 
     public function testSetAndIsFinal()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setIsFinal();
         $this->assertTrue($code->isFinal());
     }
 
     public function testSetAndIsAbstract()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $code->setIsAbstract();
         $this->assertTrue($code->isAbstract());
     }

@@ -23,7 +23,7 @@
 
 namespace ClassGeneration\Test;
 
-use ClassGeneration\Builder;
+use ClassGeneration\PhpClass;
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\UseCollection;
 
@@ -50,11 +50,11 @@ class UseCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAndGetParent()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $use = new UseCollection();
         $use->init();
         $use->setOptions(array('parent' => $code));
-        $this->assertInstanceOf('\ClassGeneration\Builder', $use->getParent());
+        $this->assertInstanceOf('\ClassGeneration\PhpClass', $use->getParent());
         $use->setParent(new Tag());
     }
 

@@ -24,7 +24,7 @@ namespace ClassGeneration\Test;
 
 use ClassGeneration\Argument;
 use ClassGeneration\ArgumentCollection;
-use ClassGeneration\Builder;
+use ClassGeneration\PhpClass;
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\Method;
 use ClassGeneration\Visibility;
@@ -51,7 +51,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAndGetParent()
     {
-        $code = new Builder();
+        $code = new PhpClass();
         $method = new Method();
         $method->setParent($code);
         $method->setParent(new Tag());

@@ -100,7 +100,7 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
     }
 
     /**
-     * @return Builder
+     * @return PhpClass
      */
     public function getParent()
     {
