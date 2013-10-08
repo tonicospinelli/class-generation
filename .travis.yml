@@ -5,12 +5,18 @@ php:
   - 5.4
   - 5.5
 
+env:
+    - RUN=vendor/bin/phpunit
+    - RUN=vendor/bin/phing
+
 before_script:
+  - "composer selfupdate"
+  - "composer --version"
+  - "composer install --prefer-dist --verbose"
   - "composer install --dev"
+  - "mkdir -p build/logs"
+  - "mkdir -p build/docs"
+  - "mkdir -p build/reports"
 
 script:
-  - "mkdir -p build/logs"
-  - "php vendor/bin/phpunit --configuration phpunit.xml.dist"
-
-after_script:
-  - "./vendor/bin/coveralls -v"
+  - "${RUN}"

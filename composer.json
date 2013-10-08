@@ -29,8 +29,13 @@
         "ext-spl": "*"
     },
     "require-dev": {
+        "ext-xdebug": "*",
         "satooshi/php-coveralls": "dev-master",
-        "phpunit/phpunit": "3.7@stable"
+        "phpunit/phpunit": "3.7@stable",
+        "pdepend/pdepend": "*",
+        "sebastian/phpcpd": "*",
+        "squizlabs/php_codesniffer": "*",
+        "phpmd/phpmd": "*"
     },
     "autoload": {
         "psr-0": { "ClassGeneration": "src/"}
