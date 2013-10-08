@@ -11,7 +11,8 @@ tools:
         names:
             - src/*
             - tests/*
-    php_code_coverage: true
+    php_code_coverage:
+        test_command: phpunit -c .phpunit.xml
     php_pdepend:
         excluded_dirs: [vendor/*]
     php_code_sniffer:
