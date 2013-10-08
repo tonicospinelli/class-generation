@@ -11,12 +11,12 @@ Installation
 ============
 I assume you know about Composer, if not see [Composer WebSite](http://getcomposer.org/).
 ```sh
-$ php composer.phar require tonicospinelli/classgeneration:1.0.*
+$ php composer.phar require tonicospinelli/classgeneration:1.1.*
 ```
 OR
 ```javascripti
 {
-    "tonicospinelli/classgeneration" : "1.0.*"
+    "tonicospinelli/classgeneration" : "1.1.*"
 }
 ```
 
