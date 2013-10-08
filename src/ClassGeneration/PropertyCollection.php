@@ -47,6 +47,7 @@ class PropertyCollection extends ArrayCollection
      *
      * @param PropertyInterface $property
      *
+     * @throws \InvalidArgumentException
      * @return bool
      */
     public function add($property)

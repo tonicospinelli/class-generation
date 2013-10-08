@@ -23,28 +23,26 @@
 
 namespace ClassGeneration\Test;
 
-use ClassGeneration\PhpClass;
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\PhpClass;
 use ClassGeneration\UseClass;
-use ClassGeneration\UseCollection;
 
 /**
- * Method Collection ClassGenerator
+ * Use ClassGenerator
  * @category   ClassGenerator
  * @package    ClassGenerator
  * @copyright  Copyright (c) 2012 ClassGenerator (https://github.com/tonicospinelli/ClassGenerator)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class UseCollectionTest extends \PHPUnit_Framework_TestCase
+class UseTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCreatingInstanceOfMethodCollection()
+    public function testCreatingInstanceOfUseClass()
     {
-        $collection = new UseCollection();
-        $this->assertInstanceOf('\ClassGeneration\UseCollection', $collection);
+        $use = new UseClass();
+        $this->assertInstanceOf('\ClassGeneration\UseClass', $use);
     }
-
 
     /**
      * @expectedException \InvalidArgumentException
@@ -52,19 +50,27 @@ class UseCollectionTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetParent()
     {
         $code = new PhpClass();
-        $use = new UseCollection();
+        $use = new UseClass();
         $use->init();
         $use->setOptions(array('parent' => $code));
         $this->assertInstanceOf('\ClassGeneration\PhpClass', $use->getParent());
         $use->setParent(new Tag());
     }
 
-    public function testParseToString()
+    public function testParseToStringWithoutAlias()
     {
-        $collection = new UseCollection();
-        $this->assertEmpty($collection->toString());
-        $collection->add(new UseClass(array('className' => 'ClassGenerator\Code')));
-        $expected = 'use ClassGenerator\Code;' . PHP_EOL;
-        $this->assertEquals($expected, $collection->toString());
+        $use = new UseClass();
+        $use->setClassName('ClassGeneration\Code');
+        $expected = 'use ClassGeneration\Code;' . PHP_EOL;
+        $this->assertEquals($expected, $use->toString());
+    }
+
+    public function testParseToStringWithAlias()
+    {
+        $use = new UseClass();
+        $use->setClassName('ClassGeneration\Code')
+            ->setAlias('MyCode');
+        $expected = 'use ClassGeneration\Code as MyCode;' . PHP_EOL;
+        $this->assertEquals($expected, $use->toString());
     }
 }

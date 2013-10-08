@@ -57,10 +57,29 @@ interface Declarable
 
     /**
      * Sets this class is abstract.
+     * When set an abstract, isInterface is set false.
      *
      * @param boolean $isAbstract
      *
+     * @throws \RuntimeException
      * @return ElementInterface
      */
     public function setIsAbstract($isAbstract = true);
+
+    /**
+     * This class is a interface?
+     * @return boolean
+     */
+    public function isInterface();
+
+    /**
+     * Sets this class is a interface.
+     * When set a interface, abstract is set false.
+     *
+     * @param boolean $isInterface
+     *
+     * @throws \RuntimeException
+     * @return ElementInterface
+     */
+    public function setIsInterface($isInterface = true);
 }

@@ -24,6 +24,7 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
+use ClassGeneration\DocBlock\TagInterface;
 use ClassGeneration\Element\Declarable;
 use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
@@ -35,7 +36,7 @@ use ClassGeneration\Element\ElementAbstract;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PhpClass extends ElementAbstract implements ClassInterface, Documentary, Declarable
+class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary, Declarable
 {
 
     /**
@@ -76,7 +77,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
 
     /**
      * Class namespace
-     * @var Namespacing
+     * @var NamespaceClass
      */
     protected $namespace;
 
@@ -139,7 +140,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
         $this->setPropertyCollection(new PropertyCollection());
         $this->setConstantCollection(new ConstantCollection());
         $this->setInterfaceCollection(new InterfaceCollection());
-        $this->setNamespace(new Namespacing());
+        $this->setNamespace(new NamespaceClass());
         $this->setUseCollection(new UseCollection());
     }
 
@@ -162,8 +163,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the classe full name. Include the namespace.
-     * @return string
+     * @inheritdoc
      */
     public function getFullName()
     {
@@ -171,8 +171,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the class name.
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -180,11 +179,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the class name.
-     *
-     * @param string $name
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setName($name)
     {
@@ -203,8 +198,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the namespace.
-     * @return Namespacing
+     * @inheritdoc
      */
     public function getNamespace()
     {
@@ -212,13 +206,9 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the namespace.
-     *
-     * @param Namespacing $namespace Add the namespace path.
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function setNamespace(Namespacing $namespace)
+    public function setNamespace(NamespaceInterface $namespace)
     {
         $namespace->setParent($this);
         $this->namespace = $namespace;
@@ -227,8 +217,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets Constant Collection.
-     * @return ConstantCollection
+     * @inheritdoc
      */
     public function getConstantCollection()
     {
@@ -236,11 +225,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the constants collection on the Class.
-     *
-     * @param ConstantCollection $constants
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setConstantCollection(ConstantCollection $constants)
     {
@@ -250,13 +235,9 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds the CONSTANTS on the Class.
-     *
-     * @param Constant $const
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function addConstant(Constant $const)
+    public function addConstant(ConstantInterface $const)
     {
         $const->setParent($this);
         $this->getConstantCollection()->add($const);
@@ -265,8 +246,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets properties collection.
-     * @return PropertyCollection
+     * @inheritdoc
      */
     public function getPropertyCollection()
     {
@@ -274,11 +254,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets property by name.
-     *
-     * @param string $propertyName
-     *
-     * @return PropertyCollection
+     * @inheritdoc
      */
     public function getProperty($propertyName)
     {
@@ -286,11 +262,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets properties by collection.
-     *
-     * @param PropertyCollection $properties
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setPropertyCollection(PropertyCollection $properties)
     {
@@ -300,11 +272,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds property in Properties Collection.
-     *
-     * @param PropertyInterface $property
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function addProperty(PropertyInterface $property)
     {
@@ -315,13 +283,9 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds tag on the Class DocBlock.
-     *
-     * @param Tag|array $tagArguments
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function addCommentTag($tagArguments)
+    public function addCommentTag(TagInterface $tagArguments)
     {
         $this->getDocBlock()->addTag($tagArguments);
 
@@ -329,8 +293,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the Methods Collection.
-     * @return MethodCollection
+     * @inheritdoc
      */
     public function getMethodCollection()
     {
@@ -338,11 +301,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds Method on Methods Collection.
-     *
-     * @param MethodInterface $method
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function addMethod(MethodInterface $method)
     {
@@ -353,11 +312,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the methods collection.
-     *
-     * @param MethodCollection $methods
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setMethodCollection(MethodCollection $methods)
     {
@@ -367,8 +322,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the class extends.
-     * @return string
+     * @inheritdoc
      */
     public function getExtends()
     {
@@ -376,12 +330,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the class extended. If this is a Abstract Class,
-     * creates automatically abstract methods.
-     *
-     * @param string $extends
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setExtends($extends)
     {
@@ -400,8 +349,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the interfaces collection.
-     * @return InterfaceCollection
+     * @inheritdoc
      */
     public function getInterfaceCollection()
     {
@@ -409,11 +357,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds the new interface.
-     *
-     * @param string $interfaceName Interface name.
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function addInterface($interfaceName)
     {
@@ -431,11 +375,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets the interfaces to implement.
-     *
-     * @param InterfaceCollection $interfacesNames
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setInterfaceCollection(InterfaceCollection $interfacesNames)
     {
@@ -445,8 +385,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * This class is a trait?
-     * @return boolean
+     * @inheritdoc
      */
     public function isTrait()
     {
@@ -454,11 +393,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets this class is trait.
-     *
-     * @param boolean $isTrait
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setIsTrait($isTrait = true)
     {
@@ -468,8 +403,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * This class is a interface?
-     * @return boolean
+     * @inheritdoc
      */
     public function isInterface()
     {
@@ -477,25 +411,21 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Sets this class is a interface.
-     *
-     * @param boolean $isInterface
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setIsInterface($isInterface = true)
     {
+        if ($this->isAbstract()) {
+            throw new \RuntimeException('This method is an abstract and it not be an interface too.');
+        }
+
         $this->isInterface = (bool)$isInterface;
 
         return $this;
     }
 
     /**
-     * Sets the class description
-     *
-     * @param string $description
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setDescription($description)
     {
@@ -505,8 +435,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Gets the collection class use.
-     * @return UseCollection
+     * @inheritdoc
      */
     public function getUseCollection()
     {
@@ -514,26 +443,17 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Adds the use.
-     *
-     * @param string $fullClassName
-     * @param string $alias
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function addUse($fullClassName, $alias = null)
+    public function addUse(UseInterface $use)
     {
-        $this->useCollection->add($fullClassName . ($alias !== null ? ' as ' . $alias : ''));
+        $this->useCollection->add($use);
 
         return $this;
     }
 
     /**
-     * Sets the uses.
-     *
-     * @param UseCollection $uses
-     *
-     * @return PhpClass
+     * @inheritdoc
      */
     public function setUseCollection(UseCollection $uses)
     {
@@ -593,6 +513,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
 
     /**
      * Create all getters and setters from Property Collection.
+     * @return void
      */
     public function generateGettersAndSettersFromProperties()
     {
@@ -604,8 +525,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * This class to string.
-     * @return string
+     * @inheritdoc
      */
     public function toString()
     {
@@ -683,7 +603,7 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
     }
 
     /**
-     * Allocates generated class to memory.
+     * @inheritdoc
      */
     public function evaluate()
     {
@@ -720,10 +640,14 @@ class PhpClass extends ElementAbstract implements ClassInterface, Documentary, D
 
     /**
      * {@inheritdoc}
-     * @return PhpClass
+     *
      */
     public function setIsAbstract($isAbstract = true)
     {
+        if ($this->isInterface()) {
+            throw new \RuntimeException('This method is an interface and it not be an abstract too.');
+        }
+
         $this->isAbstract = (bool)$isAbstract;
     }
 }

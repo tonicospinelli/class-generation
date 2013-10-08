@@ -30,6 +30,7 @@ use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
 use ClassGeneration\Element\StaticInterface;
 use ClassGeneration\Element\VisibilityInterface;
+use ClassGeneration\PhpClassInterface;
 
 /**
  * Method ClassGeneration
@@ -78,6 +79,12 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
     protected $isAbstract;
 
     /**
+     * Sets like an interface.
+     * @var bool
+     */
+    protected $isInterface;
+
+    /**
      * Sets like a static.
      * @var bool
      */
@@ -112,8 +119,8 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
      */
     public function setParent(ElementInterface $parent)
     {
-        if (!$parent instanceof ClassInterface) {
-            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\ClassInterface');
+        if (!$parent instanceof PhpClassInterface) {
+            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
         parent::setParent($parent);
         $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
@@ -205,6 +212,7 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
 
     /**
      * @inheritdoc
+     * @return MethodInterface
      */
     public function setDescription($description)
     {
@@ -273,7 +281,7 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      * @return Method
      */
     public function setVisibility($visibility)
@@ -317,6 +325,9 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
      */
     public function setIsAbstract($isAbstract = true)
     {
+        if ($this->isInterface()) {
+            throw new \RuntimeException('This method is an interface and it not be an abstract too.');
+        }
         $this->isAbstract = (bool)$isAbstract;
 
         return $this;
@@ -337,6 +348,29 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
     public function setIsStatic($isStatic = true)
     {
         $this->isStatic = (bool)$isStatic;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isInterface()
+    {
+        return $this->isInterface;
+    }
+
+    /**
+     * @inheritdoc
+     * @return Method
+     */
+    public function setIsInterface($isInterface = true)
+    {
+        if ($this->isAbstract()) {
+            throw new \RuntimeException('This method is an abstract and it not be an interface too.');
+        }
+
+        $this->isInterface = (bool)$isInterface;
 
         return $this;
     }
@@ -391,6 +425,20 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
             $visibility = $this->getVisibility() . ' ';
         }
 
+        if (!$this->isInterface() AND !$this->isAbstract()) {
+            $code = PHP_EOL
+                . $tabulationFormatted
+                . '{'
+                . PHP_EOL
+                . $tabulationFormattedCode
+                . preg_replace("/\n/", PHP_EOL . $tabulationFormattedCode, $this->getCode())
+                . PHP_EOL
+                . $tabulationFormatted
+                . '}';
+        } else {
+            $code = ';';
+        }
+
         $method = $this->getDocBlock()->toString()
             . $tabulationFormatted
             . $final
@@ -402,15 +450,7 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
             . '('
             . $this->arguments->implode()
             . ')'
-            . PHP_EOL
-            . $tabulationFormatted
-            . '{'
-            . PHP_EOL
-            . $tabulationFormattedCode
-            . preg_replace("/\n/", PHP_EOL . $tabulationFormattedCode, $this->getCode())
-            . PHP_EOL
-            . $tabulationFormatted
-            . '}'
+            . $code
             . PHP_EOL;
 
         return $method;

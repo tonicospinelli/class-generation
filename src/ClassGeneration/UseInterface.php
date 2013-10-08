@@ -26,43 +26,50 @@ namespace ClassGeneration;
 use ClassGeneration\Element\ElementInterface;
 
 /**
- * Interface for Class Elements ClassGeneration
+ * Use ClassGeneration
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface ClassInterface extends ElementInterface
+interface UseInterface extends ElementInterface
 {
 
     /**
-     * Is a final element?
-     * @return boolean
+     * Sets the alias name.
+     *
+     * @param string $alias
+     *
+     * @return UseInterface
      */
-    public function isFinal();
+    public function setAlias($alias);
 
     /**
-     * Sets this class is final.
-     *
-     * @param boolean $isFinal
-     *
-     * @return ElementInterface
+     * Gets the alias name.
+     * @return string
      */
-    public function setIsFinal($isFinal = true);
+    public function getAlias();
 
     /**
-     * Is a abstract element?
-     * @return boolean
+     * Does it have an alias?
+     * @return bool
      */
-    public function isAbstract();
+    public function hasAlias();
+
 
     /**
-     * Sets this class is abstract.
+     * Sets the class name.
      *
-     * @param boolean $isAbstract
+     * @param string $className
      *
-     * @return ElementInterface
+     * @return UseInterface
      */
-    public function setIsAbstract($isAbstract = true);
+    public function setClassName($className);
+
+    /**
+     * Gets the class name.
+     * @return string
+     */
+    public function getClassName();
 }

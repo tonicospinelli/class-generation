@@ -23,8 +23,7 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\Collection\ArrayCollection;
-use ClassGeneration\Collection\CollectionIterator;
+use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
 
 /**
@@ -35,54 +34,20 @@ use ClassGeneration\Element\ElementInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class UseCollection extends ArrayCollection implements ElementInterface
+class UseClass extends ElementAbstract implements UseInterface
 {
 
-    protected $parent;
+    /**
+     * The class name.
+     * @var string
+     */
+    protected $className;
 
     /**
-     * Adds a new Use on the collection.
-     *
-     * @param UseInterface $use
-     *
-     * @throws \InvalidArgumentException
-     * @return bool
+     * The alias for class name.
+     * @var string
      */
-    public function add($use)
-    {
-        if (!$use instanceof UseInterface) {
-            throw new \InvalidArgumentException('This Property must be a instance of \ClassGeneration\UseInterface');
-        }
-
-        return parent::add($use);
-    }
-
-    /**
-     * @inheritdoc
-     * @return UseIterator|UseClass[]
-     */
-    public function getIterator()
-    {
-        return new UseIterator($this);
-    }
-
-    /**
-     * Parse the Uses to string;
-     * @return string
-     */
-    public function toString()
-    {
-        if ($this->count() < 1) {
-            return '';
-        }
-        $uses = $this->getIterator();
-        $string = '';
-        foreach ($uses as $use) {
-            $string .= $use->toString();
-        }
-
-        return $string;
-    }
+    protected $alias;
 
     /**
      * @inheritdoc
@@ -93,6 +58,7 @@ class UseCollection extends ArrayCollection implements ElementInterface
 
     /**
      * @inheritdoc
+     * @return PhpClassInterface
      */
     public function getParent()
     {
@@ -101,6 +67,7 @@ class UseCollection extends ArrayCollection implements ElementInterface
 
     /**
      * @inheritdoc
+     * @return UseInterface
      */
     public function setParent(ElementInterface $parent)
     {
@@ -115,15 +82,61 @@ class UseCollection extends ArrayCollection implements ElementInterface
     /**
      * @inheritdoc
      */
-    public function setOptions(array $options)
+    public function setAlias($alias)
     {
-        foreach ($options as $prop => $option) {
-            $method = 'set' . ucfirst($prop);
-            if (method_exists($this, $method)) {
-                $this->$method($option);
-            }
-        }
+        $this->alias = (string)$alias;
 
         return $this;
+    }
+
+    /**
+     * Gets the alias name.
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hasAlias()
+    {
+        $alias = $this->getAlias();
+
+        return (!is_null($alias) AND !empty($alias));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setClassName($className)
+    {
+        $this->className = (string)$className;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getClassName()
+    {
+        return $this->className;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function toString()
+    {
+
+        $implements = 'use '
+            . $this->getClassName()
+            . ($this->hasAlias() ? ' as ' . $this->getAlias() : '')
+            . ';' . PHP_EOL;
+
+        return $implements;
     }
 }

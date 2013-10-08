@@ -56,7 +56,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $method->setParent($code);
         $method->setParent(new Tag());
 
-        $this->assertInstanceOf('\ClassGeneration\Builder', $method->getParent());
+        $this->assertInstanceOf('\ClassGeneration\PhpClassInterface', $method->getParent());
     }
 
     public function testSetAndGetName()
@@ -64,6 +64,28 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $method = new Method(array('name' => 'test'));
         $method->setName('test');
         $this->assertEquals('test', $method->getName());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testSetAndIsAbstract()
+    {
+        $method = new Method(array('name' => 'test'));
+        $method->setIsAbstract();
+        $this->assertTrue($method->isAbstract());
+        $method->setIsInterface();
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testSetAndIsInterface()
+    {
+        $method = new Method(array('name' => 'test'));
+        $method->setIsInterface();
+        $this->assertTrue($method->isInterface());
+        $method->setIsAbstract();
     }
 
     public function testSetAndGetArguments()
@@ -108,26 +130,138 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('$test = 0', $method->getCode());
     }
 
-    public function testToString()
+    public function testNormalMethodToString()
     {
         $method = new Method();
         $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
             ->setCode('$test = 0;')
-            ->setIsStatic()
-            ->setIsFinal()
             ->addArgument(new Argument(array('name' => 'arg')))
-            ->setDescription('test description')
-            ->setVisibility(Visibility::TYPE_PUBLIC);
-        $expected = '
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
     /**
      * test description
-     * @param mixed $arg
+     * @param mixed \$arg
      */
-    final public static function test($arg)
+    public function test(\$arg)
     {
-        $test = 0;
+        \$test = 0;
     }
-';
+
+TEXT;
+        $this->assertEquals($expected, $method->toString());
+    }
+
+    public function testAbstractMethodToString()
+    {
+        $method = new Method();
+        $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
+            ->setCode('$test = 0;')
+            ->setIsAbstract()
+            ->addArgument(new Argument(array('name' => 'arg')))
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
+    /**
+     * test description
+     * @param mixed \$arg
+     */
+    abstract public function test(\$arg);
+
+TEXT;
+        $this->assertEquals($expected, $method->toString());
+    }
+
+    public function testInterfaceMethodToString()
+    {
+        $method = new Method();
+        $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
+            ->setCode('$test = 0;')
+            ->setIsInterface()
+            ->addArgument(new Argument(array('name' => 'arg')))
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
+    /**
+     * test description
+     * @param mixed \$arg
+     */
+    public function test(\$arg);
+
+TEXT;
+        $this->assertEquals($expected, $method->toString());
+    }
+
+    public function testStaticMethodToString()
+    {
+        $method = new Method();
+        $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
+            ->setCode('$test = 0;')
+            ->setIsStatic()
+            ->addArgument(new Argument(array('name' => 'arg')))
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
+    /**
+     * test description
+     * @param mixed \$arg
+     */
+    public static function test(\$arg)
+    {
+        \$test = 0;
+    }
+
+TEXT;
+        $this->assertEquals($expected, $method->toString());
+    }
+
+    public function testAbstractAndStaticMethodToString()
+    {
+        $method = new Method();
+        $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
+            ->setCode('$test = 0;')
+            ->setIsAbstract()
+            ->setIsStatic()
+            ->addArgument(new Argument(array('name' => 'arg')))
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
+    /**
+     * test description
+     * @param mixed \$arg
+     */
+    abstract public static function test(\$arg);
+
+TEXT;
+        $this->assertEquals($expected, $method->toString());
+    }
+
+    public function testFinalMethodToString()
+    {
+        $method = new Method();
+        $method->setName('test')
+            ->setVisibility(Visibility::TYPE_PUBLIC)
+            ->setCode('$test = 0;')
+            ->setIsFinal()
+            ->addArgument(new Argument(array('name' => 'arg')))
+            ->setDescription('test description');
+        $expected = <<<TEXT
+
+    /**
+     * test description
+     * @param mixed \$arg
+     */
+    final public function test(\$arg)
+    {
+        \$test = 0;
+    }
+
+TEXT;
         $this->assertEquals($expected, $method->toString());
     }
 }

@@ -20,38 +20,48 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
+namespace ClassGeneration;
 
-namespace ClassGeneration\Element;
+use ClassGeneration\Element\ElementInterface;
 
 /**
- * Interface for Tabulate Class Elements
+ * Namespace ClassGeneration
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface Tabbable
+interface NamespaceInterface extends ElementInterface
 {
 
     /**
-     * Tabulation class.
-     * @return int
-     */
-    public function getTabulation();
-
-    /**
-     * Tabulation fomatted
+     * Gets the path.
      * @return string
      */
-    public function getTabulationFormatted();
+    public function getPath();
 
     /**
-     * Set tabulation spaces.
+     * Sets the Path.
      *
-     * @param int $tabulation
+     * @param string $path
      *
-     * @return ElementAbstract
+     * @return NamespaceInterface
      */
-    public function setTabulation($tabulation);
+    public function setPath($path);
+
+    /**
+     * Sets the namespace's description.
+     *
+     * @param string $description
+     *
+     * @return NamespaceInterface
+     */
+    public function setDescription($description);
+
+    /**
+     * Gets the namespace's description.
+     * @return string
+     */
+    public function getDescription();
 }

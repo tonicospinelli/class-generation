@@ -31,9 +31,10 @@ use ClassGeneration\DocBlock;
 use ClassGeneration\InterfaceCollection;
 use ClassGeneration\Method;
 use ClassGeneration\MethodCollection;
-use ClassGeneration\Namespacing;
+use ClassGeneration\NamespaceClass;
 use ClassGeneration\Property;
 use ClassGeneration\PropertyCollection;
+use ClassGeneration\UseClass;
 use ClassGeneration\UseCollection;
 
 /**
@@ -43,13 +44,13 @@ use ClassGeneration\UseCollection;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class PhpClassTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCreatingInstanceOfBuilder()
+    public function testCreatingInstanceOfPhpClassInterface()
     {
         $code = new PhpClass();
-        $this->assertInstanceOf('\ClassGeneration\ClassInterface', $code);
+        $this->assertInstanceOf('\ClassGeneration\PhpClassInterface', $code);
     }
 
     public function testSetAndGetName()
@@ -62,7 +63,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetNamespace()
     {
         $code = new PhpClass();
-        $code->setNamespace(new Namespacing(array('path'=>'PhpClass')));
+        $code->setNamespace(new NamespaceClass(array('path' => 'PhpClass')));
         $this->assertEquals('PhpClass', $code->getNamespace()->getPath());
     }
 
@@ -70,7 +71,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $code = new PhpClass();
         $code->setName('Test');
-        $code->setNamespace(new Namespacing('Code'));
+        $code->setNamespace(new NamespaceClass('Code'));
         $this->assertEquals('Code\Test', $code->getFullName());
     }
 
@@ -178,11 +179,15 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($code->isTrait());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testSetAndIsInterface()
     {
         $code = new PhpClass();
         $code->setIsInterface();
         $this->assertTrue($code->isInterface());
+        $code->setIsAbstract();
     }
 
     public function testSetAndGetDescription()
@@ -195,17 +200,33 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddUse()
     {
         $code = new PhpClass();
-        $code->setUseCollection(new UseCollection(array(
-            'ClassGenerator\Builder'
-        )));
+        $code->setUseCollection(
+            new UseCollection(array(
+                    new UseClass(array('className' => 'ClassGeneration\PhpClass'))
+                )
+            )
+        );
 
         $this->assertInstanceOf('\ClassGeneration\UseCollection', $code->getUseCollection());
         $this->assertCount(1, $code->getUseCollection());
-        $this->assertEquals('ClassGenerator\Builder', $code->getUseCollection()->current());
+        $this->assertEquals(
+            'ClassGeneration\PhpClass',
+            $code->getUseCollection()->current()->getClassName()
+        );
 
-        $code->addUse('ClassGenerator\BuilderAbstract', 'Builders');
+        $code->addUse(
+            new UseClass(
+                array(
+                    'className' => 'ClassGeneration\PropertyCollection',
+                    'alias'     => 'Properties'
+                )
+            )
+        );
         $this->assertCount(2, $code->getUseCollection());
-        $this->assertEquals('ClassGenerator\BuilderAbstract as Builders', $code->getUseCollection()->last());
+        $this->assertEquals(
+            'use ClassGeneration\PropertyCollection as Properties;' . PHP_EOL,
+            $code->getUseCollection()->last()->toString()
+        );
     }
 
     public function testParseToString()
@@ -241,7 +262,7 @@ class Test extends \ArrayIterator
     {
         $code = new PhpClass();
         $code->setName('Test')
-            ->setNamespace(new Namespacing('ClassGenerator'))
+            ->setNamespace(new NamespaceClass('ClassGenerator'))
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
@@ -310,10 +331,14 @@ class Test extends \ArrayIterator
         $this->assertTrue($code->isFinal());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testSetAndIsAbstract()
     {
         $code = new PhpClass();
         $code->setIsAbstract();
         $this->assertTrue($code->isAbstract());
+        $code->setIsInterface();
     }
 }

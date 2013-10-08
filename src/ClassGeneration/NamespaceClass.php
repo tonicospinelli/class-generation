@@ -33,7 +33,7 @@ use ClassGeneration\Element\ElementAbstract;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Namespacing extends ElementAbstract implements Documentary
+class NamespaceClass extends ElementAbstract implements NamespaceInterface, Documentary
 {
 
     /**
@@ -81,7 +81,7 @@ class Namespacing extends ElementAbstract implements Documentary
      *
      * @param string $path
      *
-     * @return Namespacing
+     * @return NamespaceClass
      */
     public function setPath($path)
     {
@@ -95,7 +95,7 @@ class Namespacing extends ElementAbstract implements Documentary
      *
      * @param string $description
      *
-     * @return Namespacing
+     * @return NamespaceClass
      */
     public function setDescription($description)
     {
@@ -123,7 +123,7 @@ class Namespacing extends ElementAbstract implements Documentary
 
     /**
      * {@inheritdoc}
-     * @return Namespacing
+     * @return NamespaceClass
      */
     public function setDocBlock(DocBlockInterface $docBlock)
     {

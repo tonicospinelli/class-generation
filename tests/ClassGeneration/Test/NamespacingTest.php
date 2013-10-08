@@ -24,7 +24,7 @@
 namespace ClassGeneration\Test;
 
 use ClassGeneration\DocBlock;
-use ClassGeneration\Namespacing;
+use ClassGeneration\NamespaceClass;
 
 /**
  * Namespace ClassGenerator
@@ -37,29 +37,29 @@ use ClassGeneration\Namespacing;
 class NamespacingTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCreatingInstanceOfNamespacing()
+    public function testCreatingInstanceOfNamespaceInterface()
     {
-        $namespace = new Namespacing();
-        $this->assertInstanceOf('\ClassGeneration\Namespacing', $namespace);
+        $namespace = new NamespaceClass();
+        $this->assertInstanceOf('\ClassGeneration\NamespaceInterface', $namespace);
     }
 
     public function testSetAndGetPath()
     {
-        $namespace = new Namespacing();
+        $namespace = new NamespaceClass();
         $namespace->setPath('Test');
         $this->assertEquals('Test', $namespace->getPath());
     }
 
     public function testSetAndGetDescription()
     {
-        $namespace = new Namespacing();
+        $namespace = new NamespaceClass();
         $namespace->setDescription('Test');
         $this->assertEquals('Test', $namespace->getDescription());
     }
 
     public function testParseToString()
     {
-        $namespace = new Namespacing();
+        $namespace = new NamespaceClass();
         $namespace->setPath('Test');
         $namespace->setDescription('Test');
         $expected = PHP_EOL
@@ -72,7 +72,7 @@ class NamespacingTest extends \PHPUnit_Framework_TestCase
 
     public function testSetNewDocBlock()
     {
-        $namespace = new Namespacing();
+        $namespace = new NamespaceClass();
         $namespace->setPath('Test');
         $namespace->setDescription('Test');
         $namespace->setDocBlock(new DocBlock(array('description' => 'New Description')));
