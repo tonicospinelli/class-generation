@@ -9,7 +9,4 @@ tools:
     php_code_coverage:
         test_command: phpunit -c phpunit.xml.dist
     php_cpd:
-            excluded_dirs: [vendor/*]
-            names:
-                - src/*
-                - tests/*
+        excluded_dirs: [vendor/*]
