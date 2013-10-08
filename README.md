@@ -33,6 +33,7 @@ $code
 ->setNamespace('MyNamespace')
 ->setDescription('Class description')
 ->addProperty(new Property(array('name' => 'property')))
+->generateGettersAndSettersFromProperties()
 ->save('./src');
 ```
 Result: ./src/MyNamespace/FirstClass.php
