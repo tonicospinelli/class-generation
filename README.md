@@ -1,7 +1,8 @@
 Class Generation
 ================
 [![Build Status](https://travis-ci.org/tonicospinelli/ClassGeneration.png?branch=1.0)](https://travis-ci.org/tonicospinelli/ClassGeneration)
-[![Coverage Status](https://coveralls.io/repos/tonicospinelli/ClassGeneration/badge.png)](https://coveralls.io/r/tonicospinelli/ClassGeneration)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/quality-score.png?s=da4a9d5122cb384c993cc53d21fa83ceaa29165e)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
+[![Code Coverage](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/coverage.png?s=6c796c027334af623359abfb442aa3cccb05ed80)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
 
 Introduction
 ============

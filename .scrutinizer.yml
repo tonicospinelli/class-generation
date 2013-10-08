@@ -1,0 +1,32 @@
+filter:
+    excluded_paths: [vendor/*]
+    paths: [src/*, tests/*]
+
+before_commands:
+    - "composer install --prefer-source"
+
+tools:
+    php_cpd:
+        excluded_dirs: [vendor/*]
+        names:
+            - src/*
+            - tests/*
+    php_code_coverage: true
+    php_pdepend:
+        excluded_dirs: [vendor/*]
+    php_code_sniffer:
+        config:
+            standard: PSR2
+    php_loc:
+        enabled: false
+        excluded_dirs: [vendor/*]
+    php_mess_detector:
+        config:
+            rulesets:
+                - cleancode
+                - codesize
+                - controversial
+                - design
+                - naming
+                - unusedcode
+    php_analyzer: true
