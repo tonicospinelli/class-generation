@@ -45,9 +45,7 @@ class ConstantIteratortest extends \PHPUnit_Framework_TestCase
 
     public function testCurrentElementInConstantIterator()
     {
-        $collection = new ConstantCollection(array(
-            new Constant(array('name' => 'test')),
-        ));
+        $collection = new ConstantCollection(array(new Constant(array('name' => 'test'))));
         $iterator = new ConstantIterator($collection);
         $this->assertEquals('test', $iterator->current()->getName());
     }

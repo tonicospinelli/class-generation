@@ -78,10 +78,7 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $tagCollection = new TagCollection();
         $property = new Property();
-        $tagCollection->add(new Tag(array(
-            'referenced' => $property,
-            'name'       => 'param',
-        )));
+        $tagCollection->add(new Tag(array('referenced' => $property, 'name' => 'param')));
         $this->assertCount(1, $tagCollection);
         $tagCollection->removeByName('param');
         $this->assertCount(0, $tagCollection);
@@ -90,12 +87,8 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
     public function testSortAsc()
     {
         $tagCollection = new TagCollection();
-        $tagCollection->add(new Tag(array(
-            'name' => 'return',
-        )));
-        $tagCollection->add(new Tag(array(
-            'name' => 'param',
-        )));
+        $tagCollection->add(new Tag(array('name' => 'return')));
+        $tagCollection->add(new Tag(array('name' => 'param')));
         $this->assertEquals('return', $tagCollection->first()->getName());
         $tagCollection->sortAsc();
         $this->assertEquals('param', $tagCollection->first()->getName());
@@ -105,12 +98,8 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
     {
 
         $tagCollection = new TagCollection();
-        $tagCollection->add(new Tag(array(
-            'name' => 'param',
-        )));
-        $tagCollection->add(new Tag(array(
-            'name' => 'return',
-        )));
+        $tagCollection->add(new Tag(array('name' => 'param',)));
+        $tagCollection->add(new Tag(array('name' => 'return',)));
         $this->assertEquals('param', $tagCollection->first()->getName());
         $tagCollection->sortDesc();
         $this->assertEquals('return', $tagCollection->first()->getName());

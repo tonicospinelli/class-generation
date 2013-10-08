@@ -84,10 +84,14 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     public function testRemoveTagsByName()
     {
         $docBlock = new DocBlock();
-        $docBlock->setTagCollection(new TagCollection(array(
-            new Tag(array('name' => 'param')),
-            new Tag(array('name' => 'return')),
-        )));
+        $docBlock->setTagCollection(
+            new TagCollection(
+                array(
+                    new Tag(array('name' => 'param')),
+                    new Tag(array('name' => 'return')),
+                )
+            )
+        );
         $this->assertCount(2, $docBlock->getTagCollection());
         $docBlock->removeTagsByName('return');
         $this->assertCount(1, $docBlock->getTagCollection());
@@ -97,11 +101,15 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     {
         $docBlock = new DocBlock();
         $property = new Property(array('name' => 'test'));
-        $docBlock->setTagCollection(new TagCollection(array(
-            new Tag(array('name' => 'param', 'referenced' => $property)),
-            new Tag(array('name' => 'param', 'referenced' => $property)),
-            new Tag(array('name' => 'param')),
-        )));
+        $docBlock->setTagCollection(
+            new TagCollection(
+                array(
+                    new Tag(array('name' => 'param', 'referenced' => $property)),
+                    new Tag(array('name' => 'param', 'referenced' => $property)),
+                    new Tag(array('name' => 'param')),
+                )
+            )
+        );
         $this->assertCount(3, $docBlock->getTagCollection());
         $docBlock->removeTagsByReference($property);
         $this->assertCount(1, $docBlock->getTagCollection());
@@ -110,11 +118,14 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     public function testGetTagsByName()
     {
         $docBlock = new DocBlock();
-        $docBlock->setTagCollection(new TagCollection(array(
-            new Tag(array('name' => 'param')),
-            new Tag(array('name' => 'return')),
-            new Tag(array('name' => 'param')),
-        )));
+        $docBlock->setTagCollection(
+            new TagCollection(array(
+                    new Tag(array('name' => 'param')),
+                    new Tag(array('name' => 'return')),
+                    new Tag(array('name' => 'param')),
+                )
+            )
+        );
         $this->assertCount(3, $docBlock->getTagCollection());
         $this->assertCount(2, $docBlock->getTagsByName('param'));
     }

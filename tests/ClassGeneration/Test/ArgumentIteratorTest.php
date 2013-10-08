@@ -46,9 +46,7 @@ class ArgumentIteratorTest extends \PHPUnit_Framework_TestCase
 
     public function testCurrentElementInArgumentIterator()
     {
-        $collection = new ArgumentCollection(array(
-            new Argument(array('name' => 'arg1')),
-        ));
+        $collection = new ArgumentCollection(array(new Argument(array('name' => 'arg1'))));
         $iterator = new ArgumentIterator($collection);
         $this->assertEquals('arg1', $iterator->current()->getName());
     }

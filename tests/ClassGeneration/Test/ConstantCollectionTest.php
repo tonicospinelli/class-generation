@@ -65,10 +65,7 @@ class ConstantCollectionTest extends \PHPUnit_Framework_TestCase
     public function testContantCollectionToString()
     {
         $collection = new ConstantCollection();
-        $collection->add(new Constant(array(
-            'name'  => 'test',
-            'value' => 1,
-        )));
+        $collection->add(new Constant(array('name' => 'test', 'value' => 1)));
         $expected = PHP_EOL . '    const TEST = 1;' . PHP_EOL;
         $this->assertEquals($expected, $collection->toString());
     }
@@ -77,22 +74,8 @@ class ConstantCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new ConstantCollection();
         $collection->add(new Constant());
-        $collection->add(
-            new Constant(
-                array(
-                    'name'  => 'test2',
-                    'value' => 1,
-                )
-            )
-        );
-        $collection->add(
-            new Constant(
-                array(
-                    'name'  => 'test3',
-                    'value' => 1,
-                )
-            )
-        );
+        $collection->add(new Constant(array('name' => 'test2', 'value' => 1)));
+        $collection->add(new Constant(array('name' => 'test3', 'value' => 1)));
         $this->assertCount(3, $collection);
         $collection->removeByName(array('constant1', 'test2'));
         $this->assertCount(1, $collection);

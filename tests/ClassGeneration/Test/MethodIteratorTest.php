@@ -46,9 +46,7 @@ class MethodIteratorTest extends \PHPUnit_Framework_TestCase
 
     public function testCurrentElementInMethodIterator()
     {
-        $collection = new MethodCollection(array(
-            new Method(array('name' => 'test')),
-        ));
+        $collection = new MethodCollection(array(new Method(array('name' => 'test'))));
         $iterator = new MethodIterator($collection);
         $this->assertEquals('test', $iterator->current()->getName());
     }

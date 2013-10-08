@@ -70,33 +70,24 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testImplodeRequiredArguments()
     {
-        $collection = new ArgumentCollection(array(
-            new Argument(array(
-                'name' => 'arg1',
-                'type' => '\ClassGeneration'
-            )),
-            new Argument(array(
-                'name' => 'arg2',
-                'type' => 'int'
-            )),
-        ));
+        $collection = new ArgumentCollection(
+            array(
+                new Argument(array('name' => 'arg1', 'type' => '\ClassGeneration')),
+                new Argument(array('name' => 'arg2', 'type' => 'int')),
+            )
+        );
         $string = $collection->implode();
         $this->assertEquals('\ClassGeneration $arg1, $arg2', $string);
     }
 
     public function testImplodeRequiredAndOptionalArguments()
     {
-        $collection = new ArgumentCollection(array(
-            new Argument(array(
-                'name'       => 'arg1',
-                'type'       => '\ClassGeneration',
-                'isOptional' => true,
-            )),
-            new Argument(array(
-                'name' => 'arg2',
-                'type' => 'int'
-            )),
-        ));
+        $collection = new ArgumentCollection(
+            array(
+                new Argument(array('name' => 'arg1', 'type' => '\ClassGeneration', 'isOptional' => true)),
+                new Argument(array('name' => 'arg2', 'type' => 'int')),
+            )
+        );
         $string = $collection->implode();
         $this->assertEquals('$arg2, \ClassGeneration $arg1 = NULL', $string);
     }

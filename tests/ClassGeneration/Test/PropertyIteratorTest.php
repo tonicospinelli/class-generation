@@ -46,9 +46,7 @@ class PropertyIteratorTest extends \PHPUnit_Framework_TestCase
 
     public function testCurrentElementInPropertyIterator()
     {
-        $collection = new PropertyCollection(array(
-            new Property(array('name' => 'test')),
-        ));
+        $collection = new PropertyCollection(array(new Property(array('name' => 'test'))));
         $iterator = new PropertyIterator($collection);
         $this->assertEquals('test', $iterator->current()->getName());
     }

@@ -78,9 +78,13 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddConstants()
     {
         $code = new PhpClass();
-        $code->setConstantCollection(new ConstantCollection(array(
-            new Constant(array('name' => 'test1', 'value' => 1))
-        )));
+        $code->setConstantCollection(
+            new ConstantCollection(
+                array(
+                    new Constant(array('name' => 'test1', 'value' => 1))
+                )
+            )
+        );
 
         $this->assertInstanceOf('\ClassGeneration\ConstantCollection', $code->getConstantCollection());
         $this->assertInstanceOf('\ClassGeneration\Constant', $code->getConstantCollection()->current());
@@ -95,9 +99,13 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddProperties()
     {
         $code = new PhpClass();
-        $code->setPropertyCollection(new PropertyCollection(array(
-            new Property(array('name' => 'test1', 'value' => 1))
-        )));
+        $code->setPropertyCollection(
+            new PropertyCollection(
+                array(
+                    new Property(array('name' => 'test1', 'value' => 1))
+                )
+            )
+        );
 
         $this->assertInstanceOf('\ClassGeneration\PropertyCollection', $code->getPropertyCollection());
         $this->assertInstanceOf('\ClassGeneration\Property', $code->getPropertyCollection()->current());
@@ -112,9 +120,13 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testGetProperty()
     {
         $code = new PhpClass();
-        $code->setPropertyCollection(new PropertyCollection(array(
+        $code->setPropertyCollection(
+            new PropertyCollection(
+                array(
             new Property(array('name' => 'test', 'value' => 1))
-        )));
+        )
+            )
+        );
 
         $this->assertInstanceOf('\ClassGeneration\PropertyCollection', $code->getProperty('test'));
         $this->assertCount(1, $code->getProperty('test'));
@@ -159,9 +171,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddInterfaces()
     {
         $code = new PhpClass();
-        $code->setInterfaceCollection(new InterfaceCollection(array(
-            '\Countable'
-        )));
+        $code->setInterfaceCollection(new InterfaceCollection(array('\Countable')));
 
         $this->assertInstanceOf('\ClassGeneration\InterfaceCollection', $code->getInterfaceCollection());
         $this->assertCount(1, $code->getInterfaceCollection());
@@ -299,9 +309,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $code = new PhpClass();
-        $code->setOptions(array(
-            'description' => 'first test',
-        ));
+        $code->setOptions(array('description' => 'first test'));
         $this->assertEquals('first test', $code->getDocBlock()->getDescription());
     }
 
