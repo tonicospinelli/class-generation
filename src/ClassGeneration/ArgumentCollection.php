@@ -48,7 +48,9 @@ class ArgumentCollection extends ArrayCollection
     public function add($argument)
     {
         if (!$argument instanceof ArgumentInterface) {
-            throw new \InvalidArgumentException('This Argument must be a instance of \ClassGeneration\ArgumentInterface');
+            throw new \InvalidArgumentException(
+                'This Argument must be a instance of \ClassGeneration\ArgumentInterface'
+            );
         }
         if ($argument->getName() === null) {
             $argument->setName('param' . ($this->count() + 1));
@@ -98,8 +100,8 @@ class ArgumentCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $argument) {
-            if (($argumentName instanceof Argument AND $argumentName->getName() != $argument->getName())
-                OR (is_string($argumentName) AND $argument->getName() !== $argumentName)
+            if (($argumentName instanceof Argument and $argumentName->getName() != $argument->getName())
+                or (is_string($argumentName) and $argument->getName() !== $argumentName)
             ) {
                 continue;
             }

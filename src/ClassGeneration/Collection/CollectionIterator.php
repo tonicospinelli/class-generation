@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -30,7 +25,6 @@ namespace ClassGeneration\Collection;
 
 /**
  * Collection Iterator
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -42,21 +36,18 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * This is our collection class, defined later in article.
-     *
      * @var \ClassGeneration\Collection\ArrayCollection|array
      */
     protected $collection = null;
 
     /**
      * Current index
-     *
      * @var int
      */
     protected $currentIndex = 0;
 
     /**
      * Keys in collection
-     *
      * @var array
      */
     protected $keys = null;
@@ -74,7 +65,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Gets the collection.
-     *
      * @return ArrayCollection
      */
     public function getCollection()
@@ -92,7 +82,7 @@ class CollectionIterator implements \Iterator, \Countable
      */
     public function setCollection($collection)
     {
-        if (!$collection instanceof ArrayCollection AND is_array($collection)) {
+        if (!$collection instanceof ArrayCollection and is_array($collection)) {
             $collection = new ArrayCollection($collection);
         }
         if (!$collection instanceof ArrayCollection) {
@@ -108,7 +98,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * This method returns current item in collection based on currentIndex.
-     *
      * @return mixed
      */
     public function current()
@@ -118,7 +107,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Get current key
-     *
      * This method returns current items' key in collection based on currentIndex.
      */
     public function key()
@@ -128,7 +116,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Move to next idex
-     *
      * This method increases currentIndex by one.
      */
     public function next()
@@ -138,7 +125,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Rewind
-     *
      * This method resets currentIndex by setting it to 0
      */
     public function rewind()
@@ -148,7 +134,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Check if current index is valid
-     *
      * This method checks if current index is valid by checking the keys array.
      */
     public function valid()
@@ -158,7 +143,6 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Get number of ocurrences.
-     *
      * @return int
      */
     public function count()

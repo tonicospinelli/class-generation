@@ -101,13 +101,12 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
             ->setValue(1)
             ->setIsStatic();
         $property->getDocBlock()->setDescription('test');
-        $expected = '
-    /**
-     * test
-     * @var int
-     */
-    public static $test = 1;
-';
+        $expected = '' . PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test' . PHP_EOL
+            . '     * @var int' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    public static $test = 1;' . PHP_EOL;
         $this->assertEquals($expected, $property->toString());
     }
 
@@ -118,12 +117,11 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
             ->setType('int')
             ->setValue(1);
         $property->setDocBlock(new DocBlock(array('description' => 'New description')));
-        $expected = '
-    /**
-     * New description
-     */
-    public $test = 1;
-';
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * New description' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    public $test = 1;' . PHP_EOL;
         $this->assertEquals($expected, $property->toString());
     }
 }

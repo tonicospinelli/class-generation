@@ -118,8 +118,8 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
     /**
      * Sets an element in the collection at the specified key/index.
      *
-     * @param string|integer   $key   The key/index of the element to set.
-     * @param mixed $value The element to set.
+     * @param string|integer $key   The key/index of the element to set.
+     * @param mixed          $value The element to set.
      */
     public function set($key, $value);
 

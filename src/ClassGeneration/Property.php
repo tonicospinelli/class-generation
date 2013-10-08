@@ -124,7 +124,7 @@ class Property extends ElementAbstract implements PropertyInterface, VisibilityI
      */
     public function hasValue()
     {
-        return (!is_null($this->value) OR !empty($this->value));
+        return (!is_null($this->value) or !empty($this->value));
     }
 
     /**

@@ -46,7 +46,9 @@ class ConstantCollection extends ArrayCollection
     public function add($constant)
     {
         if (!$constant instanceof ConstantInterface) {
-            throw new \InvalidArgumentException('This Constant must be a instance of \ClassGeneration\ConstantInterface');
+            throw new \InvalidArgumentException(
+                'This Constant must be a instance of \ClassGeneration\ConstantInterface'
+            );
         }
 
         if ($constant->getName() === null) {
@@ -101,8 +103,9 @@ class ConstantCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $constant) {
-            if ((is_array($constantName) AND in_array($constant->getName(), $constantName))
-                OR ($constant->getName() === $constantName)
+            $currentName = $constant->getName();
+            if ((is_array($constantName) and in_array($currentName, $constantName))
+                or ($constant->getName() === $constantName)
             ) {
                 $removedList->add(clone $constant);
                 $this->remove($index);

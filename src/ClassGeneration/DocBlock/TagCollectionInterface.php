@@ -65,7 +65,6 @@ interface TagCollectionInterface extends CollectionInterface
 
     /**
      * Get Tag Iterator.
-     *
      * @return TagIterator|TagInterface[]
      */
     public function getIterator();

@@ -66,5 +66,4 @@ interface DocBlockInterface extends ElementInterface
      * @return DocBlock
      */
     public function setDescription($description);
-
 }

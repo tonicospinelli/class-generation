@@ -40,7 +40,12 @@ use ClassGeneration\PhpClassInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Method extends ElementAbstract implements MethodInterface, VisibilityInterface, Declarable, StaticInterface, Documentary
+class Method extends ElementAbstract implements
+    MethodInterface,
+    VisibilityInterface,
+    Declarable,
+    StaticInterface,
+    Documentary
 {
 
     /**
@@ -261,8 +266,8 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
      */
     public function setCode($code)
     {
-        if (preg_match('/return /', $code) AND $this->getReturns() instanceof Tag
-            AND $this->getReturns()->getType() === 'type'
+        if (preg_match('/return /', $code) and $this->getReturns() instanceof Tag
+            and $this->getReturns()->getType() === 'type'
         ) {
             $this->setReturns(null);
         }
@@ -425,7 +430,7 @@ class Method extends ElementAbstract implements MethodInterface, VisibilityInter
             $visibility = $this->getVisibility() . ' ';
         }
 
-        if (!$this->isInterface() AND !$this->isAbstract()) {
+        if (!$this->isInterface() and !$this->isAbstract()) {
             $code = PHP_EOL
                 . $tabulationFormatted
                 . '{'

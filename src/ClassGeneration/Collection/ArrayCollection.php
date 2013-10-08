@@ -2,23 +2,18 @@
 
 /**
  * ClassGeneration
- *
  * Copyright (c) 2012 ClassGeneration
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -30,7 +25,6 @@ namespace ClassGeneration\Collection;
 
 /**
  * Collection ClassGeneration
- *
  * @category   ClassGeneration
  * @package    ClassGeneration
  * @copyright  Copyright (c) 2012 ClassGeneration (https://github.com/tonicospinelli/ClassGeneration)
@@ -42,7 +36,6 @@ class ArrayCollection implements CollectionInterface
 
     /**
      * An array containing the entries of this collection.
-     *
      * @var array
      */
     protected $elements;
@@ -59,7 +52,6 @@ class ArrayCollection implements CollectionInterface
 
     /**
      * Gets the PHP array representation of this collection.
-     *
      * @return array The PHP array representation of this collection.
      */
     public function toArray()
@@ -82,6 +74,7 @@ class ArrayCollection implements CollectionInterface
     {
         return end($this->elements);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -200,12 +193,12 @@ class ArrayCollection implements CollectionInterface
      */
     public function exists($findKey = null, $findElement = null)
     {
-        if (!is_null($findKey) AND is_null($findElement)) {
+        if (!is_null($findKey) and is_null($findElement)) {
             return $this->containsKey($findKey);
-        } elseif (is_null($findKey) AND !is_null($findElement)) {
+        } elseif (is_null($findKey) and !is_null($findElement)) {
             return $this->contains($findElement);
         } else {
-            return $this->containsKey($findKey) AND $this->contains($findElement);
+            return $this->containsKey($findKey) and $this->contains($findElement);
         }
     }
 
@@ -310,7 +303,6 @@ class ArrayCollection implements CollectionInterface
 
     /**
      * Sort the list by elements.
-     *
      * @return void
      */
     public function sortAsc()
@@ -327,7 +319,6 @@ class ArrayCollection implements CollectionInterface
 
     /**
      * Sort the list by elements.
-     *
      * @return void
      */
     public function sortDesc()

@@ -105,7 +105,7 @@ class UseClass extends ElementAbstract implements UseInterface
     {
         $alias = $this->getAlias();
 
-        return (!is_null($alias) AND !empty($alias));
+        return (!is_null($alias) and !empty($alias));
     }
 
     /**

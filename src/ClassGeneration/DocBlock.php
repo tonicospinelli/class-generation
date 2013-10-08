@@ -146,7 +146,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
 
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
-            if (is_array($nameTag) AND in_array($name, $nameTag)) {
+            if (is_array($nameTag) and in_array($name, $nameTag)) {
                 $foundList->add($this->getTagCollection()->get($index));
             } elseif ($name === $nameTag) {
                 $foundList->add($this->getTagCollection()->get($index));
@@ -163,7 +163,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     {
         $tagList = $this->getTagCollection()->getIterator();
 
-        if ($tagList->count() == 0 AND ($this->getDescription() === null OR $this->getDescription() === '')) {
+        if ($tagList->count() == 0 and ($this->getDescription() === null or $this->getDescription() === '')) {
             return PHP_EOL;
         }
 

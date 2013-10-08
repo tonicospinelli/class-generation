@@ -560,8 +560,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
             . $this->getConstantCollection()->toString()
             . $this->getPropertyCollection()->toString()
             . $this->getMethodCollection()->toString()
-            . PHP_EOL
-            . '}';
+            . '}' . PHP_EOL;
 
         return $string;
     }

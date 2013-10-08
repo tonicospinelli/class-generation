@@ -138,18 +138,15 @@ class MethodTest extends \PHPUnit_Framework_TestCase
             ->setCode('$test = 0;')
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    public function test(\$arg)
-    {
-        \$test = 0;
-    }
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    public function test($arg)' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        $test = 0;' . PHP_EOL
+            . '    }' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 
@@ -162,15 +159,12 @@ TEXT;
             ->setIsAbstract()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    abstract public function test(\$arg);
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    abstract public function test($arg);' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 
@@ -183,15 +177,12 @@ TEXT;
             ->setIsInterface()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    public function test(\$arg);
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    public function test($arg);' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 
@@ -204,18 +195,15 @@ TEXT;
             ->setIsStatic()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    public static function test(\$arg)
-    {
-        \$test = 0;
-    }
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    public static function test($arg)' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        $test = 0;' . PHP_EOL
+            . '    }' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 
@@ -229,15 +217,12 @@ TEXT;
             ->setIsStatic()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    abstract public static function test(\$arg);
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    abstract public static function test($arg);' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 
@@ -250,18 +235,15 @@ TEXT;
             ->setIsFinal()
             ->addArgument(new Argument(array('name' => 'arg')))
             ->setDescription('test description');
-        $expected = <<<TEXT
-
-    /**
-     * test description
-     * @param mixed \$arg
-     */
-    final public function test(\$arg)
-    {
-        \$test = 0;
-    }
-
-TEXT;
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test description' . PHP_EOL
+            . '     * @param mixed $arg' . PHP_EOL
+            . '     */' . PHP_EOL
+            . '    final public function test($arg)' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        $test = 0;' . PHP_EOL
+            . '    }' . PHP_EOL;
         $this->assertEquals($expected, $method->toString());
     }
 }

@@ -72,11 +72,10 @@ class PropertyCollectionTest extends \PHPUnit_Framework_TestCase
         $collection = new PropertyCollection();
         $collection->add(new Property(array('name' => 'test1')));
         $collection->add(new Property(array('name' => 'test2')));
-        $expected = '
-    public $test1;
-
-    public $test2;
-';
+        $expected = PHP_EOL
+            . '    public $test1;' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public $test2;' . PHP_EOL;
         $this->assertEquals($expected, $collection->toString());
     }
 

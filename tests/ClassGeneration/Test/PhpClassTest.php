@@ -201,10 +201,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     {
         $code = new PhpClass();
         $code->setUseCollection(
-            new UseCollection(array(
-                    new UseClass(array('className' => 'ClassGeneration\PhpClass'))
-                )
-            )
+            new UseCollection(array(new UseClass(array('className' => 'ClassGeneration\PhpClass'))))
         );
 
         $this->assertInstanceOf('\ClassGeneration\UseCollection', $code->getUseCollection());
@@ -237,24 +234,22 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property());
-        $expected = '<?php
-
-/**
- * Class description
- * @name Test
- */
-class Test extends \ArrayIterator
-{
-
-    public $property1;
-
-    public function method1()
-    {
-        //TODO: implements the method1 method
-    }
-
-}';
-
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' * @name Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'class Test extends \ArrayIterator' . PHP_EOL
+            . '{' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public $property1;' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public function method1()' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        //TODO: implements the method1 method' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '}' . PHP_EOL;
         $this->assertEquals($expected, $code->toString());
     }
 
@@ -271,12 +266,12 @@ class Test extends \ArrayIterator
         if (!is_dir('./tests/data')) {
             $path = './data';
             $i = 0;
-            while ($i < 3 AND !realpath($path)) {
+            while ($i < 3 and !realpath($path)) {
                 $path = '../' . $path;
                 $i++;
             }
         }
-        $code->save($path);
+        $code->save($path, null, true);
         $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
     }
 
