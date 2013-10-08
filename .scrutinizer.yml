@@ -10,3 +10,6 @@ tools:
         test_command: phpunit -c phpunit.xml.dist
     php_cpd:
         excluded_dirs: [vendor/*]
+    php_code_sniffer:
+        config:
+            standard: PSR2
