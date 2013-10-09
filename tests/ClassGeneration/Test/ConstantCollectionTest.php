@@ -70,7 +70,7 @@ class ConstantCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $collection->toString());
     }
 
-    public function removeByName()
+    public function testRemoveByName()
     {
         $collection = new ConstantCollection();
         $collection->add(new Constant());
