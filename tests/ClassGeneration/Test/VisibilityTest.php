@@ -48,4 +48,9 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('protected', Visibility::TYPE_PROTECTED);
     }
+
+    public function testIsValid()
+    {
+        $this->assertTrue(Visibility::isValid('public'));
+    }
 }
