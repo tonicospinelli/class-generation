@@ -241,12 +241,6 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public function setCode($code)
     {
-        if (preg_match('/return /', $code) and $this->getReturns() instanceof Tag
-            and $this->getReturns()->getType() === 'mixed'
-        ) {
-            $this->setReturns(null);
-        }
-
         $this->code = $code;
 
         return $this;
