@@ -125,26 +125,6 @@ class Method extends ElementAbstract implements MethodInterface
         parent::setParent($parent);
         $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
-        if (is_null($this->getCode())) {
-            $this->setCode(
-                str_replace(
-                    $this->getName(),
-                    $this->getParent()->getFullName() . '::' . $this->getName(),
-                    $this->getCode()
-                )
-            );
-        }
-        if (preg_match('/return \$this;.*$/', $this->getCode())) {
-            $this->setReturns(
-                new Tag(
-                    array(
-                        'name'        => $this->getParent()->getFullName(),
-                        'description' => $description,
-                    )
-                )
-            );
-        }
-
         return $this;
     }
 
@@ -262,7 +242,7 @@ class Method extends ElementAbstract implements MethodInterface
     public function setCode($code)
     {
         if (preg_match('/return /', $code) and $this->getReturns() instanceof Tag
-            and $this->getReturns()->getType() === 'type'
+            and $this->getReturns()->getType() === 'mixed'
         ) {
             $this->setReturns(null);
         }

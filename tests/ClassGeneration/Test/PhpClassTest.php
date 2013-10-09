@@ -345,7 +345,8 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '}' . PHP_EOL;
         $this->assertEquals($expected, $code->toString());
     }
-public function testParseTraitToString()
+
+    public function testParseTraitToString()
     {
         $code = new PhpClass();
         $code->setName('Test')
