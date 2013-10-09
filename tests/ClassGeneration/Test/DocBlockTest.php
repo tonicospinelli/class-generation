@@ -119,7 +119,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     {
         $docBlock = new DocBlock();
         $docBlock->setTagCollection(
-            new TagCollection(array(
+            new TagCollection(
+                array(
                     new Tag(array('name' => 'param')),
                     new Tag(array('name' => 'return')),
                     new Tag(array('name' => 'param')),
