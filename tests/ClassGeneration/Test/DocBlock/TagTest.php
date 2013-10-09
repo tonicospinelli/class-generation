@@ -87,6 +87,12 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\Property', $tag->getReferenced());
     }
 
+    public function testSetAndGetIsInline()
+    {
+        $tag = new Tag(array('isInline' => true));
+        $this->assertTrue($tag->isInline());
+    }
+
     public function testParseTagToString()
     {
         $tag = new Tag();
