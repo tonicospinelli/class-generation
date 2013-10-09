@@ -73,7 +73,7 @@ class PropertyCollection extends ArrayCollection
      */
     public function getIterator()
     {
-        return new PropertyIterator($this->toArray());
+        return new PropertyIterator($this);
     }
 
     /**

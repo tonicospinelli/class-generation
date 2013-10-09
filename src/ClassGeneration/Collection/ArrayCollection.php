@@ -277,7 +277,7 @@ class ArrayCollection implements CollectionInterface
      */
     public function getIterator()
     {
-        return new CollectionIterator($this->elements);
+        return new CollectionIterator($this);
     }
 
     /**

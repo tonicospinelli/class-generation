@@ -62,7 +62,7 @@ class MethodCollection extends ArrayCollection
      */
     public function getIterator()
     {
-        return new MethodIterator($this->toArray());
+        return new MethodIterator($this);
     }
 
     /**
