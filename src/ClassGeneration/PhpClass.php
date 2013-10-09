@@ -362,14 +362,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
     public function addInterface($interfaceName)
     {
         $this->interfaces->add($interfaceName);
-
-        if (interface_exists($interfaceName)) {
-            $refInterface = new \ReflectionClass($interfaceName);
-            $methods = $refInterface->getMethods();
-            foreach ($methods as $method) {
-                $this->addMethod(new Method(array('name' => $method->getName())));
-            }
-        }
+        $this->createMethodsFromInterface($interfaceName);
 
         return $this;
     }
@@ -382,6 +375,25 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
         $this->interfaces = $interfacesNames;
 
         return $this;
+    }
+
+    /**
+     * Creates methods from Interface.
+     *
+     * @param string $interfaceName
+     */
+    protected function createMethodsFromInterface($interfaceName)
+    {
+        if (interface_exists($interfaceName)) {
+            $refInterface = new \ReflectionClass($interfaceName);
+            $methods = $refInterface->getMethods();
+            foreach ($methods as $method) {
+                if($this->getMethodCollection()->exists($method->getName())){
+                    continue;
+                }
+                $this->addMethod(new Method(array('name' => $method->getName())));
+            }
+        }
     }
 
     /**
@@ -577,7 +589,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
     public function save($directoryPath, $fileName = null, $overwrite = false)
     {
         if (!is_dir($directoryPath)) {
-            throw new \Exception('This directory ' . $directoryPath . ' not found');
+            throw new \RuntimeException('This directory ' . $directoryPath . ' not found');
         }
         if (is_null($fileName)) {
             $fileName = $this->getName();

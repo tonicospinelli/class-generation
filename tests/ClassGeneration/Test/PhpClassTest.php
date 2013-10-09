@@ -117,14 +117,31 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test2', $code->getPropertyCollection()->last()->getName());
     }
 
+    public function testSetAndGetPropertiesAndGenerateMethodsGettersAndSetters()
+    {
+        $code = new PhpClass();
+        $code->setPropertyCollection(
+            new PropertyCollection(array(new Property(array('name' => 'test1', 'value' => 1))))
+        );
+
+        $code->generateGettersAndSettersFromProperties();
+
+        $this->assertCount(1, $code->getPropertyCollection());
+        $this->assertEquals('test1', $code->getPropertyCollection()->current()->getName());
+
+        $this->assertCount(2, $code->getMethodCollection());
+        $this->assertEquals('getTest1', $code->getMethodCollection()->current()->getName());
+        $this->assertEquals('setTest1', $code->getMethodCollection()->last()->getName());
+    }
+
     public function testGetProperty()
     {
         $code = new PhpClass();
         $code->setPropertyCollection(
             new PropertyCollection(
                 array(
-            new Property(array('name' => 'test', 'value' => 1))
-        )
+                    new Property(array('name' => 'test', 'value' => 1))
+                )
             )
         );
 
@@ -171,15 +188,15 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddInterfaces()
     {
         $code = new PhpClass();
-        $code->setInterfaceCollection(new InterfaceCollection(array('\Countable')));
+        $code->setInterfaceCollection(new InterfaceCollection(array('\Traversable')));
 
         $this->assertInstanceOf('\ClassGeneration\InterfaceCollection', $code->getInterfaceCollection());
         $this->assertCount(1, $code->getInterfaceCollection());
-        $this->assertEquals('\Countable', $code->getInterfaceCollection()->current());
+        $this->assertEquals('\Traversable', $code->getInterfaceCollection()->current());
 
-        $code->addInterface('\Traversable');
+        $code->addInterface('\Countable');
         $this->assertCount(2, $code->getInterfaceCollection());
-        $this->assertEquals('\Traversable', $code->getInterfaceCollection()->last());
+        $this->assertEquals('\Countable', $code->getInterfaceCollection()->last());
     }
 
     public function testSetAndIsTrait()
@@ -263,6 +280,9 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $code->toString());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testSaveFile()
     {
         $code = new PhpClass();
@@ -283,6 +303,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         }
         $code->save($path, null, true);
         $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
+        $code->save('/asd');
     }
 
     public function testEvaluate()

@@ -44,6 +44,8 @@ interface MethodInterface extends ElementInterface
 
     /**
      * Sets the method's name.
+     * The method name must be camelCase, with first char in lower
+     * and other words with first char upper.
      *
      * @param string $name
      *

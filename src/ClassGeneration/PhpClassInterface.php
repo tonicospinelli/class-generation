@@ -196,12 +196,14 @@ interface PhpClassInterface extends ElementInterface
 
     /**
      * Sets the interfaces to implement.
+     * On replace interface collection all methods will be removed
+     * and it adds methods from new interface, if exists.
      *
-     * @param InterfaceCollection $interfacesNames
+     * @param InterfaceCollection $interfaceCollection
      *
      * @return PhpClassInterface
      */
-    public function setInterfaceCollection(InterfaceCollection $interfacesNames);
+    public function setInterfaceCollection(InterfaceCollection $interfaceCollection);
 
     /**
      * This class is a trait?
