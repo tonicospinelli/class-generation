@@ -141,11 +141,7 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public function setName($name)
     {
-        if (preg_match('/^__/', $name)) {
-            $this->name = $name;
-        } else {
-            $this->name = lcfirst(str_replace(" ", "", ucwords(strtr($name, "_-", "  "))));
-        }
+        $this->name = lcfirst(str_replace(" ", "", ucwords(strtr($name, "_-", "  "))));
         $this->setCode('//TODO: implements the ' . $this->name . ' method');
 
         return $this;

@@ -54,9 +54,9 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $code = new PhpClass();
         $method = new Method();
         $method->setParent($code);
-        $method->setParent(new Tag());
 
         $this->assertInstanceOf('\ClassGeneration\PhpClassInterface', $method->getParent());
+        $method->setParent(new Tag());
     }
 
     public function testSetAndGetName()
