@@ -43,6 +43,9 @@ class PropertyCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\PropertyCollection', $collection);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testAddPropertyFromInstace()
     {
         $property = new Property(array('name' => 'test'));
@@ -50,6 +53,7 @@ class PropertyCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->add($property);
         $this->assertCount(1, $collection);
         $this->assertEquals('test', $collection->current()->getName());
+        $collection->add('asd');
     }
 
     public function testGetIterator()
