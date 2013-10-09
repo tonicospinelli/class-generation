@@ -89,8 +89,8 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetDescription()
     {
         $property = new Property();
-        $property->getDocBlock()->setDescription('test');
-        $this->assertEquals('test', $property->getDocBlock()->getDescription());
+        $property->setDescription('test');
+        $this->assertEquals('test', $property->getDescription());
     }
 
     public function testParseToString()
