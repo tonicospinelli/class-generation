@@ -78,7 +78,8 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     public function testGetElementInArrayCollection()
     {
         $collection = new ArrayCollection(array('first', 'last'));
-        $this->assertTrue($collection->get(0) == 'first');
+        $this->assertEquals('first', $collection->get(0));
+        $this->assertNull($collection->get(2));
     }
 
     public function testGetIteratorInArrayCollection()
@@ -153,6 +154,7 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new ArrayCollection(array('element', 'last'));
         $collection->offsetSet(0, 'first');
+        $collection->offsetSet(null, 'second');
         $this->assertEquals('first', $collection->first());
     }
 
@@ -170,6 +172,7 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $collection = new ArrayCollection(array('first', 'last'));
         $this->assertEquals('first', $collection->first());
         $collection->remove(0);
+        $this->assertNull($collection->remove(2));
         $this->assertEquals('last', $collection->first());
     }
 
@@ -177,8 +180,9 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new ArrayCollection(array('first', 'last'));
         $this->assertEquals('first', $collection->first());
-        $collection->removeElement('first');
+        $this->assertTrue($collection->removeElement('first'));
         $this->assertEquals('last', $collection->first());
+        $this->assertFalse($collection->removeElement('second'));
     }
 
     public function testSetInArrayCollection()
