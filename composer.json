@@ -3,6 +3,8 @@
     "description": "Library to create Php Class files",
     "homepage": "https://github.com/tonicospinelli/ClassGeneration/",
     "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
     "keywords": [
         "php class generator",
         "php class gen",
@@ -38,6 +40,8 @@
         "phpmd/phpmd": "*"
     },
     "autoload": {
-        "psr-0": { "ClassGeneration": "src/"}
+        "psr-0": {
+            "ClassGeneration": "src/"
+        }
     }
 }
