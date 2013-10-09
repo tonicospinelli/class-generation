@@ -101,4 +101,14 @@ class TagTest extends \PHPUnit_Framework_TestCase
             ->setDescription('property description');
         $this->assertEquals('@property int property description' . PHP_EOL, $tag->toString());
     }
+
+    public function testParseTagInlineToString()
+    {
+        $tag = new Tag();
+        $tag->setName(Tag::TAG_PROPERTY)
+            ->setType('int')
+            ->setDescription('property description')
+            ->setIsInline();
+        $this->assertEquals('{@property int property description}' . PHP_EOL, $tag->toString());
+    }
 }
