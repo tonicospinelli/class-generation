@@ -124,11 +124,13 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
                     new Tag(array('name' => 'param')),
                     new Tag(array('name' => 'return')),
                     new Tag(array('name' => 'param')),
+                    new Tag(array('name' => 'internal')),
                 )
             )
         );
-        $this->assertCount(3, $docBlock->getTagCollection());
+        $this->assertCount(4, $docBlock->getTagCollection());
         $this->assertCount(2, $docBlock->getTagsByName('param'));
+        $this->assertCount(2, $docBlock->getTagsByName(array('return', 'internal')));
     }
 
     public function testGetTabulation()
