@@ -197,6 +197,11 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $code->addInterface('\Countable');
         $this->assertCount(2, $code->getInterfaceCollection());
         $this->assertEquals('\Countable', $code->getInterfaceCollection()->last());
+
+        $code->getInterfaceCollection()->removeElement('\Countable');
+        $this->assertCount(1, $code->getInterfaceCollection());
+        $code->addInterface('\Countable');
+        $this->assertEquals('\Countable', $code->getInterfaceCollection()->last());
     }
 
     public function testSetAndIsTrait()
