@@ -22,6 +22,7 @@
  */
 namespace ClassGeneration;
 
+use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementInterface;
 
 /**
@@ -32,7 +33,7 @@ use ClassGeneration\Element\ElementInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface ConstantInterface extends ElementInterface
+interface ConstantInterface extends ElementInterface, Documentary
 {
 
     /**

@@ -40,12 +40,7 @@ use ClassGeneration\PhpClassInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Method extends ElementAbstract implements
-    MethodInterface,
-    VisibilityInterface,
-    Declarable,
-    StaticInterface,
-    Documentary
+class Method extends ElementAbstract implements MethodInterface
 {
 
     /**

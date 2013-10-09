@@ -23,7 +23,11 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Element\Declarable;
+use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\Element\StaticInterface;
+use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Method ClassGeneration
@@ -33,7 +37,7 @@ use ClassGeneration\Element\ElementInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface MethodInterface extends ElementInterface
+interface MethodInterface extends ElementInterface, Declarable, VisibilityInterface, StaticInterface, Documentary
 {
 
     /**

@@ -24,6 +24,8 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Element\Declarable;
+use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementInterface;
 
 /**
@@ -34,7 +36,7 @@ use ClassGeneration\Element\ElementInterface;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-interface PhpClassInterface extends ElementInterface
+interface PhpClassInterface extends ElementInterface, Documentary, Declarable
 {
 
     /**
@@ -258,34 +260,4 @@ interface PhpClassInterface extends ElementInterface
      * @return void
      */
     public function evaluate();
-
-    /**
-     * Is a final element?
-     * @return boolean
-     */
-    public function isFinal();
-
-    /**
-     * Sets this class is final.
-     *
-     * @param boolean $isFinal
-     *
-     * @return PhpClassInterface
-     */
-    public function setIsFinal($isFinal = true);
-
-    /**
-     * Is a abstract element?
-     * @return boolean
-     */
-    public function isAbstract();
-
-    /**
-     * Sets this class is abstract.
-     *
-     * @param boolean $isAbstract
-     *
-     * @return PhpClassInterface
-     */
-    public function setIsAbstract($isAbstract = true);
 }

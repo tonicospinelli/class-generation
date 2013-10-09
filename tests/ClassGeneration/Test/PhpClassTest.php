@@ -253,7 +253,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testParseToString()
+    public function testParseClassToString()
     {
         $code = new PhpClass();
         $code->setName('Test')
@@ -271,6 +271,95 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '{' . PHP_EOL
             . '' . PHP_EOL
             . '    public $property1;' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public function method1()' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        //TODO: implements the method1 method' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '}' . PHP_EOL;
+        $this->assertEquals($expected, $code->toString());
+    }
+
+    public function testParseInterfaceToString()
+    {
+        $code = new PhpClass();
+        $code->setName('Test')
+            ->setDescription('Class description')
+            ->setIsInterface()
+            ->addMethod(new Method(array('isInterface' => true)));
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' * @name Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'interface Test' . PHP_EOL
+            . '{' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public function method1();' . PHP_EOL
+            . '}' . PHP_EOL;
+        $this->assertEquals($expected, $code->toString());
+    }
+
+    public function testParseAbstractClassToString()
+    {
+        $code = new PhpClass();
+        $code->setName('Test')
+            ->setDescription('Class description')
+            ->setIsAbstract()
+            ->addMethod(new Method(array('isAbstract' => true)));
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' * @name Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'abstract class Test' . PHP_EOL
+            . '{' . PHP_EOL
+            . '' . PHP_EOL
+            . '    abstract public function method1();' . PHP_EOL
+            . '}' . PHP_EOL;
+        $this->assertEquals($expected, $code->toString());
+    }
+
+    public function testParseFinalClassToString()
+    {
+        $code = new PhpClass();
+        $code->setName('Test')
+            ->setDescription('Class description')
+            ->setIsFinal()
+            ->addMethod(new Method(array('isFinal' => true)));
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' * @name Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'final class Test' . PHP_EOL
+            . '{' . PHP_EOL
+            . '' . PHP_EOL
+            . '    final public function method1()' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        //TODO: implements the method1 method' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '}' . PHP_EOL;
+        $this->assertEquals($expected, $code->toString());
+    }
+public function testParseTraitToString()
+    {
+        $code = new PhpClass();
+        $code->setName('Test')
+            ->setDescription('Class description')
+            ->setIsTrait()
+            ->addMethod(new Method());
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' * @name Test' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'trait Test' . PHP_EOL
+            . '{' . PHP_EOL
             . '' . PHP_EOL
             . '    public function method1()' . PHP_EOL
             . '    {' . PHP_EOL

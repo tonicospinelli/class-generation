@@ -36,7 +36,7 @@ use ClassGeneration\Element\ElementAbstract;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary, Declarable
+class PhpClass extends ElementAbstract implements PhpClassInterface
 {
 
     /**
@@ -388,7 +388,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
             $refInterface = new \ReflectionClass($interfaceName);
             $methods = $refInterface->getMethods();
             foreach ($methods as $method) {
-                if($this->getMethodCollection()->exists($method->getName())){
+                if ($this->getMethodCollection()->exists($method->getName())) {
                     continue;
                 }
                 $this->addMethod(new Method(array('name' => $method->getName())));
@@ -651,7 +651,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
 
     /**
      * {@inheritdoc}
-     *
      */
     public function setIsAbstract($isAbstract = true)
     {
@@ -660,5 +659,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface, Documentary
         }
 
         $this->isAbstract = (bool)$isAbstract;
+
+        return $this;
     }
 }
