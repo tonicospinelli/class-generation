@@ -45,6 +45,15 @@ class UseCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\UseCollection', $collection);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddUse()
+    {
+        $use = new UseCollection();
+        $use->add(new UseClass());
+        $use->add(new Tag());
+    }
 
     /**
      * @expectedException \InvalidArgumentException

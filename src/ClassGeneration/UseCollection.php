@@ -41,6 +41,17 @@ class UseCollection extends ArrayCollection implements ElementInterface
     protected $parent;
 
     /**
+     * Initializes a new ArrayCollection.
+     *
+     * @param array $elements
+     */
+    public function __construct(array $elements = array())
+    {
+        parent::__construct($elements);
+        $this->init();
+    }
+
+    /**
      * Adds a new Use on the collection.
      *
      * @param UseInterface $use
