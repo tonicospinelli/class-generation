@@ -4,6 +4,9 @@ Class Generation
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/quality-score.png?s=da4a9d5122cb384c993cc53d21fa83ceaa29165e)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
 [![Code Coverage](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/coverage.png?s=6c796c027334af623359abfb442aa3cccb05ed80)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
 
+[![Latest Stable Version](https://poser.pugx.org/tonicospinelli/ClassGeneration/v/stable.png)](https://packagist.org/packages/tonicospinelli/ClassGeneration)
+[![Total Downloads](https://poser.pugx.org/tonicospinelli/ClassGeneration/downloads.png)](https://packagist.org/packages/tonicospinelli/ClassGeneration)
+
 Introduction
 ============
 When I developed a specific project, I saw an opportunity to create a library to generate Php Class Files and this was born.
