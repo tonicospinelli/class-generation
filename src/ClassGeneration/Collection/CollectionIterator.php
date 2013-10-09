@@ -36,7 +36,7 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * This is our collection class, defined later in article.
-     * @var \ClassGeneration\Collection\ArrayCollection|array
+     * @var CollectionInterface
      */
     protected $collection = null;
 
@@ -55,9 +55,9 @@ class CollectionIterator implements \Iterator, \Countable
     /**
      * Collection iterator constructor
      *
-     * @param \ClassGeneration\Collection\ArrayCollection|array $collection
+     * @param CollectionInterface $collection
      */
-    public function __construct($collection)
+    public function __construct(CollectionInterface $collection)
     {
         $this->setCollection($collection);
         $this->keys = $this->getCollection()->getKeys();
@@ -65,7 +65,7 @@ class CollectionIterator implements \Iterator, \Countable
 
     /**
      * Gets the collection.
-     * @return ArrayCollection
+     * @return CollectionInterface
      */
     public function getCollection()
     {
@@ -75,21 +75,12 @@ class CollectionIterator implements \Iterator, \Countable
     /**
      * Sets the collection.
      *
-     * @param \ClassGeneration\Collection\ArrayCollection|array $collection
+     * @param CollectionInterface $collection
      *
-     * @return \ClassGeneration\Collection\CollectionIterator
-     * @throws \Exception
+     * @return CollectionIterator
      */
-    public function setCollection($collection)
+    public function setCollection(CollectionInterface $collection)
     {
-        if (!$collection instanceof ArrayCollection and is_array($collection)) {
-            $collection = new ArrayCollection($collection);
-        }
-        if (!$collection instanceof ArrayCollection) {
-            throw new \Exception(
-                'The collection is not instance of \ClassGeneration\Collection\ArrayCollection and is not Array'
-            );
-        }
         $this->currentIndex = 0;
         $this->collection = $collection;
 
