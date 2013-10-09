@@ -15,3 +15,4 @@ tools:
             standard: PSR2
     php_pdepend:
         excluded_dirs: [vendor/*]
+    php_analyzer: true
