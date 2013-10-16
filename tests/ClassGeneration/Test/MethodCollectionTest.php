@@ -44,6 +44,9 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\MethodCollection', $collection);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testAddMethodFromInstace()
     {
         $Method = new Method(array('name' => 'test'));
@@ -51,6 +54,7 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->add($Method);
         $this->assertCount(1, $collection);
         $this->assertEquals('test', $collection->current()->getName());
+        $collection->add('non-object');
     }
 
     public function testGetIterator()

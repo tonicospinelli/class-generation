@@ -53,7 +53,7 @@ class MethodCollection extends ArrayCollection
             $method->setName('method' . ($this->count() + 1));
         }
 
-        return parent::add($method);
+        return parent::set($method->getName(), $method);
     }
 
     /**
