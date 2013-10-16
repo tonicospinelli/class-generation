@@ -44,11 +44,15 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\DocBlock\TagCollection', $tagCollection);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testAddTag()
     {
         $tagCollection = new TagCollection();
         $tagCollection->add(new Tag());
         $this->assertCount(1, $tagCollection);
+        $tagCollection->add(new \stdClass());
     }
 
     public function testIsUniqueTag()
@@ -89,6 +93,7 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
         $tagCollection = new TagCollection();
         $tagCollection->add(new Tag(array('name' => 'return')));
         $tagCollection->add(new Tag(array('name' => 'param')));
+        $tagCollection->add(new Tag(array('name' => 'param')));
         $this->assertEquals('return', $tagCollection->first()->getName());
         $tagCollection->sortAsc();
         $this->assertEquals('param', $tagCollection->first()->getName());
@@ -98,6 +103,7 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
     {
 
         $tagCollection = new TagCollection();
+        $tagCollection->add(new Tag(array('name' => 'param',)));
         $tagCollection->add(new Tag(array('name' => 'param',)));
         $tagCollection->add(new Tag(array('name' => 'return',)));
         $this->assertEquals('param', $tagCollection->first()->getName());
