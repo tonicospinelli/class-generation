@@ -63,7 +63,7 @@ class Writer extends ElementAbstract implements WriterInterface
      */
     public function setPath($path)
     {
-        if (!is_dir($path) OR !is_writable($path)) {
+        if (!is_dir($path) or !is_writable($path)) {
             throw new \RuntimeException('This directory ' . $path . ' not exists or not writable');
         }
 
@@ -95,7 +95,7 @@ class Writer extends ElementAbstract implements WriterInterface
      */
     public function getFileName()
     {
-        return $this->fileName;
+        return (!is_null($this->fileName) ? $this->fileName : $this->getPhpClass()->getName());
     }
 
     /**
@@ -109,7 +109,10 @@ class Writer extends ElementAbstract implements WriterInterface
         $namespace = $this->getPhpClass()->getNamespace()->getPath();
 
         $directoryPath .= DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $namespace);
-        $fullFileName = $directoryPath . $fileName . '.php';
+        $fullFileName = $directoryPath . DIRECTORY_SEPARATOR . $fileName . '.php';
+        if (!is_dir($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
         $file = new \SplFileObject($fullFileName, 'w');
         $file->fwrite($this->getPhpClass()->toString());
     }

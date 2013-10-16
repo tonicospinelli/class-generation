@@ -29,7 +29,6 @@ use ClassGeneration\Writer;
 use ClassGeneration\PhpClass;
 use ClassGeneration\Property;
 
-
 /**
  * @category   ClassGenerator
  * @package    ClassGenerator\PhpClass
@@ -84,14 +83,15 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     public function testWrite()
     {
         $code = new PhpClass();
-        $code->setName('Test')
+        $code->setName('FirstClass')
             ->setNamespace(new NamespaceClass('ClassGenerator'))
             ->setDescription('Class description')
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property());
 
-        if (!is_dir($this->path)) {
+        $path = $this->path;
+        if (!is_dir($path)) {
             $path = './data';
             $i = 0;
             while ($i < 3 and !realpath($path)) {
@@ -99,8 +99,11 @@ class WriterTest extends \PHPUnit_Framework_TestCase
                 $i++;
             }
         }
-        $writer = new Writer(array('phpClass' => $code, 'path' => $this->path,));
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        $writer = new Writer(array('phpClass' => $code, 'path' => $path,));
         $writer->write();
-        $this->assertFileExists($this->path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
+        $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
     }
 }
