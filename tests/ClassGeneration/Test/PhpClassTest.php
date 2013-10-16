@@ -375,32 +375,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $code->toString());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testSaveFile()
-    {
-        $code = new PhpClass();
-        $code->setName('Test')
-            ->setNamespace(new NamespaceClass('ClassGenerator'))
-            ->setDescription('Class description')
-            ->setExtends('\ArrayIterator')
-            ->addMethod(new Method())
-            ->addProperty(new Property());
-        $path = './tests/data';
-        if (!is_dir('./tests/data')) {
-            $path = './data';
-            $i = 0;
-            while ($i < 3 and !realpath($path)) {
-                $path = '../' . $path;
-                $i++;
-            }
-        }
-        $code->save($path, null, true);
-        $this->assertFileExists($path . '/' . $code->getNamespace()->getPath() . '/' . $code->getName() . '.php');
-        $code->save('/asd');
-    }
-
     public function testEvaluate()
     {
         $code = new PhpClass();

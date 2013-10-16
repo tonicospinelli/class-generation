@@ -578,42 +578,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     }
 
     /**
-     * Saves the class on file.
-     *
-     * @param string      $directoryPath
-     * @param string|null $fileName
-     * @param boolean     $overwrite If exists the file, overwrite it.
-     *
-     * @throws \Exception
-     */
-    public function save($directoryPath, $fileName = null, $overwrite = false)
-    {
-        if (!is_dir($directoryPath)) {
-            throw new \RuntimeException('This directory ' . $directoryPath . ' not found');
-        }
-        if (is_null($fileName)) {
-            $fileName = $this->getName();
-        }
-
-        $directoryPath = realpath($directoryPath);
-        $directoryPath .= DIRECTORY_SEPARATOR
-            . str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()->getPath());
-        $path = explode(DIRECTORY_SEPARATOR, $directoryPath);
-        $dirPath = '';
-        foreach ($path as $pathName) {
-            $dirPath .= $pathName . DIRECTORY_SEPARATOR;
-            if (!is_dir($dirPath)) {
-                mkdir($dirPath);
-            }
-        }
-        $fullFileName = $dirPath . $fileName . '.php';
-        if ($overwrite || !is_file($fullFileName)) {
-            $file = new \SplFileObject($fullFileName, 'w');
-            $file->fwrite($this->toString());
-        }
-    }
-
-    /**
      * @inheritdoc
      */
     public function evaluate()
