@@ -55,7 +55,7 @@ class PropertyCollection extends ArrayCollection
             $property->setName('property' . ($this->count() + 1));
         }
 
-        return parent::add($property);
+        return parent::set($property->getName(), $property);
     }
 
     /**
