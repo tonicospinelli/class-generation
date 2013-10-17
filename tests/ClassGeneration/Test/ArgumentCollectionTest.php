@@ -68,7 +68,7 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\ArgumentIterator', $collection->getIterator());
     }
 
-    public function testImplodeRequiredArguments()
+    public function testToStringRequiredArguments()
     {
         $collection = new ArgumentCollection(
             array(
@@ -80,7 +80,7 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('\ClassGeneration $arg1, $arg2', $string);
     }
 
-    public function testImplodeRequiredAndOptionalArguments()
+    public function testToStringRequiredAndOptionalArguments()
     {
         $collection = new ArgumentCollection(
             array(
