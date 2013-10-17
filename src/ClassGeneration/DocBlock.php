@@ -161,29 +161,17 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
      */
     public function toString()
     {
-        $tagList = $this->getTagCollection()->getIterator();
-
-        if ($tagList->count() == 0 and ($this->getDescription() === null or $this->getDescription() === '')) {
+        if ($this->getTagCollection()->count() == 0
+            and ($this->getDescription() === null or $this->getDescription() === '')
+        ) {
             return PHP_EOL;
         }
 
         $spaces = $this->getTabulationFormatted();
         $block = PHP_EOL
             . $spaces . '/**' . PHP_EOL
-            . $spaces . ' * ' . nl2br($this->getDescription());
-
-        $block = preg_replace('/(\<br \/\>)+[\r\n][\s]*/', '<br />' . PHP_EOL . $spaces . ' * ', $block);
-        $block = preg_replace('/\<br \/\>[\r\n][\s]*\* $/', '', $block) . PHP_EOL;
-
-        if ($tagList->count() > 0) {
-            $tagList->getCollection()->sortAsc();
-
-            foreach ($tagList as $tag) {
-                if ($tag instanceof TagInterface) {
-                    $block .= $spaces . ' * ' . str_replace('<br>', '<br>' . $spaces . ' * ', $tag->toString());
-                }
-            }
-        }
+            . $spaces . ' * ' . $this->getDescription() . PHP_EOL
+            . preg_replace('/^ \* /', $spaces . ' * ', $this->getTagCollection()->toString());
 
         return $block . $spaces . ' */' . PHP_EOL;
     }

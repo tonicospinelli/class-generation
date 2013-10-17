@@ -162,4 +162,19 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
         };
         usort($this->elements, $cmp);
     }
+
+    public function toString()
+    {
+        if ($this->count() < 1) {
+            return '';
+        }
+        $this->sortAsc();
+        $tagIterator = $this->getIterator();
+        $string = '';
+        foreach ($tagIterator as $tag) {
+            $string .= ' * ' . $tag->toString();
+        }
+
+        return $string;
+    }
 }

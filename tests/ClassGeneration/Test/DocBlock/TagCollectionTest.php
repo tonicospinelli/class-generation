@@ -101,7 +101,6 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testSortDesc()
     {
-
         $tagCollection = new TagCollection();
         $tagCollection->add(new Tag(array('name' => 'param',)));
         $tagCollection->add(new Tag(array('name' => 'param',)));
@@ -109,5 +108,16 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('param', $tagCollection->first()->getName());
         $tagCollection->sortDesc();
         $this->assertEquals('return', $tagCollection->first()->getName());
+    }
+
+    public function testToString()
+    {
+        $tagCollection = new TagCollection();
+        $tagCollection->add(new Tag(array('name' => 'param', 'variable' => 'test')));
+        $tagCollection->add(new Tag(array('name' => 'return',)));
+
+        $expexted = ' * @param mixed $test' . PHP_EOL
+            . ' * @return mixed' . PHP_EOL;
+        $this->assertEquals($expexted, $tagCollection->toString());
     }
 }

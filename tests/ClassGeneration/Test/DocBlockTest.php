@@ -154,7 +154,18 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $docBlock->getTabulation());
     }
 
-    public function testParseDocBlockToString()
+    public function testParseDocBlockToStringWithDescription()
+    {
+        $docBlock = new DocBlock();
+        $docBlock->setDescription('test');
+        $expected = PHP_EOL
+            . '    /**' . PHP_EOL
+            . '     * test' . PHP_EOL
+            . '     */' . PHP_EOL;
+
+        $this->assertEquals($expected, $docBlock->toString());
+    }
+    public function testParseDocBlockToStringWithDescriptionAndTag()
     {
         $docBlock = new DocBlock();
         $docBlock->setDescription('test')

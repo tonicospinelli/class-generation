@@ -74,4 +74,10 @@ interface TagCollectionInterface extends CollectionInterface
      * @return TagInterface
      */
     public function current();
+
+    /**
+     * Parse the tag collection to string.
+     * @return string
+     */
+    public function toString();
 }
