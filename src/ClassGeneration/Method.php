@@ -364,16 +364,25 @@ class Method extends ElementAbstract implements MethodInterface
         return $this;
     }
 
+    protected function codeToString()
+    {
+        $this->setTabulation($this->getTabulation() * 2);
+        $tabulationFormatted = $this->getTabulationFormatted();
+
+        $code = PHP_EOL
+            . $tabulationFormatted
+            . preg_replace("/\n/", PHP_EOL . $tabulationFormatted, $this->getCode())
+            . PHP_EOL;
+
+        return $code;
+    }
+
     /**
      * @inheritdoc
      */
     public function toString()
     {
-        $defaultTabulation = $this->getTabulation();
         $tabulationFormatted = $this->getTabulationFormatted();
-
-        $this->setTabulation($defaultTabulation + $defaultTabulation);
-        $tabulationFormattedCode = $this->getTabulationFormatted();
 
         $final = '';
         if ($this->isFinal()) {
@@ -396,13 +405,9 @@ class Method extends ElementAbstract implements MethodInterface
         }
 
         if (!$this->isInterface() and !$this->isAbstract()) {
-            $code = PHP_EOL
-                . $tabulationFormatted
+            $code = PHP_EOL . $tabulationFormatted
                 . '{'
-                . PHP_EOL
-                . $tabulationFormattedCode
-                . preg_replace("/\n/", PHP_EOL . $tabulationFormattedCode, $this->getCode())
-                . PHP_EOL
+                . $this->codeToString()
                 . $tabulationFormatted
                 . '}';
         } else {
@@ -418,7 +423,7 @@ class Method extends ElementAbstract implements MethodInterface
             . 'function '
             . $this->getName()
             . '('
-            . $this->arguments->implode()
+            . $this->getArgumentCollection()->toString()
             . ')'
             . $code
             . PHP_EOL;
