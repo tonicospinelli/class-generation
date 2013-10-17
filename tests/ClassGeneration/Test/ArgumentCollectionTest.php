@@ -76,7 +76,7 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
                 new Argument(array('name' => 'arg2', 'type' => 'int')),
             )
         );
-        $string = $collection->implode();
+        $string = $collection->toString();
         $this->assertEquals('\ClassGeneration $arg1, $arg2', $string);
     }
 
@@ -88,7 +88,7 @@ class ArgumentCollectionTest extends \PHPUnit_Framework_TestCase
                 new Argument(array('name' => 'arg2', 'type' => 'int')),
             )
         );
-        $string = $collection->implode();
+        $string = $collection->toString();
         $this->assertEquals('$arg2, \ClassGeneration $arg1 = NULL', $string);
     }
 

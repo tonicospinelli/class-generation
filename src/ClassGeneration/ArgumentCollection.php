@@ -72,7 +72,7 @@ class ArgumentCollection extends ArrayCollection
      * Returns the arguments in string.
      * @return string
      */
-    public function implode()
+    public function toString()
     {
         $arguments = $this->getIterator();
         $params = array();
