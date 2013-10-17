@@ -113,6 +113,10 @@ class Tag extends ElementAbstract implements TagInterface
      */
     public function getType()
     {
+        if ((is_null($this->type) or empty($this->type)) and $this->needsType()) {
+            return 'mixed';
+        }
+
         return $this->type;
     }
 
@@ -165,13 +169,11 @@ class Tag extends ElementAbstract implements TagInterface
     /**
      * This tag, has type?
      *
-     * @param string $tagName
-     *
      * @return bool
      */
-    protected function needsType($tagName)
+    protected function needsType()
     {
-        return $this->tagNeedsType->contains($tagName);
+        return $this->tagNeedsType->contains($this->getName());
     }
 
     /**
@@ -219,9 +221,6 @@ class Tag extends ElementAbstract implements TagInterface
         $variable = $this->getVariable();
         $type = $this->getType();
         $description = $this->getDescription();
-        if ($this->needsType($name)) {
-            $type = (is_null($type) or empty($type)) ? 'mixed' : $type;
-        }
         $string =
             '@' . $name
             . ((!is_null($type) and !empty($type)) ? ' ' . $type : '')

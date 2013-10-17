@@ -83,9 +83,6 @@ class UseCollection extends ArrayCollection implements ElementInterface
      */
     public function toString()
     {
-        if ($this->count() < 1) {
-            return '';
-        }
         $uses = $this->getIterator();
         $string = '';
         foreach ($uses as $use) {

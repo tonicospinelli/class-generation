@@ -42,7 +42,6 @@ class PropertyCollection extends ArrayCollection
      * @param PropertyInterface $property
      *
      * @throws \InvalidArgumentException
-     * @return bool
      */
     public function add($property)
     {
@@ -55,7 +54,8 @@ class PropertyCollection extends ArrayCollection
             $property->setName('property' . ($this->count() + 1));
         }
 
-        return parent::set($property->getName(), $property);
+        parent::set($property->getName(), $property);
+        return true;
     }
 
     /**

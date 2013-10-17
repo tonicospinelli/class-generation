@@ -42,7 +42,6 @@ class MethodCollection extends ArrayCollection
      * @param MethodInterface $method
      *
      * @throws \InvalidArgumentException
-     * @return bool
      */
     public function add($method)
     {
@@ -53,7 +52,8 @@ class MethodCollection extends ArrayCollection
             $method->setName('method' . ($this->count() + 1));
         }
 
-        return parent::set($method->getName(), $method);
+        parent::set($method->getName(), $method);
+        return true;
     }
 
     /**
