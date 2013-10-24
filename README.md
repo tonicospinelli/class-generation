@@ -13,12 +13,12 @@ When I developed a specific project, I saw an opportunity to create a library to
 
 Installation
 ============
-I assume you know about Composer, if not see [Composer WebSite](http://getcomposer.org/).
+I assume you know about Composer, if not look at [Composer WebSite](http://getcomposer.org/).
 ```sh
 $ php composer.phar require tonicospinelli/classgeneration:1.1.*
 ```
 OR
-```javascripti
+```json
 {
     "tonicospinelli/classgeneration" : "1.1.*"
 }
@@ -30,14 +30,19 @@ QUICK START
 Using ClassGeneration is simple. Here's a simple example for creating a Php Class File. 
 
 ```php
-$code = new \ClassGeneration\Builder();
+$code = new \ClassGeneration\PhpClass();
 $code
-->setName('FirstClass')
-->setNamespace('MyNamespace')
-->setDescription('Class description')
-->addProperty(new Property(array('name' => 'property')))
-->generateGettersAndSettersFromProperties()
-->save('./src');
+    ->setName('FirstClass')
+    ->setNamespace('MyNamespace')
+    ->setDescription('Class description')
+    ->addProperty(new Property(array('name' => 'property')))
+    ->generateGettersAndSettersFromProperties()
+
+$writer = new \ClassGenereation\Writer();
+$writer
+    ->setPhpClass($code)
+    ->setPath('./src')
+    ->write();
 ```
 Result: ./src/MyNamespace/FirstClass.php
 ```php
