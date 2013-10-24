@@ -1,14 +1,20 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: aspinelli
- * Date: 16/10/13
- * Time: 15:28
- * To change this template use File | Settings | File Templates.
+
+/*
+ * This file is part of the ClassGeneration package.
+ *
+ * (c) Antonio Spinelli <tonicospinelli@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace ClassGeneration;
 
+/**
+ * Class WriterInterface
+ * @author Antonio Spinelli <tonicospinelli@gmail.com>
+ */
 interface WriterInterface
 {
 

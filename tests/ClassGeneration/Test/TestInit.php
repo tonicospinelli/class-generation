@@ -1,7 +1,15 @@
 <?php
+
 /*
- * This file bootstraps the test environment.
+ * This file bootstraps the test environment and
+ * is part of the ClassGeneration package.
+ *
+ * (c) Antonio Spinelli <tonicospinelli@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace PositionalText\Tests;
 
 error_reporting(E_ALL | E_STRICT);
