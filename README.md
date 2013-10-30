@@ -9,7 +9,8 @@ Class Generation
 
 Introduction
 ============
-When I developed a specific project, I saw an opportunity to create a library to generate Php Class Files and this was born.
+When I developed a specific project, I saw an opportunity to create a library
+to generate Php Class Files and this library was born.
 
 Installation
 ============
@@ -27,18 +28,26 @@ OR
 QUICK START
 -----------
 
-Using ClassGeneration is simple. Here's a simple example for creating a Php Class File. 
+ClassGeneration is simple to use. Here's a sample for creating a Php Class File.
 
 ```php
-$code = new \ClassGeneration\PhpClass();
+<?php
+require_once "../vendor/autoload.php";
+
+use ClassGeneration\NamespaceClass;
+use ClassGeneration\PhpClass;
+use ClassGeneration\Property;
+use ClassGeneration\Writer;
+
+$code = new PhpClass();
 $code
     ->setName('FirstClass')
-    ->setNamespace('MyNamespace')
+    ->setNamespace(new NamespaceClass('MyNamespace'))
     ->setDescription('Class description')
     ->addProperty(new Property(array('name' => 'property')))
-    ->generateGettersAndSettersFromProperties()
+    ->generateGettersAndSettersFromProperties();
 
-$writer = new \ClassGenereation\Writer();
+$writer = new Writer();
 $writer
     ->setPhpClass($code)
     ->setPath('./src')
@@ -64,19 +73,14 @@ class FirstClass
         return $this->property;
     }
 
-    /**
-     *
-     * @param mixed $property
-     * @return \MyNamespace\FirstClass
-     */
     public function setProperty($property)
     {
         $this->property = $property;
 
         return $this;
     }
-
 }
+
 ```
 Version
 ----
