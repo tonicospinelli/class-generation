@@ -3,7 +3,7 @@ filter:
     paths: [src/*, tests/*]
 
 before_commands:
-    - "composer install --prefer-source"
+    - "composer install --prefer-source --no-dev"
 
 tools:
     php_code_coverage:
