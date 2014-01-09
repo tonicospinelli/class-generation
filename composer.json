@@ -32,12 +32,7 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/phpunit": "3.7@stable",
-        "pdepend/pdepend": "*",
-        "sebastian/phpcpd": "*",
-        "squizlabs/php_codesniffer": "*",
-        "phpmd/phpmd": "*"
+        "phpunit/phpunit": "3.7@stable"
     },
     "autoload": {
         "psr-0": {
