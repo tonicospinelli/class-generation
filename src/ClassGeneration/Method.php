@@ -49,7 +49,7 @@ class Method extends ElementAbstract implements MethodInterface
     /**
      * @var string
      */
-    protected $visibility;
+    protected $visibility = Visibility::TYPE_PUBLIC;
 
     /**
      * Sets like a final.
@@ -384,20 +384,9 @@ class Method extends ElementAbstract implements MethodInterface
             $static = 'static ';
         }
 
-        $visibility = '';
-        if ($this->getVisibility()) {
-            $visibility = $this->getVisibility() . ' ';
-        }
+        $visibility = $this->getVisibility() . ' ';
 
-        if (!$this->isInterface() and !$this->isAbstract()) {
-            $code = PHP_EOL . $tabulationFormatted
-                . '{'
-                . $this->codeToString()
-                . $tabulationFormatted
-                . '}';
-        } else {
-            $code = ';';
-        }
+        $code = $this->toStringCode();
 
         $method = $this->getDocBlock()->toString()
             . $tabulationFormatted
@@ -414,5 +403,20 @@ class Method extends ElementAbstract implements MethodInterface
             . PHP_EOL;
 
         return $method;
+    }
+
+    public function toStringCode()
+    {
+        $tabulationFormatted = $this->getTabulationFormatted();
+        if (!$this->isInterface() and !$this->isAbstract()) {
+            $code = PHP_EOL . $tabulationFormatted
+                . '{'
+                . $this->codeToString()
+                . $tabulationFormatted
+                . '}';
+        } else {
+            $code = ';';
+        }
+return $code;
     }
 }
