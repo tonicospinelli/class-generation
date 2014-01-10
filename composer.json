@@ -26,12 +26,9 @@
         "issues": "https://github.com/tonicospinelli/ClassGeneration/issues"
     },
     "require": {
-        "php": ">=5.3.0",
-        "ext-reflection": "*",
-        "ext-spl": "*"
+        "php": ">=5.3.3"
     },
     "require-dev": {
-        "ext-xdebug": "*",
         "phpunit/phpunit": "3.7@stable",
         "pdepend/pdepend": "1.1.*",
         "sebastian/phpcpd": "1.4.*",
