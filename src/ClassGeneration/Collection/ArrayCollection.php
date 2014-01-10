@@ -173,6 +173,7 @@ class ArrayCollection implements CollectionInterface
 
     /**
      * {@inheritdoc}
+     * @param string $findElement
      */
     public function exists($findKey = null, $findElement = null)
     {

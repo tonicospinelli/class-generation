@@ -13,8 +13,6 @@ namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlock\TagInterface;
-use ClassGeneration\Element\Declarable;
-use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
 
 /**

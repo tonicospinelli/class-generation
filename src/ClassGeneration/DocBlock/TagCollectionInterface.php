@@ -12,6 +12,7 @@
 namespace ClassGeneration\DocBlock;
 
 use ClassGeneration\Collection\CollectionInterface;
+use ClassGeneration\Element\ElementInterface;
 
 /**
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
@@ -31,7 +32,7 @@ interface TagCollectionInterface extends CollectionInterface
     /**
      * Removes tag by reference.
      *
-     * @param int|string|array $reference
+     * @param ElementInterface $reference
      *
      * @return TagCollectionInterface
      */

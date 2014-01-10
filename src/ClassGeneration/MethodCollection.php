@@ -69,7 +69,7 @@ class MethodCollection extends ArrayCollection
     /**
      * Removes tags by name.
      *
-     * @param $methodName
+     * @param string $methodName
      *
      * @return MethodCollection Returns a collection with removed methods.
      */

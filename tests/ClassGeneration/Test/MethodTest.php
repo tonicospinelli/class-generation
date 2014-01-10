@@ -85,8 +85,8 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $method = new Method();
         $method->addArgument(new Argument(array('name' => 'arg1')));
 
-        $this->assertInstanceOf('\ClassGeneration\Argument', $method->getArgument('arg1'));
-        $this->assertEquals('arg1', $method->getArgument('arg1')->getName());
+        $this->assertInstanceOf('\ClassGeneration\Argument', $method->getArgumentCollection()->get('arg1'));
+        $this->assertEquals('arg1', $method->getArgumentCollection()->get('arg1')->getName());
     }
 
     public function testSetAndGetDescription()

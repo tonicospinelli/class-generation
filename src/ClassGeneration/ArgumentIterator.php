@@ -23,7 +23,7 @@ class ArgumentIterator extends CollectionIterator
     /**
      * Construct a Argument Collection Iterator.
      *
-     * @param \ClassGeneration\ArgumentCollection|array $collection
+     * @param ArgumentCollection $collection
      */
     public function __construct($collection)
     {

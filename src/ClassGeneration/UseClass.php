@@ -58,9 +58,8 @@ class UseClass extends ElementAbstract implements UseInterface
         if (!$parent instanceof PhpClassInterface) {
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
-        $this->parent = $parent;
 
-        return $this;
+        return parent::setParent($parent);
     }
 
     /**

@@ -26,7 +26,7 @@ class Visibility
     /**
      * Validate visiblity.
      *
-     * @param $visibility
+     * @param string $visibility
      *
      * @throws \InvalidArgumentException
      * @return bool
@@ -38,7 +38,6 @@ class Visibility
             case Visibility::TYPE_PROTECTED:
             case Visibility::TYPE_PUBLIC:
                 return true;
-                break;
         }
         throw new \InvalidArgumentException('The ' . $visibility . ' is not allowed');
     }
