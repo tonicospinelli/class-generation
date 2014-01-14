@@ -41,7 +41,9 @@ class ArgumentCollection extends ArrayCollection
             $argument->setName('param' . ($this->count() + 1));
         }
 
-        return parent::offsetSet($argument->getName(), $argument);
+        parent::offsetSet($argument->getName(), $argument);
+
+        return true;
     }
 
     /**

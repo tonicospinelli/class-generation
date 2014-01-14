@@ -12,7 +12,6 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
-use ClassGeneration\Collection\CollectionIterator;
 use ClassGeneration\Element\ElementInterface;
 
 /**

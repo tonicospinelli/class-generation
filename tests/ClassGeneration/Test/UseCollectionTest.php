@@ -42,7 +42,6 @@ class UseCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $code = new PhpClass();
         $use = new UseCollection();
-        $use->init();
         $use->setOptions(array('parent' => $code));
         $this->assertInstanceOf('\ClassGeneration\PhpClass', $use->getParent());
         $use->setParent(new Tag());

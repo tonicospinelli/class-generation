@@ -12,7 +12,6 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
-use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
 
 /**

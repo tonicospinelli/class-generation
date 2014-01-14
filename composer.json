@@ -26,9 +26,7 @@
         "issues": "https://github.com/tonicospinelli/ClassGeneration/issues"
     },
     "require": {
-        "php": ">=5.3.0",
-        "ext-reflection": "*",
-        "ext-spl": "*"
+        "php": ">=5.3.3"
     },
     "require-dev": {
         "ext-xdebug": "*",

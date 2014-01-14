@@ -96,7 +96,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     /**
      * Removes tags by name.
      *
-     * @param $tagName
+     * @param string $tagName
      *
      * @return TagCollection
      */

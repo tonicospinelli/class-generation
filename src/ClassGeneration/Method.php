@@ -13,12 +13,8 @@ namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlock\TagInterface;
-use ClassGeneration\Element\Declarable;
-use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
-use ClassGeneration\Element\StaticInterface;
-use ClassGeneration\Element\VisibilityInterface;
 use ClassGeneration\PhpClassInterface;
 
 /**
@@ -107,10 +103,8 @@ class Method extends ElementAbstract implements MethodInterface
         if (!$parent instanceof PhpClassInterface) {
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
-        parent::setParent($parent);
-        $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
-        return $this;
+        return parent::setParent($parent);
     }
 
     /**
@@ -417,6 +411,7 @@ class Method extends ElementAbstract implements MethodInterface
         } else {
             $code = ';';
         }
-return $code;
+
+        return $code;
     }
 }

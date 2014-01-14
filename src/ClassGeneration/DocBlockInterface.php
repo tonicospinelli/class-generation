@@ -12,7 +12,6 @@
 namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\TagCollectionInterface;
-use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
 
 /**

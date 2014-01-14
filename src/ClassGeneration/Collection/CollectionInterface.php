@@ -28,6 +28,7 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
 
     /**
      * Clears the collection, removing all elements.
+     * @return void
      */
     public function clear();
 
@@ -68,7 +69,7 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
     /**
      * Checks whether the collection contains an element with the specified key/index.
      *
-     * @param string|integer $key The key/index to check for.
+     * @param mixed $key The key/index to check for.
      *
      * @return boolean TRUE if the collection contains an element with the specified key/index,
      *          FALSE otherwise.
@@ -78,7 +79,7 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
     /**
      * Gets the element at the specified key/index.
      *
-     * @param string|integer $key The key/index of the element to retrieve.
+     * @param mixed $key The key/index of the element to retrieve.
      *
      * @return mixed
      */
@@ -101,8 +102,10 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
     /**
      * Sets an element in the collection at the specified key/index.
      *
-     * @param string|integer $key   The key/index of the element to set.
-     * @param mixed          $value The element to set.
+     * @param mixed $key   The key/index of the element to set.
+     * @param mixed $value The element to set.
+     *
+     * @return void
      */
     public function set($key, $value);
 

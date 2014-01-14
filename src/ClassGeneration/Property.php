@@ -13,10 +13,7 @@ namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlockInterface;
-use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
-use ClassGeneration\Element\StaticInterface;
-use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Property ClassGeneration
