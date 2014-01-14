@@ -121,6 +121,7 @@ class Property extends ElementAbstract implements PropertyInterface
         if (is_object($value)) {
             throw new \InvalidArgumentException('Object is not allowed in value for Property.');
         }
+
         $this->value = $value;
 
         return $this;
