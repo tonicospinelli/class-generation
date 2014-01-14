@@ -13,8 +13,12 @@ namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Element\Declarable;
+use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\Element\StaticInterface;
+use ClassGeneration\Element\VisibilityInterface;
 use ClassGeneration\PhpClassInterface;
 
 /**
@@ -103,8 +107,10 @@ class Method extends ElementAbstract implements MethodInterface
         if (!$parent instanceof PhpClassInterface) {
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
+        parent::setParent($parent);
+        $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
-        return parent::setParent($parent);
+        return $this;
     }
 
     /**
@@ -277,6 +283,7 @@ class Method extends ElementAbstract implements MethodInterface
         if ($this->isInterface()) {
             throw new \RuntimeException('This method is an interface and it not be an abstract too.');
         }
+
         $this->isAbstract = (bool)$isAbstract;
 
         return $this;
@@ -363,31 +370,14 @@ class Method extends ElementAbstract implements MethodInterface
     {
         $tabulationFormatted = $this->getTabulationFormatted();
 
-        $final = '';
-        if ($this->isFinal()) {
-            $final = 'final ';
-        }
-
-        $abstract = '';
-        if ($this->isAbstract()) {
-            $abstract = 'abstract ';
-        }
-
-        $static = '';
-        if ($this->isStatic()) {
-            $static = 'static ';
-        }
-
-        $visibility = $this->getVisibility() . ' ';
-
         $code = $this->toStringCode();
 
         $method = $this->getDocBlock()->toString()
             . $tabulationFormatted
-            . $final
-            . $abstract
-            . $visibility
-            . $static
+            . ($this->isFinal() ? 'final ' : '')
+            . ($this->isAbstract() ? 'abstract ' : '')
+            . $this->getVisibility() . ' '
+            . ($this->isStatic() ? 'static ' : '')
             . 'function '
             . $this->getName()
             . '('
@@ -399,6 +389,10 @@ class Method extends ElementAbstract implements MethodInterface
         return $method;
     }
 
+    /**
+     * Get string code.
+     * @return string
+     */
     public function toStringCode()
     {
         $tabulationFormatted = $this->getTabulationFormatted();
