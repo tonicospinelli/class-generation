@@ -525,19 +525,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     public function toString()
     {
         $extends = '';
-
-        if ($this->isInterface()) {
-            $type = 'interface ';
-        } elseif ($this->isAbstract()) {
-            $type = 'abstract class ';
-        } elseif ($this->isFinal()) {
-            $type = 'final class ';
-        } elseif ($this->isTrait()) {
-            $type = 'trait ';
-        } else {
-            $type = 'class ';
-        }
-
         if ($this->getExtends()) {
             $extends = ' extends ' . $this->getExtends();
         }
@@ -545,7 +532,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             . $this->getNamespace()->toString()
             . $this->getUseCollection()->toString()
             . $this->getDocBlock()->setTabulation($this->getTabulation())->toString()
-            . $type
+            . $this->toStringType()
             . $this->getName()
             . $extends
             . $this->getInterfaceCollection()->toString()
@@ -608,5 +595,30 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         $this->isAbstract = (bool)$isAbstract;
 
         return $this;
+    }
+
+    /**
+     * Get string based on type set.
+     * @return string
+     */
+    protected function toStringType()
+    {
+        $type = 'class ';
+        switch(true){
+            case $this->isInterface():
+                $type = 'interface ';
+                break;
+            case $this->isAbstract():
+                $type = 'abstract class ';
+                break;
+            case $this->isFinal():
+                $type = 'final class';
+                break;
+            case $this->isTrait():
+                $type = 'trait ';
+                break;
+        }
+
+        return $type;
     }
 }
