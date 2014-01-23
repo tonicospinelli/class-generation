@@ -612,7 +612,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
                 $type = 'abstract class ';
                 break;
             case $this->isFinal():
-                $type = 'final class';
+                $type = 'final class ';
                 break;
             case $this->isTrait():
                 $type = 'trait ';
