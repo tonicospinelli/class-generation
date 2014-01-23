@@ -603,8 +603,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
      */
     protected function toStringType()
     {
-        $type = 'class ';
-        switch(true){
+        switch (true) {
             case $this->isInterface():
                 $type = 'interface ';
                 break;
@@ -617,6 +616,8 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             case $this->isTrait():
                 $type = 'trait ';
                 break;
+            default:
+                $type = 'class ';
         }
 
         return $type;
