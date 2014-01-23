@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "phpunit/phpunit": "3.7@stable"
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
