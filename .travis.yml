@@ -8,7 +8,7 @@ php:
 before_script:
   - "composer self-update"
   - "composer --version"
-  - "composer install --dev --verbose"
+  - "composer install --no-dev --verbose"
 
 script:
-  - "./vendor/bin/phpunit"
+  - "phpunit -c phpunit.dist.xml"
