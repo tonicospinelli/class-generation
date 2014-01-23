@@ -11,8 +11,6 @@
 
 namespace ClassGeneration\Element;
 
-use ClassGeneration\DocBlockInterface;
-
 /**
  * Abstract ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
@@ -98,11 +96,7 @@ abstract class ElementAbstract implements ElementInterface, Tabbable
     }
 
     /**
-     * Set tabulation spaces.
-     *
-     * @param int $tabulation
-     *
-     * @return ElementAbstract
+     * @inheritdoc
      */
     public function setTabulation($tabulation)
     {
