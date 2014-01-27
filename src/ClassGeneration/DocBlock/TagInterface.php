@@ -148,7 +148,7 @@ interface TagInterface extends ElementInterface
     /**
      * Sets the element (Property or Method) to reference.
      *
-     * @param mixed $referenced
+     * @param ElementInterface $referenced
      *
      * @return TagInterface
      */
@@ -165,7 +165,7 @@ interface TagInterface extends ElementInterface
      *
      * @param bool $isInline
      *
-     * @return mixed
+     * @return TagInterface
      */
     public function setIsInline($isInline = true);
 }

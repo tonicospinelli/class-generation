@@ -283,7 +283,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * Sorting by values using a user-defined comparison function.
      *
-     * @param callable $callable
+     * @param \Closure $callable
      *
      * @return void
      */

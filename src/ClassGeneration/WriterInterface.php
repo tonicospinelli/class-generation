@@ -22,6 +22,8 @@ interface WriterInterface
      * Class to write a file from Class Object.
      *
      * @param PhpClassInterface|array $class
+     *
+     * @return WriterInterface
      */
     public function __construct($class = array());
 
@@ -63,6 +65,7 @@ interface WriterInterface
 
     /**
      * Writes the class on file.
+     * @return void
      */
     public function write();
 }

@@ -26,7 +26,7 @@ class UseCollection extends ArrayCollection implements ElementInterface
     /**
      * Initializes a new ArrayCollection.
      *
-     * @param array $elements
+     * @param UseClass[] $elements
      */
     public function __construct(array $elements = array())
     {
