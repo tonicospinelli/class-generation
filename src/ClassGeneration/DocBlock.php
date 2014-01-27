@@ -102,7 +102,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
      */
     public function removeTagsByName($tagName)
     {
-        return $this->tagCollection->removeByName($tagName);
+        return $this->getTagCollection()->removeByName($tagName);
     }
 
     /**
@@ -114,29 +114,19 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
      */
     public function removeTagsByReference($reference)
     {
-        return $this->tagCollection->removeByReferece($reference);
+        return $this->getTagCollection()->removeByReferece($reference);
     }
 
     /**
      * Gets tags by name.
      *
-     * @param string $nameTag
+     * @param string $tagName
      *
      * @return TagCollectionInterface
      */
-    public function getTagsByName($nameTag)
+    public function getTagsByName($tagName)
     {
-        $foundList = new TagCollection();
-        $list = $this->getTagCollection()->getIterator();
-
-        foreach ($list as $index => $tag) {
-            $name = $tag->getName();
-            if (is_array($nameTag) and in_array($name, $nameTag)) {
-                $foundList->add($this->getTagCollection()->get($index));
-            } elseif ($name === $nameTag) {
-                $foundList->add($this->getTagCollection()->get($index));
-            }
-        }
+        $foundList = $this->getTagCollection()->getByName($tagName);
 
         return $foundList;
     }

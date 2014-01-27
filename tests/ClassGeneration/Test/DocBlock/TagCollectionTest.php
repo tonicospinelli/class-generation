@@ -100,4 +100,16 @@ class TagCollectionTest extends \PHPUnit_Framework_TestCase
             . ' * @return mixed' . PHP_EOL;
         $this->assertEquals($expexted, $tagCollection->toString());
     }
+
+    public function testGetTagsByName()
+    {
+        $tagCollection = new TagCollection();
+        $tagCollection->add(new Tag(array('name' => 'param',)));
+        $tagCollection->add(new Tag(array('name' => 'param',)));
+        $tagCollection->add(new Tag(array('name' => 'return',)));
+        $tagCollection->add(new Tag(array('name' => 'internal',)));
+        $this->assertCount(4, $tagCollection);
+        $this->assertCount(2, $tagCollection->getByName('param'));
+        $this->assertCount(2, $tagCollection->getByName(array('return', 'internal')));
+    }
 }
