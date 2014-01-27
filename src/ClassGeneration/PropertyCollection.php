@@ -25,6 +25,7 @@ class PropertyCollection extends ArrayCollection
      *
      * @param PropertyInterface $property
      *
+     * @return bool
      * @throws \InvalidArgumentException
      */
     public function add($property)
@@ -39,6 +40,7 @@ class PropertyCollection extends ArrayCollection
         }
 
         parent::set($property->getName(), $property);
+
         return true;
     }
 
@@ -100,7 +102,7 @@ class PropertyCollection extends ArrayCollection
     /**
      * Removes tags by name.
      *
-     * @param $propertyName
+     * @param string $propertyName
      *
      * @return PropertyCollection
      */
