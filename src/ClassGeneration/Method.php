@@ -104,7 +104,6 @@ class Method extends ElementAbstract implements MethodInterface
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
         parent::setParent($parent);
-        $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
         return $this;
     }
@@ -141,18 +140,9 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public function addArgument(ArgumentInterface $argument)
     {
-        $this->arguments->add($argument);
-        $this->getDocBlock()->addTag(
-            new Tag(
-                array(
-                    'name'        => Tag::TAG_PARAM,
-                    'type'        => $argument->getType(),
-                    'variable'    => $argument->getName(),
-                    'description' => $argument->getDescription(),
-                    'referenced'  => $this->arguments->offsetGet($argument->getName())
-                )
-            )
-        );
+        $this->getArgumentCollection()->add($argument);
+        $tag = Tag::createFromArgument($argument);
+        $this->getDocBlock()->addTag($tag);
 
         return $this;
     }

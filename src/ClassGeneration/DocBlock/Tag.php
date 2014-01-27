@@ -11,6 +11,7 @@
 
 namespace ClassGeneration\DocBlock;
 
+use ClassGeneration\ArgumentInterface;
 use ClassGeneration\Collection\ArrayCollection;
 use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
@@ -151,7 +152,6 @@ class Tag extends ElementAbstract implements TagInterface
 
     /**
      * This tag, has type?
-     *
      * @return bool
      */
     protected function needsType()
@@ -216,5 +216,24 @@ class Tag extends ElementAbstract implements TagInterface
         }
 
         return $string . PHP_EOL;
+    }
+
+    /**
+     * Creating a Tag from an Argument Object.
+     *
+     * @param ArgumentInterface $argument
+     *
+     * @return TagInterface
+     */
+    public static function createFromArgument(ArgumentInterface $argument)
+    {
+        $tag = (new self)
+            ->setName(self::TAG_PARAM)
+            ->setType($argument->getType())
+            ->setVariable($argument->getName())
+            ->setDescription($argument->getDescription())
+            ->setReferenced($argument);
+
+        return $tag;
     }
 }
