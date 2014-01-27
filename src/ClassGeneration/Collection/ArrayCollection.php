@@ -281,19 +281,30 @@ class ArrayCollection implements CollectionInterface
     }
 
     /**
+     * Sorting by values using a user-defined comparison function.
+     *
+     * @param callable $callable
+     *
+     * @return void
+     */
+    public function sort(\Closure $callable)
+    {
+        usort($this->elements, $callable);
+    }
+
+    /**
      * Sort the list by elements.
      * @return void
      */
     public function sortAsc()
     {
-        $cmp = function ($a, $b) {
-            if ($a == $b) {
+        $this->sort(function ($a, $b) {
+            if ($a === $b) {
                 return 0;
             }
 
             return ($a < $b) ? -1 : 1;
-        };
-        usort($this->elements, $cmp);
+        });
     }
 
     /**
@@ -302,13 +313,12 @@ class ArrayCollection implements CollectionInterface
      */
     public function sortDesc()
     {
-        $cmp = function ($a, $b) {
-            if ($a == $b) {
+        $this->sort(function ($a, $b) {
+            if ($a === $b) {
                 return 0;
             }
 
             return ($a > $b) ? -1 : 1;
-        };
-        usort($this->elements, $cmp);
+        });
     }
 }

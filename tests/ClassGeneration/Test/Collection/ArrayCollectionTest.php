@@ -212,6 +212,20 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $slice);
     }
 
+    public function testSortUserDefinedInArrayCollection()
+    {
+        $collection = new ArrayCollection(array(5, 5, 4, 3, 2, 1, 0));
+        $this->assertEquals(5, $collection->first());
+        $collection->sort(function ($a, $b) {
+            if ($a === $b) {
+                return 0;
+            }
+
+            return ($a < $b) ? -1 : 1;
+        });
+        $this->assertEquals(5, $collection->last());
+    }
+
     public function testSortAscInArrayCollection()
     {
         $collection = new ArrayCollection(array(5, 5, 4, 3, 2, 1, 0));
