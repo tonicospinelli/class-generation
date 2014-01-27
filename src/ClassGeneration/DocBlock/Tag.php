@@ -15,6 +15,7 @@ use ClassGeneration\ArgumentInterface;
 use ClassGeneration\Collection\ArrayCollection;
 use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\PropertyInterface;
 
 /**
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
@@ -227,12 +228,30 @@ class Tag extends ElementAbstract implements TagInterface
      */
     public static function createFromArgument(ArgumentInterface $argument)
     {
-        $tag = (new self)
+        $tag = new self();
+        $tag
             ->setName(self::TAG_PARAM)
             ->setType($argument->getType())
             ->setVariable($argument->getName())
             ->setDescription($argument->getDescription())
             ->setReferenced($argument);
+
+        return $tag;
+    }
+
+    /**
+     * Create var tag from property.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Tag
+     */
+    public static function createFromProperty(PropertyInterface $property)
+    {
+        $tag = new self();
+        $tag
+            ->setName(self::TAG_VAR)
+            ->setType($property->getType());
 
         return $tag;
     }

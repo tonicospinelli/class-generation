@@ -404,7 +404,8 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public static function createGetterFromProperty(PropertyInterface $property)
     {
-        $method = (new self)
+        $method = new self;
+        $method
             ->setName('get_' . $property->getName())
             ->setCode('return $this->' . $property->getName() . ';');
 
@@ -427,11 +428,32 @@ class Method extends ElementAbstract implements MethodInterface
             . PHP_EOL
             . 'return $this;';
 
-        $method = (new self)
+        $method = new self;
+        $method
             ->setName('set_' . $property->getName())
-            ->setCode($code);
-        $method->getArgumentCollection()->add($argument);
+            ->setCode($code)
+            ->getArgumentCollection()->add($argument);
 
+        return $method;
+    }
+
+    /**
+     * Creates a method from Reflection Method.
+     *
+     * @param \ReflectionMethod $reflected
+     *
+     * @return Method
+     */
+    public static function createFromReflection(\ReflectionMethod $reflected)
+    {
+        $method = new self();
+        $method->setName($reflected->getName());
+
+        foreach($reflected->getParameters() as $parameterReflected){
+            $argument = new Argument();
+            $argument->setName($parameterReflected->getName());
+            $method->addArgument($argument);
+        }
         return $method;
     }
 }

@@ -1,6 +1,12 @@
 Class Generation Changelog
 ================
 
+* 2.1.1
+  * [Method] create getter and setter from property
+  * [Tag] create from argument and property
+  * [PhpClass] methods refactored and some improves
+  * rollback on create instances like `(Class)`
+
 * 2.1.0
   * create a changelog file
   * some improves and methods refactored
