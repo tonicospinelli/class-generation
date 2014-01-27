@@ -21,16 +21,6 @@ class UseIterator extends CollectionIterator
 {
 
     /**
-     * Construct the Property Iterator.
-     *
-     * @param PropertyCollection|array $collection
-     */
-    public function __construct($collection)
-    {
-        parent::__construct($collection);
-    }
-
-    /**
      * Gets the current Property.
      * @return UseInterface
      */

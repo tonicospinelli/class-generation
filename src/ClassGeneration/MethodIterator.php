@@ -21,16 +21,6 @@ class MethodIterator extends CollectionIterator
 {
 
     /**
-     * Construct a Method Iterator.
-     *
-     * @param MethodCollection|array $collection
-     */
-    public function __construct($collection)
-    {
-        parent::__construct($collection);
-    }
-
-    /**
      * Gets the current Method.
      * @return Method
      */
