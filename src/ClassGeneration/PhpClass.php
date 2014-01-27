@@ -168,14 +168,10 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $replaceTo = strpos($name, '_') !== false ? '_' : '';
         $this->name = str_replace(' ', $replaceTo, ucwords(strtr($name, '_-', '  ')));
-        $this->addCommentTag(
-            new Tag(
-                array(
-                    'name'        => Tag::TAG_NAME,
-                    'description' => $this->name
-                )
-            )
-        );
+        $tag = (new Tag)
+            ->setName(Tag::TAG_NAME)
+            ->setDescription($this->name);
+        $this->addCommentTag($tag);
 
         return $this;
     }
@@ -318,14 +314,18 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     public function setExtends($extends)
     {
         $this->extends = $extends;
-        if (class_exists($extends)) {
-            $refExtends = new \ReflectionClass($extends);
-            $methods = $refExtends->getMethods();
-            foreach ($methods as $method) {
-                if ($method->isAbstract()) {
-                    $this->addMethod(new Method(array('name' => $method->getName())));
-                }
+
+        if (!class_exists($extends)) {
+            return $this;
+        }
+
+        $refExtends = new \ReflectionClass($extends);
+        $methods = $refExtends->getMethods();
+        foreach ($methods as $method) {
+            if (!$method->isAbstract()) {
+                continue;
             }
+            $this->addMethod((new Method)->setName($method->getName()));
         }
 
         return $this;
@@ -368,14 +368,16 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     protected function createMethodsFromInterface($interfaceName)
     {
         if (interface_exists($interfaceName)) {
-            $refInterface = new \ReflectionClass($interfaceName);
-            $methods = $refInterface->getMethods();
-            foreach ($methods as $method) {
-                if ($this->getMethodCollection()->exists($method->getName())) {
-                    continue;
-                }
-                $this->addMethod(new Method(array('name' => $method->getName())));
+            return;
+        }
+
+        $refInterface = new \ReflectionClass($interfaceName);
+        $methods = $refInterface->getMethods();
+        foreach ($methods as $method) {
+            if ($this->getMethodCollection()->exists($method->getName())) {
+                continue;
             }
+            $this->addMethod(new Method(array('name' => $method->getName())));
         }
     }
 
@@ -466,14 +468,10 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
      */
     protected function generateGetterFromProperty(PropertyInterface $property)
     {
-        $this->addMethod(
-            new Method(
-                array(
-                    'name' => 'get_' . $property->getName(),
-                    'code' => 'return $this->' . $property->getName() . ';'
-                )
-            )
-        );
+        $method = (new Method)
+            ->setName('get_' . $property->getName())
+            ->setCode('return $this->' . $property->getName() . ';');
+        $this->addMethod($method);
     }
 
     /**
@@ -486,24 +484,20 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
      */
     protected function generateSetterFromProperty(PropertyInterface $property)
     {
-        $argument = new Argument(
-            array(
-                'name' => $property->getName(),
-                'type' => $property->getType()
-            )
-        );
+        $argument = (new Argument)
+            ->setName($property->getName())
+            ->setType($property->getType());
+
         $code = "\$this->{$property->getName()} = {$argument->getNameFormatted()};"
             . PHP_EOL
             . 'return $this;';
-        $this->addMethod(
-            new Method(
-                array(
-                    'name'               => 'set_' . $property->getName(),
-                    'argumentCollection' => new ArgumentCollection(array($argument)),
-                    'code'               => $code
-                )
-            )
-        );
+
+        $method = (new Method)
+            ->setName('set_' . $property->getName())
+            ->setArgumentCollection(new ArgumentCollection(array($argument)))
+            ->setCode($code);
+
+        $this->addMethod($method);
     }
 
     /**
@@ -589,7 +583,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     public function setIsAbstract($isAbstract = true)
     {
         if ($this->isInterface()) {
-            throw new \RuntimeException('This method is an interface and it not be an abstract too.');
+            throw new \RuntimeException('This class is an interface and it not be an abstract too.');
         }
 
         $this->isAbstract = (bool)$isAbstract;
