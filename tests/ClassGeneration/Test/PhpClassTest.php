@@ -271,6 +271,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $code = new PhpClass();
         $code->setName('Test')
             ->setDescription('Class description')
+            ->setExtends('\Testable')
             ->setIsInterface()
             ->addMethod(new Method(array('isInterface' => true)));
         $expected = '<?php' . PHP_EOL
@@ -279,7 +280,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' * Class description' . PHP_EOL
             . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
-            . 'interface Test' . PHP_EOL
+            . 'interface Test extends \Testable' . PHP_EOL
             . '{' . PHP_EOL
             . '' . PHP_EOL
             . '    public function method1();' . PHP_EOL
@@ -293,6 +294,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $code->setName('Test')
             ->setDescription('Class description')
             ->setIsAbstract()
+            ->addInterface('\Testable')
             ->addMethod(new Method(array('isAbstract' => true)));
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL
@@ -300,7 +302,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' * Class description' . PHP_EOL
             . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
-            . 'abstract class Test' . PHP_EOL
+            . 'abstract class Test implements \Testable' . PHP_EOL
             . '{' . PHP_EOL
             . '' . PHP_EOL
             . '    abstract public function method1();' . PHP_EOL

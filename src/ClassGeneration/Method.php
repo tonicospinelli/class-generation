@@ -104,7 +104,6 @@ class Method extends ElementAbstract implements MethodInterface
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
         parent::setParent($parent);
-        $description = ($this->getReturns() instanceof TagInterface ? $this->getReturns()->getDescription() : '');
 
         return $this;
     }
@@ -141,18 +140,9 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public function addArgument(ArgumentInterface $argument)
     {
-        $this->arguments->add($argument);
-        $this->getDocBlock()->addTag(
-            new Tag(
-                array(
-                    'name'        => Tag::TAG_PARAM,
-                    'type'        => $argument->getType(),
-                    'variable'    => $argument->getName(),
-                    'description' => $argument->getDescription(),
-                    'referenced'  => $this->arguments->offsetGet($argument->getName())
-                )
-            )
-        );
+        $this->getArgumentCollection()->add($argument);
+        $tag = Tag::createFromArgument($argument);
+        $this->getDocBlock()->addTag($tag);
 
         return $this;
     }
@@ -403,5 +393,45 @@ class Method extends ElementAbstract implements MethodInterface
         }
 
         return $code;
+    }
+
+    /**
+     * Create a Get Method from Property of Class.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Method
+     */
+    public static function createGetterFromProperty(PropertyInterface $property)
+    {
+        $method = (new self)
+            ->setName('get_' . $property->getName())
+            ->setCode('return $this->' . $property->getName() . ';');
+
+        return $method;
+    }
+
+    /**
+     * Generate Set Method from Property.
+     * Add a set method in the class based on Object Property.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Method
+     */
+    public static function createSetterFromProperty(PropertyInterface $property)
+    {
+        $argument = Argument::createFromProperty($property);
+
+        $code = "\$this->{$property->getName()} = {$argument->getNameFormatted()};"
+            . PHP_EOL
+            . 'return $this;';
+
+        $method = (new self)
+            ->setName('set_' . $property->getName())
+            ->setCode($code);
+        $method->getArgumentCollection()->add($argument);
+
+        return $method;
     }
 }

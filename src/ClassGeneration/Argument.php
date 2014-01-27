@@ -202,4 +202,20 @@ class Argument extends ElementAbstract implements ArgumentInterface
 
         return $argument;
     }
+
+    /**
+     * Creates Argument from Property Object.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Argument
+     */
+    public static function createFromProperty(PropertyInterface $property)
+    {
+        $argument = (new self)
+            ->setName($property->getName())
+            ->setType($property->getType());
+
+        return $argument;
+    }
 }

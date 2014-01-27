@@ -127,10 +127,12 @@ class NamespaceClass extends ElementAbstract implements NamespaceInterface, Docu
             return '';
         }
 
+        $path = preg_replace('/^\\\/', '', $this->getPath());
+
         $namespace = $this->getDocBlock()->setTabulation($this->getTabulation())->toString()
             . $this->getTabulationFormatted()
             . 'namespace '
-            . (strpos($this->getPath(), '\\') === 0 ? substr($this->getPath(), 1) : $this->getPath())
+            . $path
             . ';' . PHP_EOL;
 
         return $namespace;

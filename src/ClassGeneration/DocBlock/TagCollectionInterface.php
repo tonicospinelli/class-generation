@@ -64,4 +64,12 @@ interface TagCollectionInterface extends CollectionInterface
      * @return string
      */
     public function toString();
+
+    /**
+     * Get all tags with the same name.
+     * @param string|array $tagName
+     *
+     * @return TagCollectionInterface
+     */
+    public function getByName($tagName);
 }
