@@ -315,18 +315,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $this->extends = $extends;
 
-        if (!class_exists($extends)) {
-            return $this;
-        }
-
-        $refExtends = new \ReflectionClass($extends);
-        $methods = $refExtends->getMethods();
-        foreach ($methods as $method) {
-            if (!$method->isAbstract()) {
-                continue;
-            }
-            $this->addMethod((new Method)->setName($method->getName()));
-        }
+        $this->createMethodsFromAbstractClass($extends);
 
         return $this;
     }
@@ -367,7 +356,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
      */
     protected function createMethodsFromInterface($interfaceName)
     {
-        if (interface_exists($interfaceName)) {
+        if (!interface_exists($interfaceName)) {
             return;
         }
 
@@ -377,7 +366,31 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             if ($this->getMethodCollection()->exists($method->getName())) {
                 continue;
             }
-            $this->addMethod(new Method(array('name' => $method->getName())));
+            $this->addMethod((new Method)->setName($method->getName()));
+        }
+    }
+
+
+    /**
+     * Creates methods from Abstract.
+     *
+     * @param string $abstractClass
+     *
+     * @return void
+     */
+    protected function createMethodsFromAbstractClass($abstractClass)
+    {
+        if (!class_exists($abstractClass)) {
+            return;
+        }
+
+        $refExtends = new \ReflectionClass($abstractClass);
+        $methods = $refExtends->getMethods();
+        foreach ($methods as $method) {
+            if (!$method->isAbstract() or $this->getMethodCollection()->exists($method->getName())) {
+                continue;
+            }
+            $this->addMethod((new Method)->setName($method->getName()));
         }
     }
 
@@ -460,47 +473,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     }
 
     /**
-     * Create a Get Method from Property of Class.
-     *
-     * @param PropertyInterface $property
-     *
-     * @return void
-     */
-    protected function generateGetterFromProperty(PropertyInterface $property)
-    {
-        $method = (new Method)
-            ->setName('get_' . $property->getName())
-            ->setCode('return $this->' . $property->getName() . ';');
-        $this->addMethod($method);
-    }
-
-    /**
-     * Generate Set Method from Property.
-     * Add a set method in the class based on Object Property.
-     *
-     * @param PropertyInterface $property
-     *
-     * @return void
-     */
-    protected function generateSetterFromProperty(PropertyInterface $property)
-    {
-        $argument = (new Argument)
-            ->setName($property->getName())
-            ->setType($property->getType());
-
-        $code = "\$this->{$property->getName()} = {$argument->getNameFormatted()};"
-            . PHP_EOL
-            . 'return $this;';
-
-        $method = (new Method)
-            ->setName('set_' . $property->getName())
-            ->setArgumentCollection(new ArgumentCollection(array($argument)))
-            ->setCode($code);
-
-        $this->addMethod($method);
-    }
-
-    /**
      * Create all getters and setters from Property Collection.
      * @return void
      */
@@ -508,8 +480,8 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $propertyIterator = $this->getPropertyCollection()->getIterator();
         foreach ($propertyIterator as $property) {
-            $this->generateGetterFromProperty($property);
-            $this->generateSetterFromProperty($property);
+            $this->getMethodCollection()->add(Method::createGetterFromProperty($property));
+            $this->getMethodCollection()->add(Method::createSetterFromProperty($property));
         }
     }
 

@@ -394,4 +394,44 @@ class Method extends ElementAbstract implements MethodInterface
 
         return $code;
     }
+
+    /**
+     * Create a Get Method from Property of Class.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Method
+     */
+    public static function createGetterFromProperty(PropertyInterface $property)
+    {
+        $method = (new self)
+            ->setName('get_' . $property->getName())
+            ->setCode('return $this->' . $property->getName() . ';');
+
+        return $method;
+    }
+
+    /**
+     * Generate Set Method from Property.
+     * Add a set method in the class based on Object Property.
+     *
+     * @param PropertyInterface $property
+     *
+     * @return Method
+     */
+    public static function createSetterFromProperty(PropertyInterface $property)
+    {
+        $argument = Argument::createFromProperty($property);
+
+        $code = "\$this->{$property->getName()} = {$argument->getNameFormatted()};"
+            . PHP_EOL
+            . 'return $this;';
+
+        $method = (new self)
+            ->setName('set_' . $property->getName())
+            ->setCode($code);
+        $method->getArgumentCollection()->add($argument);
+
+        return $method;
+    }
 }
