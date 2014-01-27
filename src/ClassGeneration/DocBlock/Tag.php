@@ -249,9 +249,8 @@ class Tag extends ElementAbstract implements TagInterface
     public static function createFromProperty(PropertyInterface $property)
     {
         $tag = new self();
-        $tag
-            ->setName(self::TAG_VAR)
-            ->setType($property->getType());
+        $tag->setName(self::TAG_VAR);
+        $tag->setType($property->getType());
 
         return $tag;
     }
