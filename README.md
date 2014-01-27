@@ -1,8 +1,8 @@
 Class Generation
 ================
 [![Build Status](https://travis-ci.org/tonicospinelli/ClassGeneration.png?branch=2.0)](https://travis-ci.org/tonicospinelli/ClassGeneration)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/quality-score.png?s=153282102917e7d070b7d0243910c7f93ef29b02)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
-[![Code Coverage](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/coverage.png?s=38bf324d5af201e8595a505a71a9378524a66e81)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/quality-score.png?s=8ffe9768f12e9d6f01d57ca3981e47eb745563a2)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
+[![Code Coverage](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/coverage.png?s=9c6c165f53058acfd2ff350a1f4ba7c77a6a1395)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
 
 [![Latest Stable Version](https://poser.pugx.org/tonicospinelli/classgeneration/v/stable.png)](https://packagist.org/packages/tonicospinelli/classgeneration)
 [![Total Downloads](https://poser.pugx.org/tonicospinelli/classgeneration/downloads.png)](https://packagist.org/packages/tonicospinelli/classgeneration)
