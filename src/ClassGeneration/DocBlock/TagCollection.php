@@ -163,7 +163,8 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
     /**
      * @inheritdoc
      */
-    public function getByName($tagName){
+    public function getByName($tagName)
+    {
         $found = new self;
         $list = $this->getIterator();
 
