@@ -404,10 +404,9 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public static function createGetterFromProperty(PropertyInterface $property)
     {
-        $method = new self;
-        $method
-            ->setName('get_' . $property->getName())
-            ->setCode('return $this->' . $property->getName() . ';');
+        $method = new self();
+        $method->setName('get_' . $property->getName());
+        $method->setCode('return $this->' . $property->getName() . ';');
 
         return $method;
     }
@@ -449,11 +448,12 @@ class Method extends ElementAbstract implements MethodInterface
         $method = new self();
         $method->setName($reflected->getName());
 
-        foreach($reflected->getParameters() as $parameterReflected){
+        foreach ($reflected->getParameters() as $parameterReflected) {
             $argument = new Argument();
             $argument->setName($parameterReflected->getName());
             $method->addArgument($argument);
         }
+
         return $method;
     }
 }

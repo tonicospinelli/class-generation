@@ -146,8 +146,10 @@ class Property extends ElementAbstract implements PropertyInterface
     public function setType($type)
     {
         $this->type = (string)$type;
-        $this->getDocBlock()->getTagCollection()->removeByName('var');
+        $this->getDocBlock()->getTagCollection()->removeByName(Tag::TAG_VAR);
+
         $tag = Tag::createFromProperty($this);
+
         $this->getDocBlock()->addTag($tag);
 
         return $this;
