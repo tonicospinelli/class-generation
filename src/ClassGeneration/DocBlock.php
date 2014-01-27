@@ -146,7 +146,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
         $block = PHP_EOL
             . $spaces . '/**' . PHP_EOL
             . $spaces . ' * ' . $this->getDescription() . PHP_EOL
-            . preg_replace('/^ \* /', $spaces . ' * ', $this->getTagCollection()->toString());
+            . preg_replace('/\s\*\s/i', $spaces . ' * ', $this->getTagCollection()->toString());
 
         return $block . $spaces . ' */' . PHP_EOL;
     }

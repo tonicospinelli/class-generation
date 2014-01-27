@@ -168,7 +168,8 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $replaceTo = strpos($name, '_') !== false ? '_' : '';
         $this->name = str_replace(' ', $replaceTo, ucwords(strtr($name, '_-', '  ')));
-        $tag = (new Tag)
+        $tag = new Tag();
+        $tag
             ->setName(Tag::TAG_NAME)
             ->setDescription($this->name);
         $this->addCommentTag($tag);
@@ -361,12 +362,13 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         }
 
         $refInterface = new \ReflectionClass($interfaceName);
-        $methods = $refInterface->getMethods();
-        foreach ($methods as $method) {
-            if ($this->getMethodCollection()->exists($method->getName())) {
+        $methodsReflected = $refInterface->getMethods();
+        foreach ($methodsReflected as $methodReflected) {
+            if ($this->getMethodCollection()->exists($methodReflected->getName())) {
                 continue;
             }
-            $this->addMethod((new Method)->setName($method->getName()));
+            $method = Method::createFromReflection($methodReflected);
+            $this->addMethod($method);
         }
     }
 

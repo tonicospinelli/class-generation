@@ -113,6 +113,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     public function setValue($value)
     {
         $this->value = $value;
+        $this->setIsOptional();
 
         return $this;
     }
@@ -212,7 +213,8 @@ class Argument extends ElementAbstract implements ArgumentInterface
      */
     public static function createFromProperty(PropertyInterface $property)
     {
-        $argument = (new self)
+        $argument = new self();
+        $argument
             ->setName($property->getName())
             ->setType($property->getType());
 

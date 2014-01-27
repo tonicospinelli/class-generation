@@ -244,7 +244,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $code = new PhpClass();
         $code->setName('Test')
             ->setDescription('Class description')
-            ->setExtends('\ArrayIterator')
+            ->addInterface('\ArrayAccess')
             ->addMethod(new Method())
             ->addProperty(new Property());
         $expected = '<?php' . PHP_EOL
@@ -253,14 +253,82 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' * Class description' . PHP_EOL
             . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
-            . 'class Test extends \ArrayIterator' . PHP_EOL
-            . '{' . PHP_EOL
-            . '' . PHP_EOL
+            . 'class Test implements \ArrayAccess' . PHP_EOL
+            . '{' . PHP_EOL . PHP_EOL
             . '    public $property1;' . PHP_EOL
             . '' . PHP_EOL
-            . '    public function method1()' . PHP_EOL
-            . '    {' . PHP_EOL
-            . '        //TODO: implements the method1 method' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetExists($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetExists method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetGet($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetGet method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     * @param mixed $value'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetSet($offset, $value)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetSet method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetUnset($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetUnset method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public function method5()'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the method5 method'
+            . '' . PHP_EOL
             . '    }' . PHP_EOL
             . '}' . PHP_EOL;
         $this->assertEquals($expected, $code->toString());
