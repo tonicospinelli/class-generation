@@ -387,12 +387,14 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         }
 
         $refExtends = new \ReflectionClass($abstractClass);
-        $methods = $refExtends->getMethods();
-        foreach ($methods as $method) {
-            if (!$method->isAbstract() or $this->getMethodCollection()->exists($method->getName())) {
+        $methodsRef = $refExtends->getMethods();
+        foreach ($methodsRef as $methodRef) {
+            if (!$methodRef->isAbstract() or $this->getMethodCollection()->exists($methodRef->getName())) {
                 continue;
             }
-            $this->addMethod((new Method)->setName($method->getName()));
+
+            $method = Method::createFromReflection($methodRef);
+            $this->addMethod($method);
         }
     }
 
