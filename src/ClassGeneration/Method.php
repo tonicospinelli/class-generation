@@ -103,6 +103,7 @@ class Method extends ElementAbstract implements MethodInterface
         if (!$parent instanceof PhpClassInterface) {
             throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClassInterface');
         }
+
         parent::setParent($parent);
 
         return $this;
@@ -360,11 +361,7 @@ class Method extends ElementAbstract implements MethodInterface
 
         $method = $this->getDocBlock()->toString()
             . $tabulationFormatted
-            . ($this->isFinal() ? 'final ' : '')
-            . ($this->isAbstract() ? 'abstract ' : '')
-            . $this->getVisibility() . ' '
-            . ($this->isStatic() ? 'static ' : '')
-            . 'function '
+            . $this->toStringFunction()
             . $this->getName()
             . '('
             . $this->getArgumentCollection()->toString()
@@ -376,23 +373,38 @@ class Method extends ElementAbstract implements MethodInterface
     }
 
     /**
+     * Get string with method type.
+     * @return string
+     */
+    protected function toStringFunction()
+    {
+        $string = ($this->isFinal() ? 'final ' : '')
+            . ($this->isAbstract() ? 'abstract ' : '')
+            . $this->getVisibility() . ' '
+            . ($this->isStatic() ? 'static ' : '')
+            . 'function ';
+
+        return $string;
+    }
+
+    /**
      * Get string code.
      * @return string
      */
     public function toStringCode()
     {
-        $tabulationFormatted = $this->getTabulationFormatted();
         if (!$this->isInterface() and !$this->isAbstract()) {
+            $tabulationFormatted = $this->getTabulationFormatted();
             $code = PHP_EOL . $tabulationFormatted
                 . '{'
                 . $this->codeToString()
                 . $tabulationFormatted
                 . '}';
-        } else {
-            $code = ';';
+
+            return $code;
         }
 
-        return $code;
+        return ';';
     }
 
     /**
