@@ -168,11 +168,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $replaceTo = strpos($name, '_') !== false ? '_' : '';
         $this->name = str_replace(' ', $replaceTo, ucwords(strtr($name, '_-', '  ')));
-        $tag = new Tag();
-        $tag
-            ->setName(Tag::TAG_NAME)
-            ->setDescription($this->name);
-        $this->addCommentTag($tag);
 
         return $this;
     }
@@ -258,16 +253,6 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     {
         $property->setParent($this);
         $this->getPropertyCollection()->add($property);
-
-        return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addCommentTag(TagInterface $tagArguments)
-    {
-        $this->getDocBlock()->addTag($tagArguments);
 
         return $this;
     }

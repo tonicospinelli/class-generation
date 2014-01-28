@@ -131,13 +131,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test', $code->getProperty('test')->current()->getName());
     }
 
-    public function testAddCommentTag()
-    {
-        $code = new PhpClass();
-        $code->addCommentTag(new Tag(array('name' => Tag::TAG_PARAM)));
-        $this->assertCount(1, $code->getDocBlock()->getTagCollection());
-    }
-
     public function testSetAndGetAndAddMethods()
     {
         $code = new PhpClass();
@@ -251,7 +244,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '' . PHP_EOL
             . '/**' . PHP_EOL
             . ' * Class description' . PHP_EOL
-            . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
             . 'class Test implements \ArrayAccess' . PHP_EOL
             . '{' . PHP_EOL . PHP_EOL
@@ -346,7 +338,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '' . PHP_EOL
             . '/**' . PHP_EOL
             . ' * Class description' . PHP_EOL
-            . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
             . 'interface Test extends \Testable' . PHP_EOL
             . '{' . PHP_EOL
@@ -368,7 +359,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '' . PHP_EOL
             . '/**' . PHP_EOL
             . ' * Class description' . PHP_EOL
-            . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
             . 'abstract class Test implements \Testable' . PHP_EOL
             . '{' . PHP_EOL
@@ -389,7 +379,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '' . PHP_EOL
             . '/**' . PHP_EOL
             . ' * Class description' . PHP_EOL
-            . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
             . 'final class Test' . PHP_EOL
             . '{' . PHP_EOL
@@ -413,7 +402,6 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . '' . PHP_EOL
             . '/**' . PHP_EOL
             . ' * Class description' . PHP_EOL
-            . ' * @name Test' . PHP_EOL
             . ' */' . PHP_EOL
             . 'trait Test' . PHP_EOL
             . '{' . PHP_EOL

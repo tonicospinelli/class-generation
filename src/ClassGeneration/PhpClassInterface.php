@@ -117,15 +117,6 @@ interface PhpClassInterface extends ElementInterface, Documentary, Declarable
     public function addProperty(PropertyInterface $property);
 
     /**
-     * Adds tag on the Class DocBlock.
-     *
-     * @param TagInterface $tagArguments
-     *
-     * @return PhpClassInterface
-     */
-    public function addCommentTag(TagInterface $tagArguments);
-
-    /**
      * Gets the Methods Collection.
      * @return MethodCollection
      */
