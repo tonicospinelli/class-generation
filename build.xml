@@ -63,8 +63,7 @@
         <exec executable="phpmd">
             <arg path="${sourcedir}"/>
             <arg value="xml"/>
-            <arg value="--reportfile"/>
-            <arg value="${builddir}/logs/pmd.xml"/>
+            <arg value="--reportfile=${builddir}/logs/pmd.xml"/>
         </exec>
     </target>
 
