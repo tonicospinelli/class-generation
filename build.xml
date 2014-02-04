@@ -64,7 +64,8 @@
             <arg path="${sourcedir}"/>
             <arg value="xml"/>
             <arg value="cleancode, codesize, controversial, design, naming, unusedcode"/>
-            <arg value="--reportfile=${builddir}/logs/pmd.xml"/>
+            <arg value="--reportfile"/>
+            <arg value="${builddir}/logs/pmd.xml"/>
         </exec>
     </target>
 
