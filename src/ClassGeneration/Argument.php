@@ -55,7 +55,6 @@ class Argument extends ElementAbstract implements ArgumentInterface
      * @var array
      */
     protected $primitiveTypes = array(
-        'array',
         'bool', 'boolean',
         'decimal', 'double',
         'float',
