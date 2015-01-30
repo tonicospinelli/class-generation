@@ -1,18 +1,43 @@
 filter:
-    excluded_paths: [vendor/*, tests/*]
-    paths: [src/*]
-
-before_commands:
-    - "composer install --prefer-dist --no-dev"
-
+    excluded_paths:
+        - 'vendor/*'
+        - 'tests/*'
+    paths:
+        - 'src/*'
 tools:
-    php_code_coverage:
-        test_command: phpunit -c phpunit.xml.dist
-    php_cpd:
-        excluded_dirs: [vendor/*]
+    php_analyzer: true
+    php_changetracking: true
     php_code_sniffer:
+        enabled: true
         config:
             standard: PSR2
-    php_pdepend:
-        excluded_dirs: [vendor/*]
-    php_analyzer: true
+    php_cpd: true
+    php_mess_detector: true
+    php_pdepend: true
+    php_pdepend: true
+    php_sim: true
+
+build:
+    dependencies:
+        before:
+            - "sudo composer self-update"
+        override:
+            - "composer install --no-interaction --prefer-source"
+    tests:
+        override:
+            -
+                command: 'phpunit -c phpunit.xml.dist --coverage-clover=clover.xml'
+                coverage:
+                    file: 'clover.xml'
+                    format: 'php-clover'
+    environment:
+        mysql: false
+        postgresql: false
+        redis: false
+        elasticsearch: false
+        rabbitmq: false
+        mongodb: false
+        neo4j: false
+        memcached: false
+        php:
+            version: 5.4.28
