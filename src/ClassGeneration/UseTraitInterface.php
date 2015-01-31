@@ -11,15 +11,13 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\Element\AliasInterface;
 use ClassGeneration\Element\ElementInterface;
-use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Use Trait ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface UseTraitInterface extends ElementInterface, VisibilityInterface, AliasInterface
+interface UseTraitInterface extends ElementInterface
 {
     /**
      * Gets the trait's name

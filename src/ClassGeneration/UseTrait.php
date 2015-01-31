@@ -78,55 +78,6 @@ class UseTrait extends ElementAbstract implements UseTraitInterface
     /**
      * @inheritdoc
      */
-    public function setAlias($alias)
-    {
-        $this->alias = (string)$alias;
-
-        return $this;
-    }
-
-    /**
-     * Gets the alias name.
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function hasAlias()
-    {
-        $alias = $this->getAlias();
-
-        return (!is_null($alias) and !empty($alias));
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getVisibility()
-    {
-        return $this->visibility;
-    }
-
-    /**
-     * @inheritdoc
-     * @return UseTrait
-     */
-    public function setVisibility($visibility)
-    {
-        Visibility::isValid($visibility);
-        $this->visibility = $visibility;
-
-        return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function toString()
     {
         return $this->getName();
