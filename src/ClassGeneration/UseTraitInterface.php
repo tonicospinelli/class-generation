@@ -13,25 +13,26 @@ namespace ClassGeneration;
 
 use ClassGeneration\Element\AliasInterface;
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\Element\VisibilityInterface;
 
 /**
- * Use ClassGeneration
+ * Use Trait ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface UseInterface extends ElementInterface, AliasInterface
+interface UseTraitInterface extends ElementInterface, VisibilityInterface, AliasInterface
 {
     /**
-     * Sets the class name.
-     *
-     * @param string $className
-     *
-     * @return UseInterface
-     */
-    public function setClassName($className);
-
-    /**
-     * Gets the class name.
+     * Gets the trait's name
      * @return string
      */
-    public function getClassName();
+    public function getName();
+
+    /**
+     * Sets the trait's name.
+     *
+     * @param string $name
+     *
+     * @return UseTraitInterface
+     */
+    public function setName($name);
 }

@@ -11,7 +11,6 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\DocBlock\TagInterface;
 use ClassGeneration\Element\Declarable;
 use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementInterface;
@@ -235,4 +234,21 @@ interface PhpClassInterface extends ElementInterface, Documentary, Declarable
      * @return void
      */
     public function evaluate();
+
+    /**
+     * @param UseTraitInterface $traitName
+     * @return PhpClassInterface
+     */
+    public function addUseTrait(UseTraitInterface $traitName);
+
+    /**
+     * @param UseTraitCollection $useTraits
+     * @return PhpClassInterface
+     */
+    public function setUseTraitCollection(UseTraitCollection $useTraits);
+
+    /**
+     * @return UseTraitCollection
+     */
+    public function getUseTraitCollection();
 }

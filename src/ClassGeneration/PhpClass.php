@@ -11,8 +11,6 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\DocBlock\Tag;
-use ClassGeneration\DocBlock\TagInterface;
 use ClassGeneration\Element\ElementAbstract;
 
 /**
@@ -60,7 +58,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
 
     /**
      * Class namespace
-     * @var NamespaceClass
+     * @var NamespaceInterface
      */
     protected $namespace;
 
@@ -101,6 +99,11 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     protected $interfaces;
 
     /**
+     * @var UseTraitCollection
+     */
+    protected $useTraits;
+
+    /**
      * Force on add method on class docblock.
      * @var boolean
      */
@@ -125,6 +128,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         $this->setInterfaceCollection(new InterfaceCollection());
         $this->setNamespace(new NamespaceClass());
         $this->setUseCollection(new UseCollection());
+        $this->setUseTraitCollection(new UseTraitCollection());
     }
 
     /**
@@ -494,6 +498,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             . PHP_EOL
             . '{'
             . PHP_EOL
+            . $this->getUseTraitCollection()->toString()
             . $this->getConstantCollection()->toString()
             . $this->getPropertyCollection()->toString()
             . $this->getMethodCollection()->toString()
@@ -575,5 +580,35 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         }
 
         return $type;
+    }
+
+    /**
+     * @param UseTraitInterface $traitName
+     * @return PhpClass
+     */
+    public function addUseTrait(UseTraitInterface $traitName)
+    {
+        $traitName->setParent($this);
+        $this->getUseTraitCollection()->add($traitName);
+
+        return $this;
+    }
+
+    /**
+     * @param UseTraitCollection $useTraits
+     * @return PhpClass
+     */
+    public function setUseTraitCollection(UseTraitCollection $useTraits)
+    {
+        $this->useTraits = $useTraits;
+        return $this;
+    }
+
+    /**
+     * @return UseTraitCollection
+     */
+    public function getUseTraitCollection()
+    {
+        return $this->useTraits;
     }
 }
