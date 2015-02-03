@@ -12,12 +12,13 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\Element\Tabbable;
 
 /**
- * Use Trait ClassGeneration
+ * Horizontal Composition Trait ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface UseTraitInterface extends ElementInterface
+interface CompositionInterface extends ElementInterface, Tabbable
 {
     /**
      * Gets the trait's name
@@ -30,7 +31,7 @@ interface UseTraitInterface extends ElementInterface
      *
      * @param string $name
      *
-     * @return UseTraitInterface
+     * @return CompositionInterface
      */
     public function setName($name);
 }

@@ -99,9 +99,9 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     protected $interfaces;
 
     /**
-     * @var UseTraitCollection
+     * @var CompositionCollection
      */
-    protected $useTraits;
+    protected $compositionCollection;
 
     /**
      * Force on add method on class docblock.
@@ -128,7 +128,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         $this->setInterfaceCollection(new InterfaceCollection());
         $this->setNamespace(new NamespaceClass());
         $this->setUseCollection(new UseCollection());
-        $this->setUseTraitCollection(new UseTraitCollection());
+        $this->setCompositionCollection(new CompositionCollection());
     }
 
     /**
@@ -498,7 +498,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             . PHP_EOL
             . '{'
             . PHP_EOL
-            . $this->getUseTraitCollection()->toString()
+            . $this->getCompositionCollection()->toString()
             . $this->getConstantCollection()->toString()
             . $this->getPropertyCollection()->toString()
             . $this->getMethodCollection()->toString()
@@ -583,32 +583,30 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     }
 
     /**
-     * @param UseTraitInterface $traitName
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function addUseTrait(UseTraitInterface $traitName)
+    public function addComposition(CompositionInterface $trait)
     {
-        $traitName->setParent($this);
-        $this->getUseTraitCollection()->add($traitName);
+        $trait->setParent($this);
+        $this->getCompositionCollection()->add($trait);
 
         return $this;
     }
 
     /**
-     * @param UseTraitCollection $useTraits
-     * @return PhpClass
+     * @inheritdoc
      */
-    public function setUseTraitCollection(UseTraitCollection $useTraits)
+    public function setCompositionCollection(CompositionCollection $traits)
     {
-        $this->useTraits = $useTraits;
+        $this->compositionCollection = $traits;
         return $this;
     }
 
     /**
-     * @return UseTraitCollection
+     * @inheritdoc
      */
-    public function getUseTraitCollection()
+    public function getCompositionCollection()
     {
-        return $this->useTraits;
+        return $this->compositionCollection;
     }
 }

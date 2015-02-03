@@ -17,10 +17,10 @@ use ClassGeneration\Collection\ArrayCollection;
  * Property Collection ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-class UseTraitCollection extends ArrayCollection
+class CompositionCollection extends ArrayCollection
 {
     /**
-     * @return UseTrait[]
+     * @return CompositionInterface[]
      */
     public function getIterator()
     {
@@ -28,7 +28,7 @@ class UseTraitCollection extends ArrayCollection
     }
 
     /**
-     * Parse the UseTrait Collection to string.
+     * Parse the Composition Collection to string.
      * @return string
      */
     public function toString()

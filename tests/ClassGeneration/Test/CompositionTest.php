@@ -13,15 +13,15 @@ namespace ClassGeneration\Test;
 
 use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\PhpClass;
-use ClassGeneration\UseTrait;
+use ClassGeneration\Composition;
 
-class UseTraitTest extends \PHPUnit_Framework_TestCase
+class CompositionTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCreatingInstanceOfUseTraitClass()
+    public function testCreatingInstanceOfCompositionClass()
     {
-        $useTrait = new UseTrait();
-        $this->assertInstanceOf('\ClassGeneration\UseTrait', $useTrait);
+        $useTrait = new Composition();
+        $this->assertInstanceOf('\ClassGeneration\Composition', $useTrait);
     }
 
     /**
@@ -30,7 +30,7 @@ class UseTraitTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetParent()
     {
         $code = new PhpClass();
-        $use = new UseTrait();
+        $use = new Composition();
         $use->setOptions(array('parent' => $code));
         $this->assertInstanceOf('\ClassGeneration\PhpClass', $use->getParent());
         $use->setParent(new Tag());
@@ -38,7 +38,7 @@ class UseTraitTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $use = new UseTrait();
+        $use = new Composition();
         $use->setName('\ClassGeneration\Test\Provider\ObjectTrait');
         $expected = '\ClassGeneration\Test\Provider\ObjectTrait';
         $this->assertEquals($expected, $use->toString());

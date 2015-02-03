@@ -18,7 +18,7 @@ use ClassGeneration\Element\ElementInterface;
  * Use ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-class UseTrait extends ElementAbstract implements UseTraitInterface
+class Composition extends ElementAbstract implements CompositionInterface
 {
 
     /**
@@ -26,16 +26,6 @@ class UseTrait extends ElementAbstract implements UseTraitInterface
      * @var string
      */
     protected $name;
-
-    /**
-     * @var string
-     */
-    protected $alias;
-
-    /**
-     * @var string
-     */
-    protected $visibility;
 
     /**
      * @inheritdoc
@@ -46,7 +36,7 @@ class UseTrait extends ElementAbstract implements UseTraitInterface
 
     /**
      * @inheritdoc
-     * @return UseTrait
+     * @return Composition
      */
     public function setParent(ElementInterface $parent)
     {

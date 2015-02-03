@@ -236,19 +236,20 @@ interface PhpClassInterface extends ElementInterface, Documentary, Declarable
     public function evaluate();
 
     /**
-     * @param UseTraitInterface $traitName
+     * Add a new horizontal composition.
+     * @param CompositionInterface $trait
      * @return PhpClassInterface
      */
-    public function addUseTrait(UseTraitInterface $traitName);
+    public function addComposition(CompositionInterface $trait);
 
     /**
-     * @param UseTraitCollection $useTraits
+     * @param CompositionCollection $traits
      * @return PhpClassInterface
      */
-    public function setUseTraitCollection(UseTraitCollection $useTraits);
+    public function setCompositionCollection(CompositionCollection $traits);
 
     /**
-     * @return UseTraitCollection
+     * @return CompositionCollection
      */
-    public function getUseTraitCollection();
+    public function getCompositionCollection();
 }

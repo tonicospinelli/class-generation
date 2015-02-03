@@ -23,16 +23,15 @@ use ClassGeneration\Property;
 use ClassGeneration\PropertyCollection;
 use ClassGeneration\UseClass;
 use ClassGeneration\UseCollection;
-use ClassGeneration\UseTrait;
+use ClassGeneration\Composition;
 
 class PhpClassTest extends \PHPUnit_Framework_TestCase
 {
     protected function isTraitAvailable()
     {
-        if (version_compare(PHP_VERSION, '5.4.0') > 0) {
-            return;
+        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+            $this->markTestSkipped('Trait is available from 5.4+');
         }
-        $this->markTestSkipped('Trait is available from 5.4+');
     }
 
     public function testCreatingInstanceOfPhpClassInterface()
@@ -344,8 +343,8 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->addInterface('\ArrayAccess')
             ->addMethod(new Method())
             ->addProperty(new Property())
-            ->addUseTrait(new UseTrait(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')))
-            ->addUseTrait(new UseTrait(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')));
+            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')))
+            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')));
 
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL
@@ -545,8 +544,8 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property())
-            ->addUseTrait(new UseTrait(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')))
-            ->addUseTrait(new UseTrait(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
+            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')))
+            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
 
         $code->evaluate();
         $this->assertTrue(class_exists('\TestTrait'));
@@ -606,9 +605,9 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddUseTraits()
     {
         $code = new PhpClass();
-        $code->addUseTrait(new UseTrait(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
-        $this->assertCount(1, $code->getUseTraitCollection());
+        $code->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
+        $this->assertCount(1, $code->getCompositionCollection());
 
-        $this->assertEquals('\ClassGeneration\Test\Provider\ObjectTrait', $code->getUseTraitCollection()->current()->getName());
+        $this->assertEquals('\ClassGeneration\Test\Provider\ObjectTrait', $code->getCompositionCollection()->current()->getName());
     }
 }
