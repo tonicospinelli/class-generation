@@ -18,6 +18,7 @@
     <filter>
         <blacklist>
             <directory>./vendor</directory>
+            <directory>./tests/ClassGeneration/Test/Provider</directory>
         </blacklist>
     </filter>
     <logging>
