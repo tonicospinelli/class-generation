@@ -15,7 +15,7 @@ use ClassGeneration\Element\AliasInterface;
 use ClassGeneration\Visibility;
 
 /**
- * Use ClassGeneration
+ * Composition Trait Alias Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
 class AliasMethod extends Method implements AliasMethodInterface

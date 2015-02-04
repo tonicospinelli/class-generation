@@ -12,28 +12,12 @@
 namespace ClassGeneration\Composition;
 
 use ClassGeneration\Element\AliasInterface;
-use ClassGeneration\Element\ElementInterface;
 use ClassGeneration\Element\VisibilityInterface;
 
 /**
  * Composition Trait Alias Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface AliasMethodInterface extends ElementInterface, AliasInterface, VisibilityInterface
+interface AliasMethodInterface extends MethodInterface, AliasInterface, VisibilityInterface
 {
-    /**
-     * Gets the trait's name
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Sets the trait's name.
-     *
-     * @param string $name
-     *
-     * @return MethodInterface
-     */
-    public function setName($name);
-
 }

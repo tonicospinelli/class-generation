@@ -14,7 +14,7 @@ namespace ClassGeneration\Composition;
 use ClassGeneration\Visibility;
 
 /**
- * Use ClassGeneration
+ * Composition Trait Visibility Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
 class VisibilityMethod extends Method implements VisibilityMethodInterface
