@@ -50,10 +50,8 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToStringWithAlias()
     {
-        $composition = new Composition();
-        $composition->setName('ObjectTrait');
         $traitMethod = new AliasMethod();
-        $traitMethod->setParent($composition);
+        $traitMethod->setTraitName('ObjectTrait');
         $traitMethod->setName('doSomething');
         $traitMethod->setAlias('do');
 
@@ -63,10 +61,8 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToStringWithVisibility()
     {
-        $composition = new Composition();
-        $composition->setName('ObjectTrait');
         $traitMethod = new AliasMethod();
-        $traitMethod->setParent($composition);
+        $traitMethod->setTraitName('ObjectTrait');
         $traitMethod->setName('doSomething');
         $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);
 
@@ -76,10 +72,8 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToStringWithAliasAndVisibility()
     {
-        $composition = new Composition();
-        $composition->setName('ObjectTrait');
         $traitMethod = new AliasMethod();
-        $traitMethod->setParent($composition);
+        $traitMethod->setTraitName('ObjectTrait');
         $traitMethod->setName('doSomething');
         $traitMethod->setAlias('do');
         $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);

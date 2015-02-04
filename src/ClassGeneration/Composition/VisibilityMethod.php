@@ -49,7 +49,7 @@ class VisibilityMethod extends Method implements VisibilityMethodInterface
     {
         $result = sprintf(
             '%s::%s as %s;',
-            $this->getParent()->getName(),
+            $this->getTraitName(),
             $this->getName(),
             $this->getVisibility()
         );

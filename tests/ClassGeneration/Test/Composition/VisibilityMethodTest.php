@@ -41,10 +41,8 @@ class VisibilityMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $composition = new Composition();
-        $composition->setName('ObjectTrait');
         $traitMethod = new VisibilityMethod();
-        $traitMethod->setParent($composition);
+        $traitMethod->setTraitName('ObjectTrait');
         $traitMethod->setName('doSomething');
         $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);
 

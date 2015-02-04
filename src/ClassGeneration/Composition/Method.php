@@ -11,9 +11,9 @@
 
 namespace ClassGeneration\Composition;
 
-use ClassGeneration\CompositionInterface;
 use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\ElementInterface;
+use ClassGeneration\PhpClass;
 
 /**
  * Composition Method ClassGeneration
@@ -29,6 +29,11 @@ abstract class Method extends ElementAbstract implements MethodInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $traitName;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -41,8 +46,8 @@ abstract class Method extends ElementAbstract implements MethodInterface
      */
     public function setParent(ElementInterface $parent)
     {
-        if (!$parent instanceof CompositionInterface) {
-            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\CompositionInterface');
+        if (!$parent instanceof PhpClass) {
+            throw new \InvalidArgumentException('Only accept instances from ClassGeneration\PhpClass');
         }
 
         return parent::setParent($parent);
@@ -50,7 +55,7 @@ abstract class Method extends ElementAbstract implements MethodInterface
 
     /**
      * @inheritdoc
-     * @return CompositionInterface
+     * @return PhpClass
      */
     public function getParent()
     {
@@ -73,5 +78,22 @@ abstract class Method extends ElementAbstract implements MethodInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTraitName()
+    {
+        return $this->traitName;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTraitName($traitName)
+    {
+        $this->traitName = $traitName;
+        return $this;
     }
 }

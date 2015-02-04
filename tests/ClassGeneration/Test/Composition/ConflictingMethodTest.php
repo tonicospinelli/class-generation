@@ -32,10 +32,8 @@ class ConflictingMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $composition = new Composition();
-        $composition->setName('ObjectTrait');
         $traitMethod = new ConflictingMethod();
-        $traitMethod->setParent($composition);
+        $traitMethod->setTraitName('ObjectTrait');
         $traitMethod->setName('doSomething');
         $traitMethod->setInsteadOf('OtherTrait');
 

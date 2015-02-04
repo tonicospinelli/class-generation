@@ -20,13 +20,13 @@ use ClassGeneration\Element\ElementInterface;
 interface MethodInterface extends ElementInterface
 {
     /**
-     * Gets the trait's name
+     * Gets the trait method's name
      * @return string
      */
     public function getName();
 
     /**
-     * Sets the trait's name.
+     * Sets the trait method's name.
      *
      * @param string $name
      *
@@ -34,4 +34,16 @@ interface MethodInterface extends ElementInterface
      */
     public function setName($name);
 
+    /**
+     * Sets the trait's name.
+     * @param string $name
+     * @return MethodInterface
+     */
+    public function setTraitName($name);
+
+    /**
+     * Get trait's name.
+     * @return string
+     */
+    public function getTraitName();
 }

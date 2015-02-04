@@ -11,8 +11,6 @@
 
 namespace ClassGeneration\Composition;
 
-use ClassGeneration\CompositionInterface;
-
 /**
  * Composition Trait Conflicting Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
@@ -20,7 +18,7 @@ use ClassGeneration\CompositionInterface;
 class ConflictingMethod extends Method implements ConflictingMethodInterface
 {
     /**
-     * @var CompositionInterface
+     * @var string
      */
     protected $insteadOf;
 
@@ -28,16 +26,16 @@ class ConflictingMethod extends Method implements ConflictingMethodInterface
      * @inheritdoc
      * @return ConflictingMethod
      */
-    public function setInsteadOf($className)
+    public function setInsteadOf($traitName)
     {
-        $this->insteadOf = $className;
+        $this->insteadOf = $traitName;
 
         return $this;
     }
 
     /**
      * @inheritdoc
-     * @return CompositionInterface
+     * @return string
      */
     public function getInsteadOf()
     {
@@ -51,7 +49,7 @@ class ConflictingMethod extends Method implements ConflictingMethodInterface
     {
         $result = sprintf(
             '%s::%s insteadof %s;',
-            $this->getParent()->getName(),
+            $this->getTraitName(),
             $this->getName(),
             $this->getInsteadOf()
         );

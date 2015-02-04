@@ -21,7 +21,14 @@ use ClassGeneration\Visibility;
 class AliasMethod extends Method implements AliasMethodInterface
 {
 
+    /**
+     * @var string
+     */
     protected $alias;
+
+    /**
+     * @var string
+     */
     protected $visibility;
 
     /**
@@ -77,7 +84,7 @@ class AliasMethod extends Method implements AliasMethodInterface
     {
         $result = sprintf(
             '%s::%s as%s%s;',
-            $this->getParent()->getName(),
+            $this->getTraitName(),
             $this->getName(),
             $this->prependWhiteSpace($this->getVisibility()),
             $this->prependWhiteSpace($this->getAlias())

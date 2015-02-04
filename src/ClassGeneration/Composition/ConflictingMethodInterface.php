@@ -11,8 +11,6 @@
 
 namespace ClassGeneration\Composition;
 
-use ClassGeneration\CompositionInterface;
-
 /**
  * Composition Trait Conflicting Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
@@ -20,13 +18,13 @@ use ClassGeneration\CompositionInterface;
 interface ConflictingMethodInterface extends MethodInterface
 {
     /**
-     * @param string $className
+     * @param string $traitName
      * @return ConflictingMethodInterface
      */
-    public function setInsteadOf($className);
+    public function setInsteadOf($traitName);
 
     /**
-     * @return CompositionInterface
+     * @return string
      */
     public function getInsteadOf();
 }
