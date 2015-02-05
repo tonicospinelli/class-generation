@@ -24,6 +24,7 @@ use ClassGeneration\PropertyCollection;
 use ClassGeneration\UseClass;
 use ClassGeneration\UseCollection;
 use ClassGeneration\Composition;
+use ClassGeneration\Visibility;
 
 class PhpClassTest extends \PHPUnit_Framework_TestCase
 {
@@ -227,7 +228,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             new UseClass(
                 array(
                     'className' => 'ClassGeneration\PropertyCollection',
-                    'alias'     => 'Properties'
+                    'alias' => 'Properties'
                 )
             )
         );
@@ -343,8 +344,10 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->addInterface('\ArrayAccess')
             ->addMethod(new Method())
             ->addProperty(new Property())
-            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')))
-            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')));
+            ->addComposition(new Composition(array('name' => 'A')))
+            ->addComposition(new Composition(array('name' => 'B')));
+        $code->getCompositionCollection()->addMethod(new Composition\VisibilityMethod(array('name' => 'doSomething', 'traitName' => 'A', 'visibility' => Visibility::TYPE_PRIVATE)));
+        $code->getCompositionCollection()->addMethod(new Composition\ConflictingMethod(array('name' => 'toDo', 'traitName' => 'B', 'insteadOf' => 'A')));
 
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL
@@ -353,7 +356,10 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' */' . PHP_EOL
             . 'class Test implements \ArrayAccess' . PHP_EOL
             . '{' . PHP_EOL
-            . '    use \ClassGeneration\Test\Provider\ObjectTrait, \ClassGeneration\Test\Provider\OtherTrait;' . PHP_EOL . PHP_EOL
+            . '    use A, B {' . PHP_EOL
+            . '        A::doSomething as private;' . PHP_EOL
+            . '        B::toDo insteadof A;' . PHP_EOL
+            . '    }' . PHP_EOL . PHP_EOL
             . '    public $property1;' . PHP_EOL
             . '' . PHP_EOL
             . '    /**'

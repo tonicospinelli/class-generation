@@ -12,6 +12,8 @@
 namespace ClassGeneration;
 
 use ClassGeneration\Collection\ArrayCollection;
+use ClassGeneration\Composition\MethodCollection as CompositionMethodCollection;
+use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
 
 /**
  * Property Collection ClassGeneration
@@ -19,12 +21,80 @@ use ClassGeneration\Collection\ArrayCollection;
  */
 class CompositionCollection extends ArrayCollection
 {
+    protected $methods;
+
+    /**
+     * Initializes a new ArrayCollection.
+     *
+     * @param array $elements
+     */
+    public function __construct(array $elements = array())
+    {
+        $this->elements = $elements;
+        $this->methods = new CompositionMethodCollection();
+    }
+
+    /**
+     * Adds a new Composition at CompositionCollection.
+     *
+     * @param CompositionInterface $composition
+     *
+     * @throws \InvalidArgumentException
+     * @return bool
+     */
+    public function add($composition)
+    {
+        if (!$composition instanceof CompositionInterface) {
+            throw new \InvalidArgumentException(
+                'This Constant must be a instance of \ClassGeneration\CompositionInterface'
+            );
+        }
+
+        return parent::add($composition);
+    }
+
     /**
      * @return CompositionInterface[]
      */
     public function getIterator()
     {
         return parent::getIterator();
+    }
+
+    /**
+     * @param CompositionMethodInterface $method
+     * @return bool
+     */
+    public function addMethod(CompositionMethodInterface $method)
+    {
+        return $this->getMethods()->add($method);
+    }
+
+    /**
+     * @return CompositionMethodCollection
+     */
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * @param CompositionMethodCollection $methods
+     * @return CompositionCollection
+     */
+    public function setMethods(CompositionMethodCollection $methods)
+    {
+        $this->methods = $methods;
+        return $this;
+    }
+
+    /**
+     * @param CompositionInterface $composition
+     * @return bool
+     */
+    public function addComposition(CompositionInterface $composition)
+    {
+        return $this->add($composition);
     }
 
     /**
@@ -38,14 +108,18 @@ class CompositionCollection extends ArrayCollection
         }
 
         $useTraits = $this->getIterator();
-        $tabulation = '';
+        $tabulationFormatted = $this->current()->getTabulationFormatted();
         $string = 'use ';
         $traitList = array();
         foreach ($useTraits as $useTrait) {
-            $tabulation = $useTrait->getTabulationFormatted();
             $traitList[] = $useTrait->toString();
         }
 
-        return $tabulation . $string . implode(', ', $traitList) . ';' . PHP_EOL;
+        $compositionMethods = ';' . PHP_EOL;
+        if (!$this->getMethods()->isEmpty()) {
+            $compositionMethods = ' ' . $this->getMethods()->toString();
+        }
+
+        return $tabulationFormatted . $string . implode(', ', $traitList) . $compositionMethods;
     }
 }
