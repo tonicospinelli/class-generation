@@ -28,40 +28,30 @@ class CompositionCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\CompositionCollection', $collection);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testAddCompositionFromInstance()
+    public function testSetMethodCollection()
     {
-        $composition = new Composition(array('name' => 'ObjectTrait'));
         $collection = new CompositionCollection();
-        $collection->add($composition);
-        $this->assertCount(1, $collection);
-        $this->assertEquals('ObjectTrait', $collection->current()->getName());
-        $collection->add(array('name' => 'bla'));
-    }
+        $collection->addMethod(AliasMethod::create('doSomething', 'A', 'doNothing'));
+        $this->assertCount(1, $collection->getMethods());
 
-    public function getIterator()
-    {
-        $collection = new CompositionCollection();
-        $this->assertInstanceOf('\ClassGeneration\CompositionIterator', $collection->getIterator());
+        $collection->setMethods(new Composition\MethodCollection());
+        $this->assertCount(0, $collection->getMethods());
     }
 
     public function testParseToStringSimpleCompositionCollection()
     {
         $collection = new CompositionCollection();
-        $collection->addComposition(new Composition(array('name' => 'test')));
+        $collection->addComposition('test');
         $expected = '    use test;' . PHP_EOL;
         $this->assertEquals($expected, $collection->toString());
     }
 
     public function testParseToStringCompositionCollectionWithAliasMethod()
     {
-        $composition = new Composition(array('name' => 'TestTrait'));
         $doSomething = new AliasMethod(array('name' => 'doSomething', 'traitName' => 'TestTrait', 'alias' => 'doNothing'));
         $somethingToDo = new AliasMethod(array('name' => 'somethingToDo', 'traitName' => 'TestTrait', 'alias' => 'nothingToDo', 'visibility' => Visibility::TYPE_PRIVATE));
         $collection = new CompositionCollection();
-        $collection->add($composition);
+        $collection->add('TestTrait');
         $collection->addMethod($doSomething);
         $collection->addMethod($somethingToDo);
         $expected = <<<EXPECTED
@@ -77,15 +67,13 @@ EXPECTED;
 
     public function testParseToStringCompositionCollectionWithConflictingResolution()
     {
-        $compositionA = new Composition(array('name' => 'A'));
-        $compositionB = new Composition(array('name' => 'B'));
         $smallTalk = new ConflictingMethod(array('name' => 'smallTalk', 'traitName' => 'B', 'insteadOf' => 'A'));
         $bigTalk = new ConflictingMethod(array('name' => 'bigTalk', 'traitName' => 'A', 'insteadOf' => 'B'));
         $talk = new AliasMethod(array('name' => 'bigTalk', 'traitName' => 'B', 'alias' => 'talk'));
 
         $collection = new CompositionCollection();
-        $collection->add($compositionA);
-        $collection->add($compositionB);
+        $collection->add('A');
+        $collection->add('B');
         $collection->addMethod($smallTalk);
         $collection->addMethod($bigTalk);
         $collection->addMethod($talk);
@@ -103,10 +91,8 @@ EXPECTED;
 
     public function testParseToStringCompositionCollectionWithVisibilityChanging()
     {
-        $composition = new Composition(array('name' => 'TestTrait'));
         $doSomething = new VisibilityMethod(array('name' => 'doSomething', 'traitName' => 'TestTrait', 'visibility' => Visibility::TYPE_PRIVATE));
         $collection = new CompositionCollection();
-        $collection->add($composition);
         $collection->addMethod($doSomething);
         $expected = <<<EXPECTED
     use TestTrait {

@@ -11,6 +11,7 @@
 
 namespace ClassGeneration;
 
+use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
 use ClassGeneration\Element\ElementAbstract;
 
 /**
@@ -585,11 +586,20 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     /**
      * @inheritdoc
      */
-    public function addComposition(CompositionInterface $trait)
+    public function addComposition($traitName)
     {
-        $trait->setParent($this);
-        $this->getCompositionCollection()->add($trait);
+        $this->getCompositionCollection()->add($traitName);
 
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addCompositionMethod(CompositionMethodInterface $compositionMethod)
+    {
+        $compositionMethod->setParent($this);
+        $this->getCompositionCollection()->addMethod($compositionMethod);
         return $this;
     }
 

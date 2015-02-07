@@ -14,13 +14,23 @@ namespace ClassGeneration;
 use ClassGeneration\Collection\ArrayCollection;
 use ClassGeneration\Composition\MethodCollection as CompositionMethodCollection;
 use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
+use ClassGeneration\Element\Tabbable;
 
 /**
  * Property Collection ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-class CompositionCollection extends ArrayCollection
+class CompositionCollection extends ArrayCollection implements Tabbable
 {
+    /**
+     * Tabulation Identity.
+     * @var int
+     */
+    protected $tabulation;
+
+    /**
+     * @var CompositionMethodCollection
+     */
     protected $methods;
 
     /**
@@ -30,35 +40,50 @@ class CompositionCollection extends ArrayCollection
      */
     public function __construct(array $elements = array())
     {
+        $this->setTabulation(4);
         $this->elements = $elements;
         $this->methods = new CompositionMethodCollection();
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getTabulation()
+    {
+        return $this->tabulation;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTabulationFormatted()
+    {
+        return str_repeat(' ', $this->getTabulation());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTabulation($tabulation)
+    {
+        $this->tabulation = (int)$tabulation;
+
+        return $this;
+    }
+
+    /**
      * Adds a new Composition at CompositionCollection.
      *
-     * @param CompositionInterface $composition
+     * @param string $composition
      *
-     * @throws \InvalidArgumentException
      * @return bool
      */
     public function add($composition)
     {
-        if (!$composition instanceof CompositionInterface) {
-            throw new \InvalidArgumentException(
-                'This Constant must be a instance of \ClassGeneration\CompositionInterface'
-            );
+        if(!$this->contains($composition)){
+            parent::add($composition);
         }
-
-        return parent::add($composition);
-    }
-
-    /**
-     * @return CompositionInterface[]
-     */
-    public function getIterator()
-    {
-        return parent::getIterator();
+        return true;
     }
 
     /**
@@ -67,6 +92,7 @@ class CompositionCollection extends ArrayCollection
      */
     public function addMethod(CompositionMethodInterface $method)
     {
+        $this->addComposition($method->getTraitName());
         return $this->getMethods()->add($method);
     }
 
@@ -89,10 +115,10 @@ class CompositionCollection extends ArrayCollection
     }
 
     /**
-     * @param CompositionInterface $composition
+     * @param string $composition
      * @return bool
      */
-    public function addComposition(CompositionInterface $composition)
+    public function addComposition($composition)
     {
         return $this->add($composition);
     }
@@ -107,19 +133,14 @@ class CompositionCollection extends ArrayCollection
             return '';
         }
 
-        $useTraits = $this->getIterator();
-        $tabulationFormatted = $this->current()->getTabulationFormatted();
-        $string = 'use ';
-        $traitList = array();
-        foreach ($useTraits as $useTrait) {
-            $traitList[] = $useTrait->toString();
-        }
+        $traitNames = $this->toArray();
+        $tabulationFormatted = $this->getTabulationFormatted();
 
         $compositionMethods = ';' . PHP_EOL;
         if (!$this->getMethods()->isEmpty()) {
             $compositionMethods = ' ' . $this->getMethods()->toString();
         }
 
-        return $tabulationFormatted . $string . implode(', ', $traitList) . $compositionMethods;
+        return $tabulationFormatted . 'use ' . implode(', ', $traitNames) . $compositionMethods;
     }
 }

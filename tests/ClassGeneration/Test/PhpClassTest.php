@@ -344,10 +344,9 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->addInterface('\ArrayAccess')
             ->addMethod(new Method())
             ->addProperty(new Property())
-            ->addComposition(new Composition(array('name' => 'A')))
-            ->addComposition(new Composition(array('name' => 'B')));
-        $code->getCompositionCollection()->addMethod(new Composition\VisibilityMethod(array('name' => 'doSomething', 'traitName' => 'A', 'visibility' => Visibility::TYPE_PRIVATE)));
-        $code->getCompositionCollection()->addMethod(new Composition\ConflictingMethod(array('name' => 'toDo', 'traitName' => 'B', 'insteadOf' => 'A')));
+            ->addComposition('A')
+            ->addCompositionMethod(Composition\VisibilityMethod::create('doSomething', 'B', Visibility::TYPE_PRIVATE))
+            ->addCompositionMethod(Composition\ConflictingMethod::create('toDo', 'C', 'B'));
 
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL
@@ -356,9 +355,9 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' */' . PHP_EOL
             . 'class Test implements \ArrayAccess' . PHP_EOL
             . '{' . PHP_EOL
-            . '    use A, B {' . PHP_EOL
-            . '        A::doSomething as private;' . PHP_EOL
-            . '        B::toDo insteadof A;' . PHP_EOL
+            . '    use A, B, C {' . PHP_EOL
+            . '        B::doSomething as private;' . PHP_EOL
+            . '        C::toDo insteadof B;' . PHP_EOL
             . '    }' . PHP_EOL . PHP_EOL
             . '    public $property1;' . PHP_EOL
             . '' . PHP_EOL
@@ -550,8 +549,8 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property())
-            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\OtherTrait')))
-            ->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
+            ->addComposition('\ClassGeneration\Test\Provider\OtherTrait')
+            ->addComposition('\ClassGeneration\Test\Provider\ObjectTrait');
 
         $code->evaluate();
         $this->assertTrue(class_exists('\TestTrait'));
@@ -611,9 +610,9 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetAndAddUseTraits()
     {
         $code = new PhpClass();
-        $code->addComposition(new Composition(array('name' => '\ClassGeneration\Test\Provider\ObjectTrait')));
+        $code->addComposition('\ClassGeneration\Test\Provider\ObjectTrait');
         $this->assertCount(1, $code->getCompositionCollection());
 
-        $this->assertEquals('\ClassGeneration\Test\Provider\ObjectTrait', $code->getCompositionCollection()->current()->getName());
+        $this->assertEquals('\ClassGeneration\Test\Provider\ObjectTrait', $code->getCompositionCollection()->current());
     }
 }
