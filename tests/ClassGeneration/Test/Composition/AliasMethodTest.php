@@ -11,8 +11,8 @@
 
 namespace ClassGeneration\Test\Composition;
 
-use ClassGeneration\Composition;
 use ClassGeneration\Composition\AliasMethod;
+use ClassGeneration\PhpClass;
 use ClassGeneration\Visibility;
 
 class AliasMethodTest extends \PHPUnit_Framework_TestCase
@@ -31,6 +31,22 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
     {
         $traitMethod = new AliasMethod(array('name' => 'arg'));
         $this->assertEquals('arg', $traitMethod->getName());
+    }
+
+    public function testSetAndGetParent()
+    {
+        $traitMethod = new AliasMethod(array('name' => 'arg'));
+        $traitMethod->setParent(new PhpClass());
+        $this->assertInstanceOf('\ClassGeneration\PhpClass', $traitMethod->getParent());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetInvalidParent()
+    {
+        $traitMethod = new AliasMethod(array('name' => 'arg'));
+        $traitMethod->setParent(AliasMethod::create('something', 'A', 'some'));
     }
 
     public function testSetAndGetAlias()
@@ -72,11 +88,7 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToStringWithAliasAndVisibility()
     {
-        $traitMethod = new AliasMethod();
-        $traitMethod->setTraitName('ObjectTrait');
-        $traitMethod->setName('doSomething');
-        $traitMethod->setAlias('do');
-        $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);
+        $traitMethod = AliasMethod::create('doSomething', 'ObjectTrait', 'do', Visibility::TYPE_PRIVATE);
 
         $expected = 'ObjectTrait::doSomething as private do;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());

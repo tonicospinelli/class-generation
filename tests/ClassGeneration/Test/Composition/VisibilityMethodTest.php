@@ -41,10 +41,7 @@ class VisibilityMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $traitMethod = new VisibilityMethod();
-        $traitMethod->setTraitName('ObjectTrait');
-        $traitMethod->setName('doSomething');
-        $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);
+        $traitMethod = VisibilityMethod::create('doSomething', 'ObjectTrait', Visibility::TYPE_PRIVATE);
 
         $expected = 'ObjectTrait::doSomething as private;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());

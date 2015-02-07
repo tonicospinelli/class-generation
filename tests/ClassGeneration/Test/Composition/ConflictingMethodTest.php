@@ -32,10 +32,7 @@ class ConflictingMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $traitMethod = new ConflictingMethod();
-        $traitMethod->setTraitName('ObjectTrait');
-        $traitMethod->setName('doSomething');
-        $traitMethod->setInsteadOf('OtherTrait');
+        $traitMethod = ConflictingMethod::create('doSomething', 'ObjectTrait', 'OtherTrait');
 
         $expected = 'ObjectTrait::doSomething insteadof OtherTrait;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());

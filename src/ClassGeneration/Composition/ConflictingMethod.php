@@ -23,6 +23,22 @@ class ConflictingMethod extends Method implements ConflictingMethodInterface
     protected $insteadOf;
 
     /**
+     * Create a new instance of Composition Method
+     * @param string $name
+     * @param string $traitName
+     * @param string $insteadOf
+     * @return Method
+     */
+    public static function create($name, $traitName,$insteadOf)
+    {
+        $method = new static();
+        $method->setName($name);
+        $method->setTraitName($traitName);
+        $method->setInsteadOf($insteadOf);
+        return $method;
+    }
+
+    /**
      * @inheritdoc
      * @return ConflictingMethod
      */
