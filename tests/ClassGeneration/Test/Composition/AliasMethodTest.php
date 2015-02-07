@@ -20,7 +20,7 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingInstanceOfAliasCompositionMethod()
     {
-        $traitMethod = new AliasMethod();
+        $traitMethod = new AliasMethod('A', 'something', 'doSomething');
         $this->assertInstanceOf('\ClassGeneration\Composition\AliasMethod', $traitMethod);
         $this->assertInstanceOf('\ClassGeneration\Composition\AliasMethodInterface', $traitMethod);
         $this->assertInstanceOf('\ClassGeneration\Element\AliasInterface', $traitMethod);
@@ -29,13 +29,13 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetName()
     {
-        $traitMethod = new AliasMethod(array('name' => 'arg'));
-        $this->assertEquals('arg', $traitMethod->getName());
+        $traitMethod = new AliasMethod('A', 'something', 'doSomething');
+        $this->assertEquals('something', $traitMethod->getName());
     }
 
     public function testSetAndGetParent()
     {
-        $traitMethod = new AliasMethod(array('name' => 'arg'));
+        $traitMethod = new AliasMethod('A', 'something', 'doSomething');
         $traitMethod->setParent(new PhpClass());
         $this->assertInstanceOf('\ClassGeneration\PhpClass', $traitMethod->getParent());
     }
@@ -45,50 +45,34 @@ class AliasMethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetInvalidParent()
     {
-        $traitMethod = new AliasMethod(array('name' => 'arg'));
-        $traitMethod->setParent(AliasMethod::create('something', 'A', 'some'));
+        $traitMethod = new AliasMethod('A', 'something', 'doSomething');
+        $traitMethod->setParent(new AliasMethod('A', 'something', 'doSomething'));
     }
 
     public function testSetAndGetAlias()
     {
-        $traitMethod = new AliasMethod();
-        $traitMethod->setAlias('bla');
+        $traitMethod = new AliasMethod('A', 'something', 'bla');
         $this->assertTrue($traitMethod->hasAlias());
         $this->assertEquals('bla', $traitMethod->getAlias());
     }
 
     public function testSetAndGetVisibility()
     {
-        $traitMethod = new AliasMethod();
-        $traitMethod->setVisibility(Visibility::TYPE_PUBLIC);
+        $traitMethod = new AliasMethod('A', 'something', 'doSomething', Visibility::TYPE_PUBLIC);
         $this->assertEquals(Visibility::TYPE_PUBLIC, $traitMethod->getVisibility());
     }
 
     public function testParseToStringWithAlias()
     {
-        $traitMethod = new AliasMethod();
-        $traitMethod->setTraitName('ObjectTrait');
-        $traitMethod->setName('doSomething');
-        $traitMethod->setAlias('do');
+        $traitMethod = new AliasMethod('ObjectTrait', 'doSomething', 'do');
 
         $expected = 'ObjectTrait::doSomething as do;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());
     }
 
-    public function testParseToStringWithVisibility()
-    {
-        $traitMethod = new AliasMethod();
-        $traitMethod->setTraitName('ObjectTrait');
-        $traitMethod->setName('doSomething');
-        $traitMethod->setVisibility(Visibility::TYPE_PRIVATE);
-
-        $expected = 'ObjectTrait::doSomething as private;' . PHP_EOL;
-        $this->assertEquals($expected, $traitMethod->toString());
-    }
-
     public function testParseToStringWithAliasAndVisibility()
     {
-        $traitMethod = AliasMethod::create('doSomething', 'ObjectTrait', 'do', Visibility::TYPE_PRIVATE);
+        $traitMethod = new AliasMethod('ObjectTrait', 'doSomething', 'do', Visibility::TYPE_PRIVATE);
 
         $expected = 'ObjectTrait::doSomething as private do;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());

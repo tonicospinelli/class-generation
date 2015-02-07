@@ -345,8 +345,8 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->addMethod(new Method())
             ->addProperty(new Property())
             ->addComposition('A')
-            ->addCompositionMethod(Composition\VisibilityMethod::create('doSomething', 'B', Visibility::TYPE_PRIVATE))
-            ->addCompositionMethod(Composition\ConflictingMethod::create('toDo', 'C', 'B'));
+            ->addCompositionMethod(new Composition\VisibilityMethod('B', 'doSomething', Visibility::TYPE_PRIVATE))
+            ->addCompositionMethod(new Composition\ConflictingMethod('C', 'toDo', 'B'));
 
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL

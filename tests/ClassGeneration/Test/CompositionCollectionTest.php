@@ -31,7 +31,7 @@ class CompositionCollectionTest extends \PHPUnit_Framework_TestCase
     public function testSetMethodCollection()
     {
         $collection = new CompositionCollection();
-        $collection->addMethod(AliasMethod::create('doSomething', 'A', 'doNothing'));
+        $collection->addMethod(new AliasMethod('A', 'doSomething', 'doNothing'));
         $this->assertCount(1, $collection->getMethods());
 
         $collection->setMethods(new Composition\MethodCollection());
@@ -48,8 +48,8 @@ class CompositionCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToStringCompositionCollectionWithAliasMethod()
     {
-        $doSomething = new AliasMethod(array('name' => 'doSomething', 'traitName' => 'TestTrait', 'alias' => 'doNothing'));
-        $somethingToDo = new AliasMethod(array('name' => 'somethingToDo', 'traitName' => 'TestTrait', 'alias' => 'nothingToDo', 'visibility' => Visibility::TYPE_PRIVATE));
+        $doSomething = new AliasMethod('TestTrait', 'doSomething', 'doNothing');
+        $somethingToDo = new AliasMethod('TestTrait', 'somethingToDo', 'nothingToDo', Visibility::TYPE_PRIVATE);
         $collection = new CompositionCollection();
         $collection->add('TestTrait');
         $collection->addMethod($doSomething);
@@ -67,9 +67,9 @@ EXPECTED;
 
     public function testParseToStringCompositionCollectionWithConflictingResolution()
     {
-        $smallTalk = new ConflictingMethod(array('name' => 'smallTalk', 'traitName' => 'B', 'insteadOf' => 'A'));
-        $bigTalk = new ConflictingMethod(array('name' => 'bigTalk', 'traitName' => 'A', 'insteadOf' => 'B'));
-        $talk = new AliasMethod(array('name' => 'bigTalk', 'traitName' => 'B', 'alias' => 'talk'));
+        $smallTalk = new ConflictingMethod('B', 'smallTalk', 'A');
+        $bigTalk = new ConflictingMethod('A', 'bigTalk', 'B');
+        $talk = new AliasMethod('B', 'bigTalk', 'talk');
 
         $collection = new CompositionCollection();
         $collection->add('A');
@@ -91,7 +91,7 @@ EXPECTED;
 
     public function testParseToStringCompositionCollectionWithVisibilityChanging()
     {
-        $doSomething = new VisibilityMethod(array('name' => 'doSomething', 'traitName' => 'TestTrait', 'visibility' => Visibility::TYPE_PRIVATE));
+        $doSomething = new VisibilityMethod( 'TestTrait', 'doSomething',Visibility::TYPE_PRIVATE);
         $collection = new CompositionCollection();
         $collection->addMethod($doSomething);
         $expected = <<<EXPECTED

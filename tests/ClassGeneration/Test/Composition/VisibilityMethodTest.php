@@ -20,7 +20,7 @@ class VisibilityMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingInstanceOfVisibilityCompositionMethod()
     {
-        $traitMethod = new VisibilityMethod();
+        $traitMethod = new VisibilityMethod('TraitName', 'doSomething', Visibility::TYPE_PRIVATE);
         $this->assertInstanceOf('\ClassGeneration\Composition\VisibilityMethod', $traitMethod);
         $this->assertInstanceOf('\ClassGeneration\Composition\VisibilityMethodInterface', $traitMethod);
         $this->assertInstanceOf('\ClassGeneration\Element\VisibilityInterface', $traitMethod);
@@ -28,22 +28,21 @@ class VisibilityMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetName()
     {
-        $traitMethod = new VisibilityMethod(array('name' => 'method'));
+        $traitMethod = new VisibilityMethod('TraitName', 'method', Visibility::TYPE_PRIVATE);
         $this->assertEquals('method', $traitMethod->getName());
     }
 
     public function testSetAndGetVisibility()
     {
-        $traitMethod = new VisibilityMethod();
-        $traitMethod->setVisibility(Visibility::TYPE_PUBLIC);
+        $traitMethod = new VisibilityMethod('TraitName', 'doSomething', Visibility::TYPE_PUBLIC);
         $this->assertEquals(Visibility::TYPE_PUBLIC, $traitMethod->getVisibility());
     }
 
     public function testParseToString()
     {
-        $traitMethod = VisibilityMethod::create('doSomething', 'ObjectTrait', Visibility::TYPE_PRIVATE);
+        $traitMethod = new VisibilityMethod('TraitName', 'doSomething', Visibility::TYPE_PRIVATE);
 
-        $expected = 'ObjectTrait::doSomething as private;' . PHP_EOL;
+        $expected = 'TraitName::doSomething as private;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());
     }
 }

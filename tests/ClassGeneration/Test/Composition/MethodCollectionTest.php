@@ -30,10 +30,7 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddMethodFromInstance()
     {
-        $method = new VisibilityMethod();
-        $method->setTraitName('TraitName');
-        $method->setName('doSomething');
-        $method->setVisibility(Visibility::TYPE_PRIVATE);
+        $method = new VisibilityMethod('TraitName', 'doSomething', Visibility::TYPE_PRIVATE);
 
         $collection = new MethodCollection();
         $collection->add($method);
@@ -44,15 +41,12 @@ class MethodCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testParseToString()
     {
-        $method = new VisibilityMethod();
-        $method->setTraitName('ObjectTrait');
-        $method->setName('doSomething');
-        $method->setVisibility(Visibility::TYPE_PRIVATE);
+        $method = new VisibilityMethod('TraitName', 'doSomething', Visibility::TYPE_PRIVATE);
 
         $collection = new MethodCollection();
         $collection->add($method);
         $expected = '{' . PHP_EOL
-            . '        ObjectTrait::doSomething as private;' . PHP_EOL
+            . '        TraitName::doSomething as private;' . PHP_EOL
             . '    }' . PHP_EOL;
         $this->assertEquals($expected, $collection->toString());
     }

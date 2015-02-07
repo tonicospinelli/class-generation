@@ -19,20 +19,20 @@ class ConflictingMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingInstanceOfConflictingCompositionMethod()
     {
-        $traitMethod = new ConflictingMethod();
+        $traitMethod = new ConflictingMethod('ObjectTrait', 'doSomething', 'OtherTrait');
         $this->assertInstanceOf('\ClassGeneration\Composition\ConflictingMethod', $traitMethod);
         $this->assertInstanceOf('\ClassGeneration\Composition\ConflictingMethodInterface', $traitMethod);
     }
 
     public function testSetAndGetName()
     {
-        $traitMethod = new ConflictingMethod(array('name' => 'method'));
+        $traitMethod = new ConflictingMethod('ObjectTrait', 'method', 'OtherTrait');
         $this->assertEquals('method', $traitMethod->getName());
     }
 
     public function testParseToString()
     {
-        $traitMethod = ConflictingMethod::create('doSomething', 'ObjectTrait', 'OtherTrait');
+        $traitMethod = new ConflictingMethod('ObjectTrait', 'doSomething', 'OtherTrait');
 
         $expected = 'ObjectTrait::doSomething insteadof OtherTrait;' . PHP_EOL;
         $this->assertEquals($expected, $traitMethod->toString());

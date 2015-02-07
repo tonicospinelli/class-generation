@@ -31,26 +31,16 @@ class AliasMethod extends Method implements AliasMethodInterface
      */
     protected $visibility;
 
-    /**
-     * Create a new instance of Composition Method
-     * @param string $name
-     * @param string $traitName
-     * @param string $alias
-     * @param string $visibility [optional]
-     * @return Method
-     */
-    public static function create($name, $traitName, $alias, $visibility = null)
+    public function __construct($traitName, $name, $alias, $visibility = null)
     {
-        $method = new static();
-        $method->setName($name);
-        $method->setTraitName($traitName);
-        $method->setAlias($alias);
+        $this->setName($name);
+        $this->setTraitName($traitName);
+        $this->setAlias($alias);
 
-        if(!empty($visibility)){
-            $method->setVisibility($visibility);
+        if (!empty($visibility)) {
+            $this->setVisibility($visibility);
         }
-
-        return $method;
+        $this->init();
     }
 
     /**

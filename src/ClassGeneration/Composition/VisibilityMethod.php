@@ -22,20 +22,12 @@ class VisibilityMethod extends Method implements VisibilityMethodInterface
 
     protected $visibility;
 
-    /**
-     * Create a new instance of Composition Method
-     * @param string $name
-     * @param string $traitName
-     * @param string $visibility
-     * @return Method
-     */
-    public static function create($name, $traitName, $visibility)
+    public function __construct($traitName, $name, $visibility)
     {
-        $method = new static();
-        $method->setName($name);
-        $method->setTraitName($traitName);
-        $method->setVisibility($visibility);
-        return $method;
+        $this->setTraitName($traitName);
+        $this->setName($name);
+        $this->setVisibility($visibility);
+        $this->init();
     }
 
     /**
