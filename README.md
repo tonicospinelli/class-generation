@@ -16,12 +16,12 @@ Installation
 ============
 I assume you know about Composer, if not look at [Composer WebSite](http://getcomposer.org/).
 ```sh
-$ php composer.phar require tonicospinelli/classgeneration:2.0.*
+$ php composer.phar require tonicospinelli/classgeneration:2.2.*
 ```
 OR
 ```json
 {
-    "tonicospinelli/classgeneration" : "2.0.*"
+    "tonicospinelli/classgeneration" : "2.2.*"
 }
 ```
 
@@ -84,7 +84,7 @@ class FirstClass
 ```
 Version
 ----
-2.0
+2.2
 
 MIT License
 ----
