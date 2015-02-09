@@ -11,7 +11,7 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
 use ClassGeneration\Element\Declarable;
 use ClassGeneration\Element\Documentary;
 use ClassGeneration\Element\ElementInterface;
@@ -235,4 +235,29 @@ interface PhpClassInterface extends ElementInterface, Documentary, Declarable
      * @return void
      */
     public function evaluate();
+
+    /**
+     * Add a new horizontal composition.
+     * @param string $traitName
+     * @return PhpClassInterface
+     */
+    public function addComposition($traitName);
+
+    /**
+     * Add a new horizontal composition.
+     * @param CompositionMethodInterface $compositionMethod
+     * @return PhpClassInterface
+     */
+    public function addCompositionMethod(CompositionMethodInterface $compositionMethod);
+
+    /**
+     * @param CompositionCollection $traits
+     * @return PhpClassInterface
+     */
+    public function setCompositionCollection(CompositionCollection $traits);
+
+    /**
+     * @return CompositionCollection
+     */
+    public function getCompositionCollection();
 }

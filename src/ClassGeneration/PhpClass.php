@@ -11,8 +11,7 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\DocBlock\Tag;
-use ClassGeneration\DocBlock\TagInterface;
+use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
 use ClassGeneration\Element\ElementAbstract;
 
 /**
@@ -60,7 +59,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
 
     /**
      * Class namespace
-     * @var NamespaceClass
+     * @var NamespaceInterface
      */
     protected $namespace;
 
@@ -101,6 +100,11 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
     protected $interfaces;
 
     /**
+     * @var CompositionCollection
+     */
+    protected $compositionCollection;
+
+    /**
      * Force on add method on class docblock.
      * @var boolean
      */
@@ -125,6 +129,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         $this->setInterfaceCollection(new InterfaceCollection());
         $this->setNamespace(new NamespaceClass());
         $this->setUseCollection(new UseCollection());
+        $this->setCompositionCollection(new CompositionCollection());
     }
 
     /**
@@ -494,6 +499,7 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
             . PHP_EOL
             . '{'
             . PHP_EOL
+            . $this->getCompositionCollection()->toString()
             . $this->getConstantCollection()->toString()
             . $this->getPropertyCollection()->toString()
             . $this->getMethodCollection()->toString()
@@ -575,5 +581,42 @@ class PhpClass extends ElementAbstract implements PhpClassInterface
         }
 
         return $type;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addComposition($traitName)
+    {
+        $this->getCompositionCollection()->add($traitName);
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addCompositionMethod(CompositionMethodInterface $compositionMethod)
+    {
+        $compositionMethod->setParent($this);
+        $this->getCompositionCollection()->addMethod($compositionMethod);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCompositionCollection(CompositionCollection $traits)
+    {
+        $this->compositionCollection = $traits;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompositionCollection()
+    {
+        return $this->compositionCollection;
     }
 }

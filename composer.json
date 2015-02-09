@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ClassGeneration": "src/"
+            "ClassGeneration": ["src/","/test"]
         }
     }
 }

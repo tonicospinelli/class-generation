@@ -14,7 +14,6 @@ namespace ClassGeneration\Test;
 use ClassGeneration\PhpClass;
 use ClassGeneration\Constant;
 use ClassGeneration\ConstantCollection;
-use ClassGeneration\DocBlock\Tag;
 use ClassGeneration\DocBlock;
 use ClassGeneration\InterfaceCollection;
 use ClassGeneration\Method;
@@ -24,9 +23,17 @@ use ClassGeneration\Property;
 use ClassGeneration\PropertyCollection;
 use ClassGeneration\UseClass;
 use ClassGeneration\UseCollection;
+use ClassGeneration\Composition;
+use ClassGeneration\Visibility;
 
 class PhpClassTest extends \PHPUnit_Framework_TestCase
 {
+    protected function isTraitAvailable()
+    {
+        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+            $this->markTestSkipped('Trait is available from 5.4+');
+        }
+    }
 
     public function testCreatingInstanceOfPhpClassInterface()
     {
@@ -221,7 +228,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             new UseClass(
                 array(
                     'className' => 'ClassGeneration\PropertyCollection',
-                    'alias'     => 'Properties'
+                    'alias' => 'Properties'
                 )
             )
         );
@@ -240,6 +247,7 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->addInterface('\ArrayAccess')
             ->addMethod(new Method())
             ->addProperty(new Property());
+
         $expected = '<?php' . PHP_EOL
             . '' . PHP_EOL
             . '/**' . PHP_EOL
@@ -247,6 +255,110 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             . ' */' . PHP_EOL
             . 'class Test implements \ArrayAccess' . PHP_EOL
             . '{' . PHP_EOL . PHP_EOL
+            . '    public $property1;' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetExists($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetExists method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetGet($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetGet method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     * @param mixed $value'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetSet($offset, $value)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetSet method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    /**'
+            . '' . PHP_EOL
+            . '     * '
+            . '' . PHP_EOL
+            . '     * @param mixed $offset'
+            . '' . PHP_EOL
+            . '     */'
+            . '' . PHP_EOL
+            . '    public function offsetUnset($offset)'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the offsetUnset method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '' . PHP_EOL
+            . '    public function method5()'
+            . '' . PHP_EOL
+            . '    {'
+            . '' . PHP_EOL
+            . '        //TODO: implements the method5 method'
+            . '' . PHP_EOL
+            . '    }' . PHP_EOL
+            . '}' . PHP_EOL;
+        $this->assertEquals($expected, $code->toString());
+    }
+
+    public function testParseClassUsingTraitToString()
+    {
+        $this->isTraitAvailable();
+
+        $code = new PhpClass();
+        $code->setName('Test')
+            ->setDescription('Class description')
+            ->addInterface('\ArrayAccess')
+            ->addMethod(new Method())
+            ->addProperty(new Property())
+            ->addComposition('A')
+            ->addCompositionMethod(new Composition\VisibilityMethod('B', 'doSomething', Visibility::TYPE_PRIVATE))
+            ->addCompositionMethod(new Composition\ConflictingMethod('C', 'toDo', 'B'));
+
+        $expected = '<?php' . PHP_EOL
+            . '' . PHP_EOL
+            . '/**' . PHP_EOL
+            . ' * Class description' . PHP_EOL
+            . ' */' . PHP_EOL
+            . 'class Test implements \ArrayAccess' . PHP_EOL
+            . '{' . PHP_EOL
+            . '    use A, B, C {' . PHP_EOL
+            . '        B::doSomething as private;' . PHP_EOL
+            . '        C::toDo insteadof B;' . PHP_EOL
+            . '    }' . PHP_EOL . PHP_EOL
             . '    public $property1;' . PHP_EOL
             . '' . PHP_EOL
             . '    /**'
@@ -422,8 +534,29 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
             ->setExtends('\ArrayIterator')
             ->addMethod(new Method())
             ->addProperty(new Property());
+
         $code->evaluate();
         $this->assertTrue(class_exists('\Test'));
+    }
+
+    public function testEvaluateClassUsingTrait()
+    {
+        $this->isTraitAvailable();
+
+        $code = new PhpClass();
+        $code->setName('TestTrait')
+            ->setDescription('Class description')
+            ->setExtends('\ArrayIterator')
+            ->addMethod(new Method())
+            ->addProperty(new Property())
+            ->addComposition('\ClassGeneration\Test\Provider\OtherTrait')
+            ->addComposition('\ClassGeneration\Test\Provider\ObjectTrait');
+
+        $code->evaluate();
+        $this->assertTrue(class_exists('\TestTrait'));
+
+        $reflection = new \ReflectionClass($code->getFullName());
+        $this->assertInstanceOf('\ReflectionMethod', $reflection->getMethod('doSomething'));
     }
 
     public function testSetAndGetDocBlock()
@@ -472,5 +605,14 @@ class PhpClassTest extends \PHPUnit_Framework_TestCase
         $code->setIsAbstract();
         $this->assertTrue($code->isAbstract());
         $code->setIsInterface();
+    }
+
+    public function testSetAndGetAndAddUseTraits()
+    {
+        $code = new PhpClass();
+        $code->addComposition('\ClassGeneration\Test\Provider\ObjectTrait');
+        $this->assertCount(1, $code->getCompositionCollection());
+
+        $this->assertEquals('\ClassGeneration\Test\Provider\ObjectTrait', $code->getCompositionCollection()->current());
     }
 }
