@@ -4,7 +4,7 @@
     "homepage": "https://github.com/tonicospinelli/ClassGeneration/",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "keywords": [
         "php class generator",
         "php class gen",
@@ -26,11 +26,12 @@
         "issues": "https://github.com/tonicospinelli/ClassGeneration/issues"
     },
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "fabpot/php-cs-fixer": "~1.4"
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "~4.4"
     },
     "autoload": {
         "psr-0": {
