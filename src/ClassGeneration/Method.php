@@ -393,7 +393,7 @@ class Method extends ElementAbstract implements MethodInterface
      */
     public function toStringCode()
     {
-        if (!$this->isInterface() and !$this->isAbstract()) {
+        if (!$this->isInterface() && !$this->isAbstract()) {
             $tabulationFormatted = $this->getTabulationFormatted();
             $code = PHP_EOL . $tabulationFormatted
                 . '{'

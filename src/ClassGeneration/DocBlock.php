@@ -137,7 +137,7 @@ class DocBlock extends ElementAbstract implements DocBlockInterface
     public function toString()
     {
         if ($this->getTagCollection()->count() == 0
-            and ($this->getDescription() === null or $this->getDescription() === '')
+            && ($this->getDescription() === null || $this->getDescription() === '')
         ) {
             return PHP_EOL;
         }

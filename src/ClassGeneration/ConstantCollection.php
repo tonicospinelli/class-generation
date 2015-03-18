@@ -89,8 +89,8 @@ class ConstantCollection extends ArrayCollection
         $list = $this->getIterator();
         foreach ($list as $index => $constant) {
             $currentName = $constant->getName();
-            if ((is_array($constantName) and in_array($currentName, $constantName))
-                or ($constant->getName() === $constantName)
+            if ((is_array($constantName) && in_array($currentName, $constantName))
+                || ($constant->getName() === $constantName)
             ) {
                 $removedList->add(clone $constant);
                 $this->remove($index);

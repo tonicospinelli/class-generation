@@ -13,14 +13,14 @@ namespace ClassGeneration;
 
 use ClassGeneration\Composition\MethodInterface as CompositionMethodInterface;
 use ClassGeneration\Element\Declarable;
-use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\DocumentBlockInterface;
 use ClassGeneration\Element\ElementInterface;
 
 /**
  * Interface for Class Elements ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface PhpClassInterface extends ElementInterface, Documentary, Declarable
+interface PhpClassInterface extends ElementInterface, DocumentBlockInterface, Declarable
 {
 
     /**

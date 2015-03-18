@@ -98,7 +98,7 @@ class Tag extends ElementAbstract implements TagInterface
      */
     public function getType()
     {
-        if ((is_null($this->type) or empty($this->type)) and $this->needsType()) {
+        if ((is_null($this->type) || empty($this->type)) && $this->needsType()) {
             return 'mixed';
         }
 
@@ -207,9 +207,9 @@ class Tag extends ElementAbstract implements TagInterface
         $description = $this->getDescription();
         $string =
             '@' . $name
-            . ((!is_null($type) and !empty($type)) ? ' ' . $type : '')
-            . ((!is_null($variable) and !empty($variable)) ? ' $' . $variable : '')
-            . ((!is_null($description) and !empty($description)) ? ' ' . $description : '');
+            . ((!is_null($type) && !empty($type)) ? ' ' . $type : '')
+            . ((!is_null($variable) && !empty($variable)) ? ' $' . $variable : '')
+            . ((!is_null($description) && !empty($description)) ? ' ' . $description : '');
 
         $string = trim($string);
         if ($this->isInline()) {

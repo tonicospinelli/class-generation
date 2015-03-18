@@ -11,14 +11,14 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\DocumentBlockInterface;
 use ClassGeneration\Element\ElementAbstract;
 
 /**
  * Namespace ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-class NamespaceClass extends ElementAbstract implements NamespaceInterface, Documentary
+class NamespaceClass extends ElementAbstract implements NamespaceInterface, DocumentBlockInterface
 {
 
     /**

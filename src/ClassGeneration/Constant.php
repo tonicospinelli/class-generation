@@ -76,7 +76,7 @@ class Constant extends ElementAbstract implements ConstantInterface
      */
     public function setValue($value)
     {
-        if (!is_string($value) and !is_numeric($value)) {
+        if (!is_string($value) && !is_numeric($value)) {
             throw new \InvalidArgumentException('The constant value must be a string or number');
         }
         $this->value = $value;

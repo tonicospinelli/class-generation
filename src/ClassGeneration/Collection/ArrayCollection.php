@@ -177,12 +177,12 @@ class ArrayCollection implements CollectionInterface
      */
     public function exists($findKey = null, $findElement = null)
     {
-        if (!is_null($findKey) and is_null($findElement)) {
+        if (!is_null($findKey) && is_null($findElement)) {
             return $this->containsKey($findKey);
-        } elseif (is_null($findKey) and !is_null($findElement)) {
+        } elseif (is_null($findKey) && !is_null($findElement)) {
             return $this->contains($findElement);
         } else {
-            return $this->containsKey($findKey) and $this->contains($findElement);
+            return $this->containsKey($findKey) && $this->contains($findElement);
         }
     }
 

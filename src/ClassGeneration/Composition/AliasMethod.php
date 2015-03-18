@@ -66,7 +66,7 @@ class AliasMethod extends Method implements AliasMethodInterface
      */
     public function hasAlias()
     {
-        return !(empty($this->alias) or is_null($this->alias));
+        return !(empty($this->alias) || is_null($this->alias));
     }
 
     /**
@@ -111,7 +111,7 @@ class AliasMethod extends Method implements AliasMethodInterface
      */
     protected function prependWhiteSpace($text)
     {
-        if (is_null($text) or empty($text)) {
+        if (is_null($text) || empty($text)) {
             return '';
         }
         return ' ' . $text;
