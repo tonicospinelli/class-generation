@@ -1,5 +1,6 @@
 Class Generation
 ================
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a6437c70-d1df-4586-98d0-1faa92066f63/small.png)](https://insight.sensiolabs.com/projects/a6437c70-d1df-4586-98d0-1faa92066f63)
 [![Build Status](https://travis-ci.org/tonicospinelli/ClassGeneration.png?branch=2.0)](https://travis-ci.org/tonicospinelli/ClassGeneration)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/quality-score.png?s=8ffe9768f12e9d6f01d57ca3981e47eb745563a2)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
 [![Code Coverage](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/badges/coverage.png?s=9c6c165f53058acfd2ff350a1f4ba7c77a6a1395)](https://scrutinizer-ci.com/g/tonicospinelli/ClassGeneration/)
