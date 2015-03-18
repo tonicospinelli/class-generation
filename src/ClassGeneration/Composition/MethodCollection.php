@@ -12,7 +12,6 @@
 namespace ClassGeneration\Composition;
 
 use ClassGeneration\Collection\ArrayCollection;
-use ClassGeneration\Element\ElementAbstract;
 use ClassGeneration\Element\Tabbable;
 
 /**
