@@ -18,7 +18,7 @@ use ClassGeneration\DocBlockInterface;
  * Interface for Document Class Elements
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface Documentary
+interface DocumentBlockInterface
 {
 
     /**

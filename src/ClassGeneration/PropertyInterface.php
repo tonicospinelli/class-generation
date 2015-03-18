@@ -11,7 +11,7 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\DocumentBlockInterface;
 use ClassGeneration\Element\ElementInterface;
 use ClassGeneration\Element\StaticInterface;
 use ClassGeneration\Element\VisibilityInterface;
@@ -20,7 +20,7 @@ use ClassGeneration\Element\VisibilityInterface;
  * Property ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface PropertyInterface extends ElementInterface, VisibilityInterface, StaticInterface, Documentary
+interface PropertyInterface extends ElementInterface, VisibilityInterface, StaticInterface, DocumentBlockInterface
 {
 
     /**

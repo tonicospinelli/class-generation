@@ -13,7 +13,7 @@ namespace ClassGeneration;
 
 use ClassGeneration\DocBlock\TagInterface;
 use ClassGeneration\Element\Declarable;
-use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\DocumentBlockInterface;
 use ClassGeneration\Element\ElementInterface;
 use ClassGeneration\Element\StaticInterface;
 use ClassGeneration\Element\VisibilityInterface;
@@ -22,7 +22,7 @@ use ClassGeneration\Element\VisibilityInterface;
  * Method ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface MethodInterface extends ElementInterface, Declarable, VisibilityInterface, StaticInterface, Documentary
+interface MethodInterface extends ElementInterface, Declarable, VisibilityInterface, StaticInterface, DocumentBlockInterface
 {
 
     /**

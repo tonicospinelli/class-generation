@@ -26,7 +26,7 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\ClassGeneration\Element\ElementInterface', $property);
         $this->assertInstanceOf('\ClassGeneration\Element\VisibilityInterface', $property);
         $this->assertInstanceOf('\ClassGeneration\Element\StaticInterface', $property);
-        $this->assertInstanceOf('\ClassGeneration\Element\Documentary', $property);
+        $this->assertInstanceOf('\ClassGeneration\Element\DocumentBlockInterface', $property);
         $this->assertInstanceOf('\ClassGeneration\Element\Tabbable', $property);
     }
 

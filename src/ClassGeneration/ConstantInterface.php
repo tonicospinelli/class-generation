@@ -11,14 +11,14 @@
 
 namespace ClassGeneration;
 
-use ClassGeneration\Element\Documentary;
+use ClassGeneration\Element\DocumentBlockInterface;
 use ClassGeneration\Element\ElementInterface;
 
 /**
  * Constants ClassGeneration
  * @author Antonio Spinelli <tonicospinelli@gmail.com>
  */
-interface ConstantInterface extends ElementInterface, Documentary
+interface ConstantInterface extends ElementInterface, DocumentBlockInterface
 {
 
     /**
