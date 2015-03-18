@@ -112,7 +112,7 @@ class PropertyCollection extends ArrayCollection
         $list = $this->getIterator();
         foreach ($list as $index => $property) {
             if ((is_array($propertyName) and in_array($property->getName(), $propertyName))
-                or ($property->getName() === $propertyName)
+                || ($property->getName() === $propertyName)
             ) {
                 $removedList->add(clone $property);
                 $this->remove($index);

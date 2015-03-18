@@ -90,7 +90,7 @@ class ConstantCollection extends ArrayCollection
         foreach ($list as $index => $constant) {
             $currentName = $constant->getName();
             if ((is_array($constantName) and in_array($currentName, $constantName))
-                or ($constant->getName() === $constantName)
+                || ($constant->getName() === $constantName)
             ) {
                 $removedList->add(clone $constant);
                 $this->remove($index);

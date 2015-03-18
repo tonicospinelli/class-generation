@@ -149,7 +149,7 @@ class Argument extends ElementAbstract implements ArgumentInterface
     public function hasType()
     {
 
-        return (!is_null($this->type) or !empty($this->type))
+        return (!is_null($this->type) || !empty($this->type))
         and !in_array(mb_strtolower($this->type), $this->primitiveTypes);
     }
 

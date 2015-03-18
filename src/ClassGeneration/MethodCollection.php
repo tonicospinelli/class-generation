@@ -79,7 +79,7 @@ class MethodCollection extends ArrayCollection
         $list = $this->getIterator();
         foreach ($list as $index => $method) {
             if ((is_array($methodName) and in_array($method->getName(), $methodName))
-                or ($method->getName() === $methodName)
+                || ($method->getName() === $methodName)
             ) {
                 $removedList->add($method);
                 $this->remove($index);

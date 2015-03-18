@@ -105,7 +105,7 @@ class Property extends ElementAbstract implements PropertyInterface
      */
     public function hasValue()
     {
-        return (!is_null($this->value) or !empty($this->value));
+        return (!is_null($this->value) || !empty($this->value));
     }
 
     /**

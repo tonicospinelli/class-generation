@@ -75,7 +75,7 @@ class Writer extends ElementAbstract implements WriterInterface
      */
     public function setPath($path)
     {
-        if (!is_dir($path) or !is_writable($path)) {
+        if (!is_dir($path) || !is_writable($path)) {
             throw new \RuntimeException('This directory ' . $path . ' not exists or not writable');
         }
 

@@ -88,7 +88,7 @@ class ArgumentCollection extends ArrayCollection
         $list = $this->getIterator();
         foreach ($list as $index => $argument) {
             if (($argumentName instanceof Argument and $argumentName->getName() != $argument->getName())
-                or (is_string($argumentName) and $argument->getName() !== $argumentName)
+                || (is_string($argumentName) and $argument->getName() !== $argumentName)
             ) {
                 continue;
             }

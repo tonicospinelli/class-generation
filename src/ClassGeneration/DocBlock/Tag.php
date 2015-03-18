@@ -98,7 +98,7 @@ class Tag extends ElementAbstract implements TagInterface
      */
     public function getType()
     {
-        if ((is_null($this->type) or empty($this->type)) and $this->needsType()) {
+        if ((is_null($this->type) || empty($this->type)) and $this->needsType()) {
             return 'mixed';
         }
 
