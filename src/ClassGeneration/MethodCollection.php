@@ -78,7 +78,7 @@ class MethodCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $method) {
-            if ((is_array($methodName) and in_array($method->getName(), $methodName))
+            if ((is_array($methodName) && in_array($method->getName(), $methodName))
                 || ($method->getName() === $methodName)
             ) {
                 $removedList->add($method);

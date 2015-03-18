@@ -83,7 +83,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $tag) {
-            if ((is_array($reference) and in_array($tag->getReferenced(), $reference))
+            if ((is_array($reference) && in_array($tag->getReferenced(), $reference))
                 || ($tag->getReferenced() === $reference)
             ) {
                 $removedList->add(clone $tag);
@@ -103,7 +103,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
         $list = $this->getIterator();
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
-            if ((is_array($tagName) and in_array($name, $tagName)) or
+            if ((is_array($tagName) && in_array($name, $tagName)) or
                 ($name === $tagName)
             ) {
                 $this->remove($index);
@@ -170,7 +170,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
 
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
-            if (is_array($tagName) and in_array($name, $tagName)) {
+            if (is_array($tagName) && in_array($name, $tagName)) {
                 $found->add($this->get($index));
             } elseif ($name === $tagName) {
                 $found->add($this->get($index));

@@ -87,8 +87,8 @@ class ArgumentCollection extends ArrayCollection
         $removedList = new self();
         $list = $this->getIterator();
         foreach ($list as $index => $argument) {
-            if (($argumentName instanceof Argument and $argumentName->getName() != $argument->getName())
-                || (is_string($argumentName) and $argument->getName() !== $argumentName)
+            if (($argumentName instanceof Argument && $argumentName->getName() != $argument->getName())
+                || (is_string($argumentName) && $argument->getName() !== $argumentName)
             ) {
                 continue;
             }
