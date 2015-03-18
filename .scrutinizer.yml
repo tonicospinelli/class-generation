@@ -22,7 +22,7 @@ build:
         before:
             - "sudo composer self-update"
         override:
-            - "composer install --no-interaction --prefer-source"
+            - "composer install --no-dev --no-interaction --prefer-dist"
     tests:
         override:
             -
