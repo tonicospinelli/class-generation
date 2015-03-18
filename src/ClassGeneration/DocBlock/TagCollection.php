@@ -103,7 +103,7 @@ class TagCollection extends ArrayCollection implements TagCollectionInterface
         $list = $this->getIterator();
         foreach ($list as $index => $tag) {
             $name = $tag->getName();
-            if ((is_array($tagName) && in_array($name, $tagName)) or
+            if ((is_array($tagName) && in_array($name, $tagName)) ||
                 ($name === $tagName)
             ) {
                 $this->remove($index);

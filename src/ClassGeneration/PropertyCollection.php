@@ -90,7 +90,7 @@ class PropertyCollection extends ArrayCollection
         $list = $this->getIterator();
         foreach ($list as $property) {
             if ((is_array($propertyName) && in_array($property->getName(), $propertyName))
-                or($property->getName() === $propertyName)
+                || ($property->getName() === $propertyName)
             ) {
                 $foundList->add($property);
             }
