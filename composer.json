@@ -1,7 +1,7 @@
 {
-    "name": "tonicospinelli/classgeneration",
+    "name": "tonicospinelli/class-generation",
     "description": "Library to create Php Class files",
-    "homepage": "https://github.com/tonicospinelli/ClassGeneration/",
+    "homepage": "https://github.com/tonicospinelli/class-generation/",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
